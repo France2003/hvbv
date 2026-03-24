@@ -1,0 +1,82 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+{% block title %}{% tr "Người dùng - HandsViet Dashboard" "Users - HandsViet Dashboard" %}{% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-slate-900 font-extrabold">{% tr "Người dùng" "Users" %}</span>
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">{% tr "Quản lý người dùng" "User management" %}</h1>
+        <p class="text-gray-500 mt-1">{% tr "Danh sách đội ngũ nhân viên và khách hàng trên hệ thống." "List of staff accounts and customers on the platform." %}</p>
+    </div>
+    <div class="flex items-center gap-3">
+        <a href="{% url 'dashboard:user_create' %}" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest bg-teal-600 hover:bg-teal-700 text-white transition-all">
+            + {% tr "Thêm nhân viên" "Add staff" %}
+        </a>
+        <div class="flex bg-white p-1 rounded-xl border border-gray-200">
+            <a href="{% url 'dashboard:user_list' %}" class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all {% if not current_role %}bg-teal-500 text-white{% else %}text-slate-400 hover:text-slate-600{% endif %}">{% tr "Tất cả" "All" %}</a>
+            <a href="?role=staff" class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all {% if current_role == 'staff' %}bg-teal-500 text-white{% else %}text-slate-400 hover:text-slate-600{% endif %}">{% tr "Nhân viên" "Staff" %}</a>
+            <a href="?role=user" class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all {% if current_role == 'user' %}bg-teal-500 text-white{% else %}text-slate-400 hover:text-slate-600{% endif %}">{% tr "Người dùng" "Users" %}</a>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto text-sm">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-gray-50/50">
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Tài khoản" "Account" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Vai trò" "Role" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Trạng thái" "Status" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Ngày tham gia" "Joined on" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px] text-right">{% tr "Hành động" "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                {% for target_user in users %}
+                <tr class="hover:bg-gray-50/40 transition-colors group">
+                    <td class="px-8 py-5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-teal-50 rounded-full flex items-center justify-center text-teal-600 font-bold text-lg">{{ target_user.username|slice:":1"|upper }}</div>
+                            <div>
+                                <div class="font-bold text-gray-900">{{ target_user.username }}</div>
+                                <div class="text-[11px] text-gray-400 mt-0.5">{{ target_user.email }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-5">
+                        {% if target_user.role == 'staff' %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-blue-50 text-blue-600 border border-blue-100 uppercase tracking-widest">{% tr "Nhân viên" "Staff" %}</span>
+                        {% else %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-slate-50 text-slate-500 border border-slate-100 uppercase tracking-widest">{% tr "Người dùng" "User" %}</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-8 py-5">
+                        {% if target_user.is_active %}
+                        <span class="flex items-center gap-1.5 text-green-600 font-bold text-[11px]"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>{% tr "Hoạt động" "Active" %}</span>
+                        {% else %}
+                        <span class="flex items-center gap-1.5 text-red-500 font-bold text-[11px]"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>{% tr "Bị khóa" "Inactive" %}</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-8 py-5"><div class="text-gray-600 font-medium">{{ target_user.date_joined|date:"d/m/Y" }}</div></td>
+                    <td class="px-8 py-5 text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="{% url 'dashboard:user_edit' target_user.pk %}" class="px-3 py-2 text-xs font-bold text-blue-600 hover:bg-blue-50 rounded-xl">{% tr "Sửa" "Edit" %}</a>
+                            <a href="{% url 'dashboard:user_delete' target_user.pk %}" class="px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl">{% tr "Xóa" "Delete" %}</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="px-8 py-20 text-center text-gray-400 font-medium">{% tr "Chưa có người dùng nào khớp với bộ lọc." "No users matched the current filter." %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

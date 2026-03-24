@@ -1,0 +1,177 @@
+{% load static i18n_extras %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Quản lý chăm sóc - HandsViet" "Care Management - HandsViet" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body class="bg-slate-50 text-slate-800">
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        <section class="bg-white rounded-2xl border border-slate-200 p-6">
+            <h1 class="text-2xl font-extrabold text-slate-900">{% tr "Quản lý lịch tập, bệnh án và bài tập" "Manage schedules, medical record, and exercise plan" %}</h1>
+            <p class="text-slate-600 mt-2">{% tr "Theo dõi tiến trình điều trị và cập nhật hồ sơ cá nhân ngay trên hệ thống." "Track recovery progress and update your profile directly in the system." %}</p>
+        </section>
+
+        {% if messages %}
+        <section class="space-y-2">
+            {% for message in messages %}
+            <div class="px-4 py-3 rounded-xl border {% if message.tags == 'success' %}bg-emerald-50 text-emerald-700 border-emerald-200{% else %}bg-rose-50 text-rose-700 border-rose-200{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        <section class="grid lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-900">{% tr "Hồ sơ bệnh án đơn giản" "Simple Medical Profile" %}</h2>
+                <form method="post" class="mt-4 space-y-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_medical">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Tình trạng bệnh chính" "Primary Condition" %}</label>
+                        <textarea name="condition" class="w-full border border-slate-300 rounded-xl p-3 min-h-24">{{ patient_profile.condition }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Ghi chú y khoa" "Medical Notes" %}</label>
+                        <textarea name="medical_notes" class="w-full border border-slate-300 rounded-xl p-3 min-h-24">{{ patient_profile.notes }}</textarea>
+                    </div>
+                    <button class="px-5 py-2.5 rounded-xl bg-teal-600 text-white font-semibold">{% tr "Lưu hồ sơ bệnh án" "Save Medical Profile" %}</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-900">{% tr "Thêm ghi chú tiến triển" "Add Progress Note" %}</h2>
+                <form method="post" class="mt-4 space-y-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add_progress">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Nội dung tiến triển" "Progress Summary" %}</label>
+                        <textarea name="summary" class="w-full border border-slate-300 rounded-xl p-3 min-h-24" placeholder="{% tr 'Ví dụ: Đi vững hơn, giảm đau khi lên xuống cầu thang...' 'Example: Better balance, less pain when climbing stairs...' %}"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Điểm tiến triển (tuỳ chọn)" "Progress Score (optional)" %}</label>
+                        <input type="number" min="0" max="100" name="score" class="w-full border border-slate-300 rounded-xl p-3" placeholder="0-100">
+                    </div>
+                    <button class="px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold">{% tr "Lưu ghi chú" "Save Note" %}</button>
+                </form>
+
+                <div class="mt-6">
+                    <h3 class="font-semibold text-slate-900 mb-2">{% tr "Lịch sử tiến triển" "Progress History" %}</h3>
+                    <div class="space-y-2 max-h-64 overflow-auto pr-1">
+                        {% for note in progress_notes %}
+                        <div class="border border-slate-200 rounded-xl p-3">
+                            <p class="text-sm text-slate-700">{{ note.summary }}</p>
+                            <p class="text-xs text-slate-500 mt-1">{{ note.recorded_at|date:"d/m/Y H:i" }}{% if note.score %} - {% tr "Điểm" "Score" %}: {{ note.score }}{% endif %}</p>
+                        </div>
+                        {% empty %}
+                        <p class="text-sm text-slate-500">{% tr "Chưa có dữ liệu tiến triển." "No progress data yet." %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-900">{% tr "Quản lý lịch tập" "Schedule Management" %}</h2>
+                <form method="post" class="mt-4 space-y-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add_schedule">
+                    <input type="text" name="title" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Tên buổi tập' 'Session Title' %}">
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <input type="datetime-local" name="start_at" class="w-full border border-slate-300 rounded-xl p-3">
+                        <input type="datetime-local" name="end_at" class="w-full border border-slate-300 rounded-xl p-3">
+                    </div>
+                    <label class="flex items-center gap-2 text-sm">
+                        <input type="checkbox" name="is_zoom"> {% tr "Buổi tập online (Zoom)" "Online session (Zoom)" %}
+                    </label>
+                    <input type="text" name="zoom_meeting_id" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Zoom Meeting ID (tuỳ chọn)' 'Zoom Meeting ID (optional)' %}">
+                    <input type="url" name="zoom_join_url" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Zoom Join URL (tuỳ chọn)' 'Zoom Join URL (optional)' %}">
+                    <button class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold">{% tr "Thêm lịch tập" "Add Schedule" %}</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-900">{% tr "Lịch sử lịch tập" "Schedule History" %}</h2>
+                <div class="mt-4 space-y-2 max-h-80 overflow-auto pr-1">
+                    {% for item in schedules %}
+                    <div class="border border-slate-200 rounded-xl p-3">
+                        <p class="font-semibold text-slate-900">{{ item.title }}</p>
+                        <p class="text-sm text-slate-600">{{ item.start_at|date:"d/m/Y H:i" }} - {{ item.end_at|date:"d/m/Y H:i" }}</p>
+                        {% if item.is_zoom %}
+                        <p class="text-xs text-slate-500 mt-1">Online{% if item.zoom_meeting_id %} - ID: {{ item.zoom_meeting_id }}{% endif %}</p>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p class="text-sm text-slate-500">{% tr "Chưa có lịch tập." "No schedules yet." %}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="grid lg:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-900">{% tr "Hồ sơ bài tập" "Exercise Profile" %}</h2>
+                <form method="post" class="mt-4 space-y-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="update_exercise_profile">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Mục tiêu tập luyện" "Training Goals" %}</label>
+                        <textarea name="goals" class="w-full border border-slate-300 rounded-xl p-3 min-h-24">{{ exercise_profile.goals }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Chống chỉ định / lưu ý" "Contraindications / Notes" %}</label>
+                        <textarea name="contraindications" class="w-full border border-slate-300 rounded-xl p-3 min-h-24">{{ exercise_profile.contraindications }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">{% tr "Mức độ hiện tại" "Current Level" %}</label>
+                        <input name="current_level" value="{{ exercise_profile.current_level }}" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Ví dụ: Cơ bản, Trung bình, Nâng cao' 'Example: Basic, Intermediate, Advanced' %}">
+                    </div>
+                    <button class="px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold">{% tr "Lưu hồ sơ bài tập" "Save Exercise Profile" %}</button>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-900">{% tr "Thêm lịch sử bài tập" "Add Exercise Log" %}</h2>
+                <form method="post" class="mt-4 space-y-3">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add_exercise_log">
+                    <input type="text" name="exercise_name" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Tên bài tập' 'Exercise Name' %}">
+                    <input type="text" name="exercise_category" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Nhóm bài tập' 'Exercise Category' %}">
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <input type="number" min="0" name="duration_minutes" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Thời lượng (phút)' 'Duration (minutes)' %}">
+                        <input type="number" min="0" max="10" name="pain_score" class="w-full border border-slate-300 rounded-xl p-3" placeholder="{% tr 'Mức đau 0-10' 'Pain score 0-10' %}">
+                    </div>
+                    <textarea name="exercise_notes" class="w-full border border-slate-300 rounded-xl p-3 min-h-20" placeholder="{% tr 'Ghi chú sau buổi tập' 'Post-workout notes' %}"></textarea>
+                    <button class="px-5 py-2.5 rounded-xl bg-cyan-600 text-white font-semibold">{% tr "Lưu lịch sử tập" "Save Exercise Log" %}</button>
+                </form>
+
+                <div class="mt-6">
+                    <h3 class="font-semibold text-slate-900 mb-2">{% tr "Lịch sử bài tập đã lưu" "Saved Exercise Logs" %}</h3>
+                    <div class="space-y-2 max-h-64 overflow-auto pr-1">
+                        {% for log in exercise_logs %}
+                        <div class="border border-slate-200 rounded-xl p-3">
+                            <p class="font-semibold text-slate-900">{{ log.exercise_name }}</p>
+                            <p class="text-sm text-slate-600">{{ log.category }} - {{ log.duration_minutes }} {% tr "phút" "minutes" %} - {% tr "Mức đau" "Pain" %} {{ log.pain_score }}/10</p>
+                            {% if log.notes %}<p class="text-sm text-slate-700 mt-1">{{ log.notes }}</p>{% endif %}
+                            <p class="text-xs text-slate-500 mt-1">{{ log.trained_at|date:"d/m/Y H:i" }}</p>
+                        </div>
+                        {% empty %}
+                        <p class="text-sm text-slate-500">{% tr "Chưa có lịch sử bài tập." "No exercise logs yet." %}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+</body>
+</html>

@@ -1,0 +1,40 @@
+Watching for file changes with StatReloader
+[23/Mar/2026 18:06:03] "HEAD / HTTP/1.1" 200 0
+[23/Mar/2026 18:06:23] "HEAD / HTTP/1.0" 200 0
+[23/Mar/2026 18:06:43] "GET / HTTP/1.0" 200 88638
+Not Found: /robots.txt
+[23/Mar/2026 18:30:53] "GET /robots.txt HTTP/1.0" 404 8771
+Not Found: /news/why-do-people-urinate-more-when-drinking-alcohol-expert-explanation/sms:19001234
+[23/Mar/2026 18:30:53] "GET /news/why-do-people-urinate-more-when-drinking-alcohol-expert-explanation/sms:19001234 HTTP/1.0" 404 9676
+[23/Mar/2026 18:31:40] "GET /news/247-doctor-how-to-effectively-prevent-meningococcal-disease HTTP/1.0" 301 0
+[23/Mar/2026 18:31:41] "GET /news/247-doctor-how-to-effectively-prevent-meningococcal-disease/ HTTP/1.0" 200 57903
+[23/Mar/2026 18:31:49] "GET /news/category/tin-tuc-y-khoa/?page=5 HTTP/1.0" 200 74124
+Not Found: /news/the-mistake-that-causes-obese-individuals-to-gain-weight-even-while-fasting/sms:19001234
+[23/Mar/2026 18:32:15] "GET /news/the-mistake-that-causes-obese-individuals-to-gain-weight-even-while-fasting/sms:19001234 HTTP/1.0" 404 9700
+Not Found: /news/vietnam-successfully-performs-first-domino-multi-organ-transplant/sms:19001234
+[23/Mar/2026 18:32:51] "GET /news/vietnam-successfully-performs-first-domino-multi-organ-transplant/sms:19001234 HTTP/1.0" 404 9670
+[23/Mar/2026 18:33:21] "GET /news/first-domino-organ-transplant-in-vietnam HTTP/1.0" 301 0
+[23/Mar/2026 18:33:22] "GET /news/first-domino-organ-transplant-in-vietnam/ HTTP/1.0" 200 59227
+[23/Mar/2026 18:33:25] "GET /news/child-in-phu-quoc-dies-from-group-b-meningococcal-infection HTTP/1.0" 301 0
+[23/Mar/2026 18:33:25] "GET /news/child-in-phu-quoc-dies-from-group-b-meningococcal-infection/ HTTP/1.0" 200 59311
+Not Found: /news/from-a-small-bump-on-his-lip-young-man-discovers-multiple-sexually-transmitted-infections/sms:19001234
+[23/Mar/2026 18:33:41] "GET /news/from-a-small-bump-on-his-lip-young-man-discovers-multiple-sexually-transmitted-infections/sms:19001234 HTTP/1.0" 404 9742
+[23/Mar/2026 18:34:07] "GET / HTTP/1.0" 200 88638
+Invalid HTTP_HOST header: '103.116.53.63'. You may need to add '103.116.53.63' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/soladium/.openclaw/workspace-bot1/HandsViet/.venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/soladium/.openclaw/workspace-bot1/HandsViet/.venv/lib/python3.10/site-packages/django/utils/deprecation.py", line 119, in __call__
+    response = self.process_request(request)
+  File "/home/soladium/.openclaw/workspace-bot1/HandsViet/.venv/lib/python3.10/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+  File "/home/soladium/.openclaw/workspace-bot1/HandsViet/.venv/lib/python3.10/site-packages/django/http/request.py", line 202, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '103.116.53.63'. You may need to add '103.116.53.63' to ALLOWED_HOSTS.
+[23/Mar/2026 18:34:10] "GET /Dr0v HTTP/1.0" 400 62560
+[23/Mar/2026 18:34:32] "GET /news/first-in-vietnam-a-liver-recipient-donates-their-liver-to-another-patient HTTP/1.0" 301 0
+[23/Mar/2026 18:34:33] "GET /news/first-in-vietnam-a-liver-recipient-donates-their-liver-to-another-patient/ HTTP/1.0" 200 59972
+Not Found: /news/military-hospital-121-provides-medical-care-and-support-for-the-poor/sms:19001234
+[23/Mar/2026 18:34:38] "GET /news/military-hospital-121-provides-medical-care-and-support-for-the-poor/sms:19001234 HTTP/1.0" 404 9679
+Not Found: /news/phu-quoc-surge-in-demand-for-meningococcal-vaccine-following-childs-death/sms:19001234
+[23/Mar/2026 18:35:20] "GET /news/phu-quoc-surge-in-demand-for-meningococcal-vaccine-following-childs-death/sms:19001234 HTTP/1.0" 404 9694

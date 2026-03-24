@@ -1,0 +1,523 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HandsViet - Phục hồi chức năng</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+  <style>
+    .glass { backdrop-filter: blur(10px); background: rgba(255,255,255,.12); }
+    .hero-card-float { animation: floatY 4s ease-in-out infinite; }
+    .hero-card-hover { transition: transform .35s ease, box-shadow .35s ease; }
+    .hero-card-hover:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(2, 132, 199, .22); }
+    .doctor-fade { transition: opacity .45s ease-in-out, transform .45s ease-in-out; }
+    .doctor-fade.is-changing { opacity: .1; transform: translateY(8px) scale(.98); }
+    .hero-bg-zoom { animation: heroZoom 14s ease-in-out infinite alternate; }
+    .hero-main-card { animation: heroFadeIn .7s ease-out; }
+    .treat-card { transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+    .treat-card:hover { transform: translateY(-6px); box-shadow: 0 18px 34px rgba(5,133,142,.18); border-color: #9edee2; }
+    .treat-img { transition: transform .5s ease; }
+    .treat-card:hover .treat-img { transform: scale(1.05); }
+    .reveal-up { opacity: 0; transform: translateY(16px); transition: all .55s ease; }
+    .reveal-up.in { opacity: 1; transform: translateY(0); }
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+    .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+        .doctor-line-btn { width: 134px; transition: none; background:#05858E !important; color:#fff !important; }
+    .doctor-line-btn:hover { background:#05858E !important; color:#fff !important; }
+    .doctor-line-btn .label { max-width: 72px; opacity: 1; margin-left: 8px; transition: none; }
+    .doctor-line-btn .arrow-bubble { background:#05858E !important; color:#fff !important; }
+
+    .doctor-line-btn { width: 40px; transition: width .28s ease; background:#05858E !important; color:#fff !important; }
+    .doctor-line-btn .label { max-width: 0; opacity: 0; margin-left: 0; overflow: hidden; transition: all .28s ease; }
+    .group:hover .doctor-line-btn { width: 132px; }
+    .group:hover .doctor-line-btn .label { max-width: 70px; opacity: 1; margin-left: 8px; }
+    .doctor-line-wrap { height: 14px; position: relative; }
+    .doctor-line-full { position: absolute; left: 0; right: 0; top: 50%; height: 4px; transform: translateY(-50%); background: #05858E; border-radius: 999px; }
+    .doctor-card-clean { background: #EAF6FF; border: 1px solid #cfe8f2; }
+    .doctor-card-clean .meta-overlay { background: linear-gradient(to top, rgba(238,248,252,.98), rgba(238,248,252,.84), rgba(238,248,252,0)); }
+    .doctor-card-clean:hover .meta-overlay { background: linear-gradient(to top, rgba(238,248,252,.99), rgba(238,248,252,.90), rgba(238,248,252,.10)); }
+    .arrow-bubble { display:inline-flex; align-items:center; justify-content:center; line-height:1; }
+    .arrow-bubble svg { display:block; }
+    @keyframes floatY {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.06); }
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .doctor-card-clean .doctor-line-btn,
+    .doctor-card-clean .doctor-line-btn:hover,
+    .doctor-card-clean .doctor-line-btn:focus {
+      background: #05858E !important;
+      color: #ffffff !important;
+      border-color: #05858E !important;
+    }
+    .doctor-card-clean .doctor-line-btn .arrow-bubble,
+    .doctor-card-clean .doctor-line-btn:hover .arrow-bubble {
+      background: #05858E !important;
+      color: #ffffff !important;
+    }
+
+    .doctor-card-clean button.doctor-line-btn,
+    .doctor-card-clean button.doctor-line-btn:hover,
+    .doctor-card-clean button.doctor-line-btn:focus {
+      background: #05858E !important;
+      color: #ffffff !important;
+    }
+
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  {% include 'includes/loader.html' %}
+  {% include 'pages/header_tailwind.html' %}
+
+  <section class="relative pt-16 pb-10 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="{% static 'images/feedback/hospital-bg.jpg' %}" alt="HandsViet hospital" class="hero-bg-zoom w-full h-full object-cover">
+      <div class="absolute inset-0 bg-[#133541]/48 backdrop-blur-[1.5px]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#133541]/25 via-[#05858E]/12 to-[#133541]/52"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4">
+      <div class="hero-main-card rounded-[2rem] overflow-hidden shadow-2xl bg-[#CEF1F2] p-6 md:p-10 text-[#133541] border border-white/70">
+        <div class="grid lg:grid-cols-2 gap-6 items-end">
+          <div>
+            <h1 class="text-4xl md:text-6xl font-black leading-tight text-[#133541]">Phục Hồi Chức Năng<br>Chuyên Nghiệp<br>Cho Bạn</h1>
+            <p class="mt-4 text-[#133541]/85 max-w-lg font-medium">Với đội ngũ chuyên gia giàu kinh nghiệm, trang thiết bị hiện đại và phác đồ điều trị cá nhân hóa, HandsViet cam kết mang đến hiệu quả phục hồi tốt nhất.</p>
+            <a href="{% url 'pages:booking' %}" class="inline-flex mt-6 px-6 py-3 rounded-full bg-[#05858E] text-white font-bold hover:brightness-95">Đặt lịch khám</a>
+
+            <div class="grid grid-cols-3 gap-6 mt-8 text-center md:text-left">
+              <div><p class="text-3xl font-black text-[#133541]">24/7</p><p class="text-xs text-[#133541]/70">Emergency Service</p></div>
+              <div><p class="text-3xl font-black text-[#133541]">80+</p><p class="text-xs text-[#133541]/70">Specialist doctor</p></div>
+              <div><p class="text-3xl font-black text-[#133541]">100k+</p><p class="text-xs text-[#133541]/70">Happy Patient</p></div>
+            </div>
+          </div>
+
+          <div class="relative min-h-[320px] h-[360px] md:h-[420px] overflow-hidden rounded-2xl">
+            <div class="absolute inset-0 bg-[#0d5f79]/25"></div>
+            <img id="heroDoctor" src="{% static 'images/feedback/doctor-slide-1.jpg' %}" alt="Doctor" class="doctor-fade absolute inset-0 w-full h-full object-cover">
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2" id="heroDoctorDots">
+              <span class="w-2.5 h-2.5 rounded-full bg-white/90"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-white/40"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-4 mt-4">
+          <div class="hero-card-hover bg-white text-[#133541] rounded-2xl p-4 border border-[#CEF1F2]">
+            <p class="text-sm font-semibold">Latest visited doctor</p>
+            <div class="mt-3 flex -space-x-2">
+              <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop" class="w-8 h-8 rounded-full border-2 border-white object-cover">
+              <img src="https://images.unsplash.com/photo-1659353882074-d0e7ee52d4b1?q=80&w=200&auto=format&fit=crop" class="w-8 h-8 rounded-full border-2 border-white object-cover">
+              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=200&auto=format&fit=crop" class="w-8 h-8 rounded-full border-2 border-white object-cover">
+            </div>
+            <p class="text-xs mt-2 text-[#133541]/70">More than 80 doctor at your service</p>
+          </div>
+
+          <div class="hero-card-hover bg-[#05858E] rounded-2xl p-4 border border-[#05858E] text-white">
+            <span class="text-xs px-3 py-1 rounded-full bg-white/20 text-white">Doctors</span>
+            <p class="text-xl font-semibold mt-3 text-white">Our Specialist doctor</p>
+            <div class="mt-3 flex gap-2">
+              <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=200&auto=format&fit=crop" class="w-8 h-8 rounded-full border border-white object-cover" alt="doctor">
+              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=200&auto=format&fit=crop" class="w-8 h-8 rounded-full border border-white object-cover" alt="doctor">
+              <img src="https://images.unsplash.com/photo-1659353882074-d0e7ee52d4b1?q=80&w=200&auto=format&fit=crop" class="w-8 h-8 rounded-full border border-white object-cover" alt="doctor">
+            </div>
+          </div>
+
+          <div class="hero-card-hover bg-white text-[#133541] rounded-2xl p-4 border border-[#CEF1F2] flex items-center justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold">Connect with our professional doctor</p>
+              <a href="{% url 'pages:contact' %}" class="inline-flex mt-2 px-4 py-2 rounded-full bg-[#05858E] text-white font-semibold text-sm">Connect now</a>
+            </div>
+            <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=900&auto=format&fit=crop" class="w-24 h-24 rounded-xl object-cover" alt="consulting">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#CEF1F2]/45 border-y border-[#CEF1F2]">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+      <div class="grid md:grid-cols-4 gap-3">
+        <a href="{% url 'pages:experts' %}" class="bg-white border border-[#CEF1F2] rounded-xl px-4 py-3 flex items-start gap-3 hover:-translate-y-0.5 hover:shadow-md transition">
+          <svg class="w-7 h-7 text-[#05858E] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <div>
+            <p class="font-semibold text-[#133541]">Tìm bác sĩ</p>
+            <p class="text-sm text-[#133541]/70">Đội ngũ bác sĩ chuyên sâu</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:booking' %}" class="bg-white border border-[#CEF1F2] rounded-xl px-4 py-3 flex items-start gap-3 hover:-translate-y-0.5 hover:shadow-md transition">
+          <svg class="w-7 h-7 text-[#05858E] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-11 9h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z"/></svg>
+          <div>
+            <p class="font-semibold text-[#133541]">Đặt hẹn tư vấn</p>
+            <p class="text-sm text-[#133541]/70">Chủ động thời gian tư vấn</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:faq' %}" class="bg-white border border-[#CEF1F2] rounded-xl px-4 py-3 flex items-start gap-3 hover:-translate-y-0.5 hover:shadow-md transition">
+          <svg class="w-7 h-7 text-[#05858E] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4-.8L3 20l1.1-3.3A7.57 7.57 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          <div>
+            <p class="font-semibold text-[#133541]">Hỏi đáp cùng HandsViet</p>
+            <p class="text-sm text-[#133541]/70">Tư vấn nhanh từ bác sĩ</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:facilities' %}" class="bg-white border border-[#CEF1F2] rounded-xl px-4 py-3 flex items-start gap-3 hover:-translate-y-0.5 hover:shadow-md transition">
+          <svg class="w-7 h-7 text-[#05858E] mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
+          <div>
+            <p class="font-semibold text-[#133541]">Danh sách phòng khám</p>
+            <p class="text-sm text-[#133541]/70">Tìm phòng khám phù hợp gần bạn</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="why-trust" class="py-14 bg-[#F8FCFC] border-y border-[#CEF1F2]">
+    <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-8 items-center">
+      <div>
+        <p class="text-sm font-bold text-[#05858E] uppercase tracking-wider">TẠI SAO HANDSVIET LUÔN LÀ SỰ TÍN NHIỆM CỦA KHÁCH HÀNG?</p>
+        <h2 class="text-4xl font-extrabold text-[#133541] mt-2">HandsViet luôn nhận được sự tín nhiệm cao từ khách hàng</h2>
+        <p class="text-[#133541]/80 mt-4">Với tỷ lệ 98% đánh giá tích cực, sự tin tưởng dành cho HandsViet đến từ chuyên môn cao trong phục hồi chức năng, triết lý lấy khách hàng làm trung tâm và sự đồng hành tận tâm trong từng chặng phục hồi.</p>
+
+        <div class="grid sm:grid-cols-2 gap-4 mt-6">
+          <div class="bg-white border border-[#CEF1F2] rounded-xl p-4"><div class="flex items-center gap-2"><svg class="w-5 h-5 text-[#05858E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><p class="font-bold text-[#133541]">Tận tâm & chân thành</p></div><p class="text-sm text-[#133541]/70 mt-1">Thấu hiểu, chia sẻ và đồng hành bằng sự chân thành trong suốt quá trình điều trị.</p></div>
+          <div class="bg-white border border-[#CEF1F2] rounded-xl p-4"><div class="flex items-center gap-2"><svg class="w-5 h-5 text-[#05858E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p class="font-bold text-[#133541]">Chuyên môn cao</p></div><p class="text-sm text-[#133541]/70 mt-1">Đội ngũ chuyên gia dày dặn kinh nghiệm, mang lại hiệu quả phục hồi thực tế.</p></div>
+          <div class="bg-white border border-[#CEF1F2] rounded-xl p-4"><div class="flex items-center gap-2"><svg class="w-5 h-5 text-[#05858E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p class="font-bold text-[#133541]">Lấy khách hàng làm trung tâm</p></div><p class="text-sm text-[#133541]/70 mt-1">Luôn lắng nghe, đặt lợi ích và sức khỏe khách hàng lên hàng đầu.</p></div>
+          <div class="bg-white border border-[#CEF1F2] rounded-xl p-4"><div class="flex items-center gap-2"><svg class="w-5 h-5 text-[#05858E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><p class="font-bold text-[#133541]">Tạo sự tự tin</p></div><p class="text-sm text-[#133541]/70 mt-1">Không chỉ phục hồi thể chất mà còn giúp người bệnh tự tin trở lại cuộc sống.</p></div>
+        </div>
+      </div>
+
+      <div>
+        <img id="whySlideImage" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1400&auto=format&fit=crop" class="w-full h-[420px] object-cover rounded-2xl border border-[#CEF1F2]" alt="why" />
+      </div>
+    </div>
+  </section>
+
+  <section id="linh-vuc" class="py-16 bg-gradient-to-b from-white to-[#F8FCFC]">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-10">
+        <h2 class="text-4xl font-extrabold text-[#133541]">Lĩnh vực điều trị</h2>
+        <p class="text-[#133541]/70 mt-2">Đa dạng dịch vụ phục hồi chức năng với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="{% static 'images/conditions/phcn-co-xuong-khop-real.jpg' %}" class="treat-img w-full h-48 object-cover" alt="PHCN Cơ Xương Khớp">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">PHCN Cơ Xương Khớp</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Thoát vị đĩa đệm • Thoái hóa cột sống • Bàn chân bẹt • Vẹo cột sống</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="PHCN Thần Kinh">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">PHCN Thần Kinh</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Sau tai biến • Parkinson • Liệt nửa người • Rối loạn thăng bằng</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1535914254981-b5012eebbd15?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="PHCN Tim Mạch">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">PHCN Tim Mạch</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Sau nhồi máu cơ tim • Suy tim • Sau mổ tim • Giảm dung nạp gắng sức</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="PHCN Nhi Khoa">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">PHCN Nhi Khoa</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Chậm phát triển vận động • Chậm nói • Rối loạn phổ tự kỷ • Bại não</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="Vật Lý Trị Liệu">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">Vật Lý Trị Liệu</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Điện trị liệu • Nhiệt trị liệu • Siêu âm trị liệu • Bài tập vận động</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="Hoạt Động Trị Liệu">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">Hoạt Động Trị Liệu</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Tập kỹ năng sinh hoạt • Tự chăm sóc • Vận động tinh • Hòa nhập cộng đồng</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="Ngôn Ngữ Trị Liệu">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">Ngôn Ngữ Trị Liệu</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Chậm nói • Nói ngọng • Rối loạn giao tiếp • Rối loạn nuốt</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:services' %}" class="treat-card reveal-up bg-white border border-[#CEF1F2] rounded-xl overflow-hidden shadow-sm">
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop" class="treat-img w-full h-48 object-cover" alt="Tư Vấn Dinh Dưỡng">
+          <div class="p-4">
+            <p class="font-bold text-[#133541]">Tư Vấn Dinh Dưỡng</p>
+            <p class="text-xs text-[#133541]/70 mt-1">Dinh dưỡng phục hồi • Dinh dưỡng bệnh lý • Giảm cân y khoa • Tăng cơ an toàn</p>
+          </div>
+        </a>
+
+        <a href="{% url 'pages:booking' %}" class="treat-card reveal-up bg-[#133541] text-white border border-[#133541] rounded-xl overflow-hidden shadow-sm flex flex-col justify-center p-6">
+          <p class="text-2xl font-extrabold">Đặt lịch hẹn tư vấn</p>
+          <p class="text-sm text-white/80 mt-2">Nhận tư vấn nhanh với bác sĩ phù hợp theo triệu chứng của bạn.</p>
+          <span class="inline-flex mt-4 px-4 py-2 rounded-lg bg-[#05858E] text-white font-semibold w-fit">Đặt lịch ngay</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="text-center text-[#05858E] font-semibold uppercase tracking-wider">Đội ngũ của chúng tôi</p>
+      <h2 class="text-4xl font-extrabold text-center text-[#133541] mt-1">Bác sĩ chuyên khoa hàng đầu</h2>
+      <p class="text-center text-slate-600 mt-2">Tự hào với đội ngũ y bác sĩ giỏi chuyên môn, giàu y đức và luôn tận tâm với người bệnh.</p>
+
+      <div class="mt-8 relative">
+        <button id="doctorPrev" class="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 border border-[#CEF1F2] text-[#05858E] shadow hover:bg-[#EAF6FF]"><svg class="w-5 h-5 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button id="doctorNext" class="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 border border-[#CEF1F2] text-[#05858E] shadow hover:bg-[#EAF6FF]"><svg class="w-5 h-5 mx-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+
+        <div id="doctorTrack" class="no-scrollbar flex gap-5 overflow-x-auto scroll-smooth pb-2">
+          {% for doctor in doctors %}
+          <article class="group doctor-card-clean min-w-[280px] md:min-w-[300px] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+            <div class="relative h-[430px]">
+              <img src="{{ doctor.image }}" alt="{{ doctor.name }}" class="block w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
+              <div class="meta-overlay absolute left-0 right-0 bottom-0 px-5 pt-14 pb-16">
+                <p class="font-extrabold text-[22px] leading-tight text-[#0a5f75]">{{ doctor.name }}</p>
+                <p class="text-[15px] text-slate-700 mt-1">{{ doctor.role }}</p>
+              </div>
+              <div class="absolute left-4 right-4 bottom-4 doctor-line-wrap">
+                <div class="doctor-line-full"></div>
+                <button class="doctor-line-btn absolute left-0 top-1/2 -translate-y-1/2 z-10 inline-flex items-center rounded-full bg-[#05858E] text-white font-semibold text-sm h-10 px-3 overflow-hidden shadow-lg shadow-teal-900/20" onclick="showDoctor('{{ doctor.id }}','{{ doctor.name|escapejs }}','{{ doctor.role|escapejs }}','{{ doctor.education|escapejs }}','{{ doctor.exp|escapejs }}','{{ doctor.bio|escapejs }}')">
+                  <span class="arrow-bubble w-7 h-7 rounded-full bg-[#05858E] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                  <span class="label whitespace-nowrap">Xem thêm</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+          {% for ktv in technicians %}
+          <article class="group doctor-card-clean min-w-[280px] md:min-w-[300px] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+            <div class="relative h-[430px]">
+              <img src="{{ ktv.image }}" alt="{{ ktv.name }}" class="block w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]" />
+              <div class="meta-overlay absolute left-0 right-0 bottom-0 px-5 pt-14 pb-16">
+                <p class="font-extrabold text-[22px] leading-tight text-[#0a5f75]">{{ ktv.name }}</p>
+                <p class="text-[15px] text-slate-700 mt-1">{{ ktv.role }}</p>
+              </div>
+              <div class="absolute left-4 right-4 bottom-4 doctor-line-wrap">
+                <div class="doctor-line-full"></div>
+                <a href="{% url 'pages:experts' %}" class="doctor-line-btn absolute left-0 top-1/2 -translate-y-1/2 z-10 inline-flex items-center rounded-full bg-[#05858E] text-white font-semibold text-sm h-10 px-3 overflow-hidden shadow-lg shadow-teal-900/20">
+                  <span class="arrow-bubble w-7 h-7 rounded-full bg-[#05858E] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </span>
+                  <span class="label whitespace-nowrap">Xem thêm</span>
+                </a>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="text-center mt-7 flex flex-wrap justify-center gap-4">
+        <a href="{% url 'pages:booking' %}" class="inline-flex items-center gap-2 px-10 py-3 rounded-full bg-[#0b8ea1] text-white font-semibold hover:brightness-95">Đặt lịch hẹn <span>→</span></a>
+        <a href="{% url 'pages:experts' %}" class="inline-flex items-center gap-2 px-10 py-3 rounded-full border-2 border-[#0b8ea1] text-[#0b8ea1] font-semibold hover:bg-[#EAF6FF]">Tất cả bác sĩ <span>→</span></a>
+      </div>
+
+      <div id="doctorProfile" class="hidden mt-6 bg-slate-50 border rounded-2xl p-6"></div>
+
+      
+    </div>
+  </section>
+
+  <section class="py-16 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center">Chứng chỉ & phương pháp điều trị</h2>
+      <div class="grid md:grid-cols-3 gap-6 mt-8">
+        <div class="border border-white/20 rounded-2xl p-5 bg-white/5"><h3 class="font-bold">VLTL</h3><p class="text-sm mt-2 text-slate-200">Điện trị liệu, nhiệt trị liệu, bài tập chức năng theo tiến triển lâm sàng.</p></div>
+        <div class="border border-white/20 rounded-2xl p-5 bg-white/5"><h3 class="font-bold">Cá nhân hoá</h3><p class="text-sm mt-2 text-slate-200">Mỗi bệnh nhân có mục tiêu riêng, phác đồ và KPI theo từng tuần.</p></div>
+        <div class="border border-white/20 rounded-2xl p-5 bg-white/5"><h3 class="font-bold">Phác đồ khoa học</h3><p class="text-sm mt-2 text-slate-200">Theo dõi định kỳ, cập nhật tiến triển và điều chỉnh theo dữ liệu phục hồi.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center">Câu chuyện khách hàng</h2>
+      <div class="grid md:grid-cols-3 gap-6 mt-8">
+        <article class="border rounded-xl overflow-hidden"><img src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?q=80&w=1200&auto=format&fit=crop" class="h-44 w-full object-cover"><div class="p-4">Phục hồi sau tai biến: tăng độc lập sinh hoạt sau 6 tuần.</div></article>
+        <article class="border rounded-xl overflow-hidden"><img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1200&auto=format&fit=crop" class="h-44 w-full object-cover"><div class="p-4">Thoát vị đĩa đệm: giảm đau và cải thiện vận động sau 4 buổi.</div></article>
+        <article class="border rounded-xl overflow-hidden"><img src="https://images.unsplash.com/photo-1576671494903-8ec23c1f97f2?q=80&w=1200&auto=format&fit=crop" class="h-44 w-full object-cover"><div class="p-4">Chấn thương thể thao: quay lại tập luyện an toàn theo lộ trình.</div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-slate-50 border-y">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center">Báo chí & Đối tác sự kiện</h2>
+      <div class="grid md:grid-cols-2 gap-8 mt-8">
+        <div>
+          <h3 class="font-bold mb-3">Book báo</h3>
+          <div class="space-y-4">
+            {% for item in public_highlights %}
+            <a href="{{ item.url }}" target="_blank" rel="noopener" class="block border rounded-xl p-4 hover:border-emerald-400 bg-white">
+              <p class="text-sm text-slate-500">{{ item.source_name }} • {{ item.date_label }}</p>
+              <p class="font-semibold mt-1">{{ item.title }}</p>
+            </a>
+            {% empty %}
+            {% for press in press_mentions %}
+            <a href="{{ press.url }}" target="_blank" rel="noopener" class="block border rounded-xl p-4 hover:border-emerald-400 bg-white">
+              <p class="text-sm text-slate-500">{{ press.publisher_name }}</p>
+              <p class="font-semibold mt-1">{{ press.title }}</p>
+            </a>
+            {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+        <div>
+          <h3 class="font-bold mb-3">Đối tác sự kiện</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="border rounded-xl p-6 text-center bg-white">Hospital 199</div>
+            <div class="border rounded-xl p-6 text-center bg-white">GHAPAC</div>
+            <div class="border rounded-xl p-6 text-center bg-white">CLB Thể thao</div>
+            <div class="border rounded-xl p-6 text-center bg-white">Đối tác cộng đồng</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14 bg-white">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-extrabold">Liên hệ nhanh</h2>
+      <p class="text-slate-600 mt-2">Tư vấn qua nhiều kênh để khách hàng thao tác tiện nhất.</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="tel:19001234" class="px-5 py-3 rounded-lg bg-emerald-100 text-emerald-800 font-semibold">Gọi 1900-1234</a>
+        <a href="https://zalo.me/" target="_blank" class="px-5 py-3 rounded-lg bg-sky-100 text-sky-800 font-semibold">Chat Zalo</a>
+        <a href="sms:19001234" class="px-5 py-3 rounded-lg bg-[#CEF1F2] text-[#133541] font-semibold">SMS</a>
+        <a href="https://wa.me/84900000000" target="_blank" class="px-5 py-3 rounded-lg bg-green-100 text-green-800 font-semibold">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  {% include 'pages/footer.html' %}
+
+  <script>
+    // Hero section: doctor image transition + subtle animation
+    const heroDoctor = document.getElementById('heroDoctor');
+    const heroDoctorDots = document.querySelectorAll('#heroDoctorDots span');
+    const heroDoctors = [
+      "{% static 'images/feedback/doctor-slide-1.jpg' %}",
+      "{% static 'images/feedback/doctor-slide-2.jpg' %}"
+    ];
+    let heroDoctorIdx = 0;
+
+    function paintHeroDots() {
+      heroDoctorDots.forEach((dot, i) => {
+        dot.className = `w-2.5 h-2.5 rounded-full ${i === heroDoctorIdx ? 'bg-white/90' : 'bg-white/40'}`;
+      });
+    }
+
+    function rotateHeroDoctor() {
+      if (!heroDoctor) return;
+      heroDoctor.classList.add('is-changing');
+      setTimeout(() => {
+        heroDoctorIdx = (heroDoctorIdx + 1) % heroDoctors.length;
+        heroDoctor.src = heroDoctors[heroDoctorIdx];
+        heroDoctor.classList.remove('is-changing');
+        paintHeroDots();
+      }, 260);
+    }
+
+    if (heroDoctor) {
+      heroDoctor.addEventListener('error', () => {
+        heroDoctor.src = 'https://images.unsplash.com/photo-1594824475317-d3cb0c01f1cb?q=80&w=1200&auto=format&fit=crop';
+      });
+    }
+
+    paintHeroDots();
+    setInterval(rotateHeroDoctor, 3200);
+
+    const whySlideImage = document.getElementById('whySlideImage');
+    const whySlides = [
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1666214280391-8ff5bd3c0bf0?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1400&auto=format&fit=crop'
+    ];
+    let whyIdx = 0;
+    if (whySlideImage) {
+      setInterval(() => {
+        whyIdx = (whyIdx + 1) % whySlides.length;
+        whySlideImage.src = whySlides[whyIdx];
+      }, 3400);
+    }
+
+    const revealEls = document.querySelectorAll('.reveal-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach((el, idx) => {
+      el.style.transitionDelay = `${Math.min(idx * 40, 240)}ms`;
+      io.observe(el);
+    });
+
+    const doctorTrack = document.getElementById('doctorTrack');
+    const doctorPrev = document.getElementById('doctorPrev');
+    const doctorNext = document.getElementById('doctorNext');
+    if (doctorTrack && doctorPrev && doctorNext) {
+      doctorPrev.onclick = ()=>doctorTrack.scrollBy({left:-320, behavior:'smooth'});
+      doctorNext.onclick = ()=>doctorTrack.scrollBy({left:320, behavior:'smooth'});
+    }
+
+
+    function showDoctor(id, name, role, education, exp, bio){
+      const box = document.getElementById('doctorProfile');
+      if (!box) return;
+      box.classList.remove('hidden');
+      box.innerHTML = `
+        <div class='grid md:grid-cols-3 gap-6 items-start'>
+          <div class='md:col-span-2'>
+            <h3 class='text-3xl font-extrabold text-[#133541]'>${name}</h3>
+            <p class='text-[#05858E] font-semibold mt-1'>${role} • ${exp}</p>
+            <p class='text-sm text-slate-500 mt-2'>${education}</p>
+            <p class='text-slate-700 mt-4'>${bio}</p>
+          </div>
+          <div class='bg-white border border-[#CEF1F2] rounded-xl p-4'>
+            <p class='text-xs uppercase text-[#05858E] font-bold'>Bằng cấp / Chứng chỉ</p>
+            <ul class='mt-3 space-y-2 text-sm text-slate-700'>
+              <li>• ${education}</li>
+              <li>• Chứng chỉ cập nhật chuyên môn PHCN</li>
+              <li>• Đào tạo liên tục theo hướng dẫn Bộ Y tế</li>
+            </ul>
+          </div>
+        </div>`;
+      box.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  </script>
+</body>
+</html>

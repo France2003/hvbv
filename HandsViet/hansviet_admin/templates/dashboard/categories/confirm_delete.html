@@ -1,0 +1,30 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+
+{% block title %}{% tr "Xóa chuyên mục - HandsViet Dashboard" "Delete category - HandsViet Dashboard" %}{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'dashboard:category_list' %}" class="hover:text-teal-600">{% tr "Chuyên mục" "Categories" %}</a>
+<span class="text-gray-300">/</span>
+<span class="text-gray-900 font-medium">{% tr "Xóa chuyên mục" "Delete category" %}</span>
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center py-20">
+    <div class="max-w-md w-full bg-white rounded-[3rem] shadow-2xl border border-gray-100 p-12 text-center">
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-4">{% tr "Xóa chuyên mục?" "Delete this category?" %}</h1>
+        <p class="text-gray-500 mb-10 leading-relaxed font-medium">
+            {% if request.LANGUAGE_CODE|slice:':2' == 'en' %}
+            You are about to delete <span class="font-bold text-red-600">"{{ category.display_name|default:category.name }}"</span>. Services linked to this category may need reassignment.
+            {% else %}
+            Bạn có chắc chắn muốn xóa chuyên mục <span class="font-bold text-red-600">"{{ category.display_name|default:category.name }}"</span>? Các dịch vụ liên quan có thể cần gán lại chuyên mục.
+            {% endif %}
+        </p>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-5 rounded-2xl font-bold transition-all">{% tr "Xác nhận xóa vĩnh viễn" "Confirm permanent deletion" %}</button>
+            <a href="{% url 'dashboard:category_list' %}" class="block w-full text-gray-400 font-bold py-2 hover:text-gray-600 transition-colors">{% tr "Hủy và quay lại" "Cancel and go back" %}</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

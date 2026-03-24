@@ -1,0 +1,110 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% tr "Liên hệ - HandsViet" "Contact - HandsViet" %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+</head>
+<body class="bg-slate-50 text-slate-800">
+  {% include 'includes/loader.html' %}
+  {% include 'pages/header_tailwind.html' %}
+
+  <section class="pt-28 pb-14 bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h1 class="text-4xl font-extrabold">{% tr "Liên hệ tư vấn" "Contact consultation" %}</h1>
+      <p class="text-slate-600 mt-3">{% tr "Chuẩn hoá kênh liên hệ: Call, Zalo, SMS, WhatsApp và form đặt câu hỏi." "Optimized channels: Call, Zalo, SMS, WhatsApp, and question form." %}</p>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-4 py-12 space-y-8">
+    <section class="bg-white border rounded-2xl p-6">
+      <h2 class="text-2xl font-bold mb-4">Kênh liên hệ nhanh</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <a href="tel:19001234" data-channel="call" class="contact-btn border rounded-xl p-4 bg-emerald-50 hover:border-emerald-500 hover:bg-emerald-100">
+          <p class="font-bold">Gọi hotline</p><p class="text-sm text-slate-600">1900 1234</p>
+        </a>
+        <a href="https://zalo.me/" data-channel="zalo" target="_blank" rel="noopener" class="contact-btn border rounded-xl p-4 bg-sky-50 hover:border-sky-500 hover:bg-sky-100">
+          <p class="font-bold">Zalo</p><p class="text-sm text-slate-600">Chat tư vấn nhanh</p>
+        </a>
+        <a href="sms:19001234" data-channel="sms" class="contact-btn border rounded-xl p-4 bg-amber-50 hover:border-amber-500 hover:bg-amber-100">
+          <p class="font-bold">SMS</p><p class="text-sm text-slate-600">Gửi triệu chứng ban đầu</p>
+        </a>
+        <a href="https://wa.me/84900000000" data-channel="whatsapp" target="_blank" rel="noopener" class="contact-btn border rounded-xl p-4 bg-green-50 hover:border-green-500 hover:bg-green-100">
+          <p class="font-bold">WhatsApp</p><p class="text-sm text-slate-600">Hỗ trợ khách quốc tế</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="grid lg:grid-cols-2 gap-8">
+      <div class="bg-white border rounded-2xl p-6">
+        <h2 class="text-2xl font-bold mb-4">Thông tin cơ sở</h2>
+        <ul class="space-y-2 text-slate-700">
+          <li><b>Địa chỉ:</b> 227b Nguyễn Công Trứ, An Hải, Sơn Trà, Đà Nẵng</li>
+          <li><b>Email:</b> info@handsviet.vn</li>
+          <li><b>Hotline:</b> 1900-1234</li>
+          <li><b>Giờ làm việc:</b> 08:00 - 20:00 (T2-T6), 08:00 - 17:00 (T7-CN)</li>
+        </ul>
+        <div class="mt-5 rounded-xl overflow-hidden border h-72">
+          <iframe
+            src="https://www.google.com/maps?q=227b+Nguyen+Cong+Tru+Son+Tra+Da+Nang&z=15&output=embed"
+            width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="bg-white border rounded-2xl p-6">
+        <h2 class="text-2xl font-bold mb-4">Phiếu đặt câu hỏi (lấy data)</h2>
+        <form id="questionForm" class="space-y-3">
+          <input class="w-full border rounded-lg px-4 py-3" placeholder="Họ tên" required>
+          <input class="w-full border rounded-lg px-4 py-3" placeholder="Số điện thoại" required>
+          <select class="w-full border rounded-lg px-4 py-3">
+            <option>Lĩnh vực cần tư vấn</option>
+            <option>PHCN</option>
+            <option>VLTL</option>
+            <option>Chỉnh hình bàn chân</option>
+          </select>
+          <textarea class="w-full border rounded-lg px-4 py-3" rows="4" placeholder="Mô tả ngắn triệu chứng hoặc câu hỏi"></textarea>
+          <button class="w-full py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">Gửi yêu cầu</button>
+        </form>
+        <p id="ok" class="hidden mt-3 text-emerald-700 font-semibold">Đã ghi nhận. HandsViet sẽ liên hệ sớm.</p>
+      </div>
+    </section>
+  </main>
+
+  {% include 'pages/footer.html' %}
+
+  <script>
+    document.getElementById('questionForm')?.addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('ok').classList.remove('hidden');
+      this.reset();
+    });
+
+    // Tracking click contacts -> gửi về server
+    function trackContactClick(channel, href) {
+      const payload = JSON.stringify({ channel, href });
+      const url = "{% url 'pages:contact_click_track' %}";
+      if (navigator.sendBeacon) {
+        const blob = new Blob([payload], { type: 'application/json' });
+        navigator.sendBeacon(url, blob);
+        return;
+      }
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    }
+
+    document.querySelectorAll('.contact-btn').forEach(el => {
+      el.addEventListener('click', () => {
+        trackContactClick(el.dataset.channel || 'unknown', el.getAttribute('href') || '');
+      });
+    });
+  </script>
+</body>
+</html>

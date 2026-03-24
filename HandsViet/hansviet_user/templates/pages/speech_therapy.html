@@ -1,0 +1,320 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Ngôn ngữ trị liệu - Bệnh viện HandsViet" "Speech and language therapy - HandsViet Hospital" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style type="text/tailwindcss">
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+
+        .service-content h2 {
+            @apply text-3xl md:text-4xl font-black text-slate-900 mb-8 tracking-tighter uppercase flex items-center gap-4;
+        }
+
+        .service-content h2::before {
+            @apply content-[''] w-2 h-10 bg-teal-500 rounded-full inline-block;
+        }
+
+        .service-content p {
+            @apply text-lg text-slate-600 leading-relaxed mb-6 font-medium;
+        }
+
+        .service-content h3 {
+            @apply text-2xl font-extrabold text-slate-800 mb-4 mt-8 uppercase tracking-tight;
+        }
+
+        .service-content ul {
+            @apply space-y-4 mb-10;
+        }
+
+        .service-content li {
+            @apply flex items-start gap-4 text-slate-600 text-lg;
+        }
+
+        .service-content li svg {
+            @apply w-6 h-6 text-teal-500 mt-1 flex-shrink-0;
+        }
+
+        .image-card {
+            @apply relative rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-700 hover:scale-[1.01] border-4 border-white;
+        }
+
+        .zig-zag-section {
+            @apply py-24 md:py-32 relative overflow-hidden;
+        }
+
+        .reveal.active {
+            @apply opacity-100 translate-y-0 transition-all duration-1000;
+        }
+
+        .reveal {
+            @apply opacity-0 translate-y-10;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .highlight-box {
+            @apply bg-teal-50 p-8 rounded-[2.5rem] border-l-8 border-teal-500 mb-10 shadow-sm transition-all hover:shadow-md;
+        }
+
+        .stat-grid {
+            @apply grid grid-cols-1 md:grid-cols-3 gap-6 mb-10;
+        }
+
+        .stat-item {
+            @apply bg-white p-6 rounded-3xl border border-slate-100 shadow-sm text-center;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <section class="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/ngon-ngu-tri-lieu.jpg"
+                    class="w-full h-full object-cover" alt="{% tr 'Ngôn ngữ trị liệu chuyên sâu' 'Advanced speech and language therapy' %}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[2px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs uppercase tracking-[0.2em] mb-10 animate-fade-in-up">
+                    {% tr "Phục hồi giao tiếp và chức năng nuốt" "Communication and swallowing rehabilitation" %}
+                </div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
+                    {% tr "Ngôn ngữ" "Speech" %} <span class="text-teal-400">{% tr "trị liệu" "therapy" %}</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-200/90 max-w-4xl mx-auto leading-relaxed animate-fade-in-up delay-200 px-4 font-light">
+                    {% tr "Khôi phục khả năng hiểu, diễn đạt, phát âm và nuốt an toàn để người bệnh có thể kết nối trở lại với gia đình và cộng đồng." "Restore comprehension, expression, articulation, and safe swallowing so patients can reconnect with family and community." %}
+                </p>
+            </div>
+        </section>
+
+        <div class="relative z-20">
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="image-card lg:order-1 h-[450px] md:h-[600px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/ngon-ngu-tri-lieu-6.jpg" alt="{% tr 'Khái niệm ngôn ngữ trị liệu' 'Speech therapy overview' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content lg:order-2">
+                            <h2>{% tr "Khái niệm về ngôn ngữ trị liệu" "What is speech and language therapy?" %}</h2>
+                            <p>{% tr "Ngôn ngữ trị liệu là chuyên ngành phục hồi chức năng đánh giá và điều trị các rối loạn liên quan đến giao tiếp, ngôn ngữ, giọng nói, lời nói và chức năng nuốt." "Speech and language therapy is a rehabilitation specialty that assesses and treats disorders related to communication, language, voice, speech, and swallowing." %}</p>
+
+                            <div class="highlight-box">
+                                <p class="mb-0 text-slate-800 font-bold">{% tr "Giao tiếp là nền tảng của kết nối con người. Can thiệp đúng lúc giúp người bệnh tìm lại tiếng nói và sự tự tin của chính mình." "Communication is the foundation of human connection. Timely intervention helps patients regain their voice and confidence." %}</p>
+                            </div>
+
+                            <p>{% tr "Tại HandsViet, mỗi bệnh nhân được đánh giá riêng về khả năng hiểu ngôn ngữ, diễn đạt ý tưởng, phát âm, sử dụng hơi thở và mức độ an toàn khi ăn uống." "At HandsViet, each patient is individually assessed for language comprehension, expression, articulation, breath support, and swallowing safety." %}</p>
+                            <p>{% tr "Điều trị không dừng ở việc nói rõ hơn. Chúng tôi hướng đến khả năng giao tiếp có ý nghĩa trong gia đình, công việc, trường học và các bối cảnh xã hội thực tế." "Treatment goes beyond speaking more clearly. We aim for meaningful communication in family life, work, school, and real social settings." %}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section bg-slate-50 reveal border-y border-slate-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="service-content order-2 lg:order-1">
+                            <h2>{% tr "Mục tiêu của ngôn ngữ trị liệu" "Goals of speech and language therapy" %}</h2>
+                            <p>{% tr "Mục tiêu điều trị là giúp người bệnh giao tiếp hiệu quả nhất có thể, đồng thời bảo đảm an toàn cho ăn uống và phòng ngừa biến chứng hô hấp do sặc nuốt." "Treatment aims to help patients communicate as effectively as possible while keeping eating and drinking safe and preventing aspiration-related respiratory complications." %}</p>
+
+                            <div class="stat-grid">
+                                <div class="stat-item">
+                                    <div class="text-teal-500 font-black text-2xl mb-2">{% tr "Giao tiếp" "Communication" %}</div>
+                                    <p class="text-xs text-slate-500">{% tr "Phục hồi khả năng hiểu và diễn đạt ý tưởng bằng lời nói, chữ viết hoặc phương tiện thay thế." "Restore the ability to understand and express ideas through speech, writing, or alternative methods." %}</p>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="text-blue-500 font-black text-2xl mb-2">{% tr "Nuốt an toàn" "Safe swallowing" %}</div>
+                                    <p class="text-xs text-slate-500">{% tr "Điều chỉnh kỹ năng nuốt và thói quen ăn uống để giảm nguy cơ sặc và viêm phổi hít." "Adjust swallowing skills and eating habits to reduce choking and aspiration pneumonia risk." %}</p>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="text-purple-500 font-black text-2xl mb-2">{% tr "Hòa nhập xã hội" "Social participation" %}</div>
+                                    <p class="text-xs text-slate-500">{% tr "Tăng sự tự tin khi trò chuyện, học tập, làm việc và duy trì mối quan hệ." "Build confidence for conversation, learning, work, and maintaining relationships." %}</p>
+                                </div>
+                            </div>
+
+                            <p>{% tr "Trong thực hành lâm sàng, chúng tôi tập trung vào các mục tiêu rõ ràng sau:" "In clinical practice, we focus on these concrete goals:" %}</p>
+                            <ul>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Phát âm rõ ràng hơn" "Clearer articulation" %}:</strong> {% tr "Điều chỉnh vị trí môi, lưỡi, hàm và luồng hơi để âm thanh dễ nghe hơn." "Adjust lip, tongue, jaw, and airflow patterns so speech becomes easier to understand." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Khôi phục ngôn ngữ" "Language restoration" %}:</strong> {% tr "Rèn luyện hiểu lời nói, tìm từ, đặt câu và giao tiếp chức năng cho người bệnh mất ngôn ngữ." "Train comprehension, word retrieval, sentence building, and functional communication for patients with aphasia." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Bảo vệ đường thở khi nuốt" "Airway protection during swallowing" %}:</strong> {% tr "Hướng dẫn tư thế, kỹ thuật nuốt và thay đổi kết cấu thức ăn để ăn uống an toàn hơn." "Teach posture, swallowing strategies, and food texture modification for safer eating and drinking." %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="image-card order-1 lg:order-2 h-[450px] md:h-[600px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/ngon-ngu-tri-lieu-5.jpg" alt="{% tr 'Mục tiêu ngôn ngữ trị liệu' 'Goals of speech therapy' %}" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="image-card h-[450px] md:h-[600px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/ngon-ngu-tri-lieu-2.jpg" alt="{% tr 'Đối tượng ngôn ngữ trị liệu' 'Who benefits from speech therapy' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content">
+                            <h2>{% tr "Đối tượng được chỉ định" "Who should receive speech therapy?" %}</h2>
+                            <p>{% tr "Ngôn ngữ trị liệu được chỉ định cho người lớn và trẻ em gặp khó khăn về giao tiếp hoặc nuốt do nguyên nhân thần kinh, phát triển, cấu trúc hoặc chức năng." "Speech therapy is indicated for adults and children with communication or swallowing difficulties caused by neurological, developmental, structural, or functional issues." %}</p>
+
+                            <div class="space-y-6">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-teal-200 transition-colors">
+                                    <h4 class="font-black text-slate-800 mb-2 uppercase text-sm tracking-widest">{% tr "Người lớn có bệnh lý thần kinh" "Adults with neurological conditions" %}</h4>
+                                    <p class="text-sm text-slate-500 leading-relaxed mb-0">{% tr "Sau đột quỵ, chấn thương sọ não, Parkinson hoặc sa sút trí tuệ với biểu hiện mất ngôn ngữ, nói khó hoặc rối loạn nuốt." "After stroke, traumatic brain injury, Parkinson's disease, or dementia when aphasia, dysarthria, or swallowing disorders are present." %}</p>
+                                </div>
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-teal-200 transition-colors">
+                                    <h4 class="font-black text-slate-800 mb-2 uppercase text-sm tracking-widest">{% tr "Nhi khoa" "Pediatric cases" %}</h4>
+                                    <p class="text-sm text-slate-500 leading-relaxed mb-0">{% tr "Trẻ chậm nói, rối loạn phát âm, nói lắp, tự kỷ hoặc gặp khó khăn trong việc hiểu và sử dụng ngôn ngữ." "Children with delayed speech, articulation disorders, stuttering, autism, or difficulty understanding and using language." %}</p>
+                                </div>
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-teal-200 transition-colors">
+                                    <h4 class="font-black text-slate-800 mb-2 uppercase text-sm tracking-widest">{% tr "Rối loạn nuốt" "Swallowing disorders" %}</h4>
+                                    <p class="text-sm text-slate-500 leading-relaxed mb-0">{% tr "Người bệnh bị ho sặc, nuốt nghẹn, ăn uống kéo dài hoặc có nguy cơ viêm phổi hít cần được lượng giá và can thiệp sớm." "Patients with coughing during meals, choking, prolonged eating time, or aspiration risk need early assessment and intervention." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section bg-slate-900 text-white reveal border-y border-white/10">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="service-content">
+                            <h2 class="text-white">{% tr "Phương pháp ngôn ngữ trị liệu" "Speech therapy methods" %}</h2>
+                            <p class="text-slate-400">{% tr "HandsViet sử dụng các chiến lược can thiệp hiện đại dựa trên đánh giá lâm sàng và mục tiêu cụ thể của từng bệnh nhân." "HandsViet uses modern intervention strategies based on clinical findings and each patient's specific goals." %}</p>
+
+                            <ul class="text-white space-y-8">
+                                <li class="flex-col !items-start">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-xs font-bold">1</div>
+                                        <div class="font-bold text-lg">{% tr "Trị liệu phát âm" "Articulation therapy" %}</div>
+                                    </div>
+                                    <p class="text-sm text-slate-400 pl-11">{% tr "Huấn luyện vị trí môi, lưỡi, hàm và cách phối hợp hơi để sửa các âm khó hoặc lời nói thiếu rõ ràng." "Train lip, tongue, jaw, and airflow placement to correct difficult sounds or unclear speech." %}</p>
+                                </li>
+                                <li class="flex-col !items-start">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-xs font-bold">2</div>
+                                        <div class="font-bold text-lg">{% tr "Can thiệp ngôn ngữ" "Language intervention" %}</div>
+                                    </div>
+                                    <p class="text-sm text-slate-400 pl-11">{% tr "Sử dụng bài tập gọi tên, hiểu lời nói, xây dựng câu và giao tiếp chức năng qua các tình huống thực tế." "Use naming tasks, comprehension work, sentence building, and functional communication in real-life scenarios." %}</p>
+                                </li>
+                                <li class="flex-col !items-start">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center text-xs font-bold">3</div>
+                                        <div class="font-bold text-lg">{% tr "Quản lý khó nuốt" "Dysphagia management" %}</div>
+                                    </div>
+                                    <p class="text-sm text-slate-400 pl-11">{% tr "Luyện cơ miệng họng, hướng dẫn tư thế và thay đổi thức ăn để bảo đảm quá trình nuốt diễn ra an toàn." "Train oral and pharyngeal muscles, teach swallowing posture, and modify food textures to keep swallowing safe." %}</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="image-card h-[450px] md:h-[600px] border-white/20">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/ngon-ngu-tri-lieu-4.jpg" alt="{% tr 'Phương pháp ngôn ngữ trị liệu' 'Speech therapy methods' %}" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="image-card lg:order-2 h-[450px] md:h-[600px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/ngon-ngu-tri-lieu-3-1.jpg" alt="{% tr 'Thời điểm bắt đầu ngôn ngữ trị liệu' 'When to start speech therapy' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content lg:order-1">
+                            <h2>{% tr "Thời điểm nên bắt đầu" "When should therapy begin?" %}</h2>
+                            <p>{% tr "Can thiệp càng sớm thì cơ hội phục hồi giao tiếp và nuốt an toàn càng cao. Trì hoãn kéo dài thường khiến các rối loạn cố định hơn và khó điều chỉnh hơn." "The earlier therapy begins, the better the chance of restoring communication and safe swallowing. Prolonged delay often makes these disorders more fixed and harder to change." %}</p>
+
+                            <div class="p-8 bg-teal-50 rounded-[3rem] border border-teal-100">
+                                <h4 class="text-teal-700 font-black mb-4 uppercase tracking-widest text-sm">{% tr "Giai đoạn vàng" "Golden period" %}</h4>
+                                <p class="text-slate-600 text-sm italic">{% tr "Sau đột quỵ hoặc chấn thương não, những tháng đầu là thời điểm não bộ thích nghi mạnh nhất. Đây là giai đoạn tối ưu để tập phục hồi ngôn ngữ, lời nói và nuốt." "After stroke or brain injury, the first months are when the brain adapts most strongly. This is the optimal period to rehabilitate language, speech, and swallowing." %}</p>
+                            </div>
+
+                            <p class="mt-8 text-slate-500">{% tr "Với trẻ em, ngay khi phụ huynh nhận thấy trẻ chậm nói, ít tương tác hoặc phát âm không phù hợp với lứa tuổi, việc đánh giá sớm là rất cần thiết." "For children, early assessment is essential as soon as parents notice delayed speech, limited interaction, or age-inappropriate articulation." %}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 md:py-32 bg-slate-50 reveal">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="service-content">
+                            <h2>{% tr "Ngôn ngữ trị liệu tại HandsViet" "Speech therapy at HandsViet" %}</h2>
+                            <p>{% tr "HandsViet xây dựng không gian điều trị yên tĩnh, thân thiện và đủ công cụ lượng giá để mỗi bệnh nhân có một kế hoạch can thiệp cá nhân hóa, rõ mục tiêu và dễ theo dõi tiến triển." "HandsViet provides a calm, friendly treatment setting with the assessment tools needed to create a personalized intervention plan with clear goals and measurable progress." %}</p>
+
+                            <div class="grid grid-cols-2 gap-6 mt-12">
+                                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
+                                    <div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-bold mb-4">A</div>
+                                    <div class="text-xs font-black uppercase text-slate-800">{% tr "Lượng giá chuyên sâu" "Detailed assessment" %}</div>
+                                </div>
+                                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center">
+                                    <div class="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-bold mb-4">B</div>
+                                    <div class="text-xs font-black uppercase text-slate-800">{% tr "Lộ trình cá nhân hóa" "Personalized pathway" %}</div>
+                                </div>
+                            </div>
+
+                            <p class="mt-12 text-slate-500 italic">{% tr "Chúng tôi lắng nghe cả những điều người bệnh chưa thể nói ra để xây dựng lại khả năng giao tiếp từng bước một." "We listen even to what patients cannot yet say, then rebuild communication step by step." %}</p>
+                        </div>
+                        <div class="bg-slate-900 p-16 rounded-[4rem] text-white shadow-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-80 h-80 bg-teal-500/10 rounded-full -mr-40 -mt-40 blur-3xl"></div>
+                            <h3 class="text-4xl font-black mb-8 leading-tight text-white uppercase tracking-tighter">{% tr "Bắt đầu phục hồi tiếng nói của bạn" "Start rebuilding your voice" %}</h3>
+                            <p class="text-slate-400 mb-12 font-medium text-lg leading-relaxed">{% tr "Nếu bạn hoặc người thân đang gặp khó khăn khi nói, hiểu lời nói hoặc nuốt, hãy bắt đầu với một buổi lượng giá sớm để tránh mất thêm thời gian vàng phục hồi." "If you or a family member are having trouble speaking, understanding language, or swallowing, start with an early assessment so valuable recovery time is not lost." %}</p>
+                            <div class="flex flex-col gap-5">
+                                <a href="{% url 'pages:booking' %}" class="px-10 py-5 bg-teal-500 text-slate-900 rounded-[2rem] font-black text-center uppercase tracking-widest hover:bg-teal-400 transition-all shadow-lg shadow-teal-500/20">{% tr "Đăng ký thăm khám" "Schedule an assessment" %}</a>
+                                <a href="{% url 'pages:contact' %}" class="px-10 py-5 bg-white/10 text-white border border-white/20 rounded-[2rem] font-black text-center uppercase tracking-widest hover:bg-white/20 transition-all">{% tr "Liên hệ với chúng tôi" "Contact our team" %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>

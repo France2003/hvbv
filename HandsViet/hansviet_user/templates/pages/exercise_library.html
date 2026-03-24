@@ -1,0 +1,308 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Thư viện bài tập & Tờ khai" "Exercise Library & Declarations" %} - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s ease; }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background-color: #FFFFFF;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #133541;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #05858E;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+        }
+        .cat-btn.active {
+            background-color: #133541;
+            color: #fff;
+            border-color: #133541;
+        }
+        .animate-fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 0.12s; }
+        .delay-200 { animation-delay: 0.24s; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <section class="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop"
+                    class="w-full h-full object-cover scale-105"
+                    alt="{% tr 'Bài tập phục hồi' 'Rehabilitation exercises' %}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-10 animate-fade-in-up">
+                    {% tr "Bài tập & Tờ khai" "Exercises & declarations" %}
+                </div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
+                    {% tr "Hành trình" "Recovery" %} <span class="text-teal-400">{% tr "phục hồi" "journey" %}</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200/90 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200 px-4">
+                    {% tr "Kết hợp bài tập video từ chuyên gia và tờ khai đánh giá sức khỏe để có liệu trình điều trị hiệu quả nhất." "Combine expert-led exercise videos with health assessment forms for the most effective treatment plan." %}
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 py-24 md:py-32">
+            <div class="flex flex-col lg:flex-row gap-16 xl:gap-20">
+                <div class="lg:w-2/3 space-y-14 reveal">
+                    <div>
+                        <h2 class="text-3xl font-black text-slate-900 mb-6 tracking-tight uppercase">{% tr "Thư viện bài tập chuyên sâu" "Advanced exercise library" %}</h2>
+                        <p class="text-slate-500 font-medium mb-12">{% tr "Hệ thống bài tập được phân loại theo từng vùng cơ thể và mục đích điều trị. Hãy chọn danh mục bạn quan tâm." "Exercises are organized by body area and treatment goal. Choose the category you want to explore." %}</p>
+
+                        <div class="flex flex-wrap gap-3 mb-12">
+                            <button type="button" data-category="all" onclick="filterVideos('all')" class="cat-btn active px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest border border-slate-200 transition-all hover:border-teal-500">{% tr "Tất cả" "All" %}</button>
+                            {% for group in exercises %}
+                            <button type="button" data-category="{{ group.category_slug }}" onclick="filterVideos('{{ group.category_slug }}')" class="cat-btn px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest border border-slate-200 transition-all hover:border-teal-500">{{ group.display_category_name }}</button>
+                            {% endfor %}
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8" id="video-grid">
+                            {% for group in exercises %}
+                                {% for video in group.videos %}
+                                <div class="video-card reveal group cursor-pointer {% if not video.can_watch %}opacity-90{% endif %}" data-category="{{ group.category_slug }}" {% if video.can_watch and video.embed_url %}onclick="playVideo('{{ video.embed_url }}', '{{ video.watch_url }}', '{{ video.display_title|escapejs }}')"{% else %}onclick="window.location.href='/services/'"{% endif %}>
+                                    <div class="relative rounded-[2rem] overflow-hidden aspect-video bg-slate-100 mb-6 shadow-xl shadow-slate-200/50">
+                                        {% if video.thumb_url %}
+                                        <img src="{{ video.thumb_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ video.display_title }}">
+                                        {% else %}
+                                        <img src="{% static 'images/assets/rehab-wellness.jpg' %}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ video.display_title }}">
+                                        {% endif %}
+                                        <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white text-xl border border-white/30 scale-75 group-hover:scale-100 transition-transform">&#9654;</div>
+                                        </div>
+                                        <div class="absolute bottom-4 right-4 px-3 py-1 bg-slate-900/80 backdrop-blur-md rounded-lg text-[10px] font-black text-white">{{ video.display_duration }}</div>
+                                        <div class="absolute top-4 left-4 px-3 py-1 rounded-lg text-[10px] font-black {% if video.access == 'paid' %}bg-amber-100 text-amber-700{% else %}bg-emerald-100 text-emerald-700{% endif %}">
+                                            {{ video.display_access_label }}
+                                        </div>
+                                        {% if not video.can_watch %}
+                                        <div class="absolute inset-0 bg-slate-900/50 flex items-center justify-center">
+                                            <span class="px-3 py-1 bg-white/90 text-slate-900 rounded-lg text-xs font-bold">{% tr "Khóa - mua gói để xem" "Locked - buy a package to watch" %}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <h3 class="text-lg font-black text-slate-900 leading-tight group-hover:text-teal-600 transition-colors">{{ video.display_title }}</h3>
+                                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mt-2">{{ group.display_category_name }}</p>
+                                </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div id="video-player" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/95 backdrop-blur-sm">
+                        <button onclick="closePlayer()" class="absolute top-10 right-10 text-white text-4xl hover:rotate-90 transition-transform">&times;</button>
+                        <div class="w-full max-w-5xl">
+                            <div class="video-container mb-8">
+                                <iframe id="player-iframe" src="" allowfullscreen></iframe>
+                            </div>
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                <h2 id="player-title" class="text-3xl font-black text-white tracking-tight"></h2>
+                                <a id="player-open-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition">
+                                    {% tr "Mở trên nền tảng gốc" "Open on source platform" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-teal-50 rounded-[3rem] p-10 md:p-12 border border-teal-100">
+                        <h4 class="text-teal-900 font-black mb-6 flex items-center gap-4 text-xl">
+                            <span class="text-3xl">&#128161;</span> {% tr "Lưu ý quan trọng" "Important notes" %}
+                        </h4>
+                        <div class="grid md:grid-cols-2 gap-8 text-sm font-medium text-teal-800">
+                            <p>{% tr "Dừng lại ngay nếu cảm thấy đau nhói hoặc khó chịu bất thường." "Stop immediately if you feel sharp pain or unusual discomfort." %}</p>
+                            <p>{% tr "Tập luyện trên bề mặt phẳng, không trơn trượt để đảm bảo an toàn." "Exercise on a flat, non-slip surface for safety." %}</p>
+                            <p>{% tr "Nên có người thân hỗ trợ nếu bạn đang trong giai đoạn đầu phục hồi." "Have a family member assist you if you are in the early recovery stage." %}</p>
+                            <p>{% tr "Kết hợp với chế độ dinh dưỡng và nghỉ ngơi theo chỉ dẫn của bác sĩ." "Combine training with proper nutrition and rest as instructed by your doctor." %}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/3 reveal delay-300">
+                    <div class="sticky top-10">
+                        <div class="bg-white rounded-[3rem] p-8 shadow-2xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 right-0 h-2 bg-teal-500"></div>
+
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="w-12 h-12 bg-teal-50 rounded-2xl flex items-center justify-center text-teal-600 text-2xl font-black">&#10003;</div>
+                                <div>
+                                    <h3 class="text-xl font-black text-slate-900 tracking-tight">{% tr "Tờ khai sức khỏe" "Health declaration form" %}</h3>
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{% tr "Phiếu đánh giá y khoa" "Medical Assessment Form" %}</p>
+                                </div>
+                            </div>
+
+                            <form action="#" method="POST" class="space-y-6">
+                                {% csrf_token %}
+
+                                <div class="space-y-4">
+                                    <h4 class="text-[11px] font-black text-teal-600 uppercase tracking-[0.2em] pb-2 border-b border-slate-50">{% tr "1. Thông tin cá nhân" "1. Personal information" %}</h4>
+                                    <div>
+                                        <input type="text" name="name" class="form-input" placeholder="{% tr 'Họ và tên bệnh nhân' 'Patient full name' %}" required>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <input type="tel" name="phone" class="form-input" placeholder="{% tr 'Số điện thoại' 'Phone number' %}" required>
+                                        <input type="number" name="age" class="form-input" placeholder="{% tr 'Năm sinh' 'Birth year' %}" required>
+                                    </div>
+                                    <div>
+                                        <select name="gender" class="form-input">
+                                            <option value="">{% tr "Giới tính" "Gender" %}</option>
+                                            <option value="male">{% tr "Nam" "Male" %}</option>
+                                            <option value="female">{% tr "Nữ" "Female" %}</option>
+                                            <option value="other">{% tr "Khác" "Other" %}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <h4 class="text-[11px] font-black text-teal-600 uppercase tracking-[0.2em] pb-2 border-b border-slate-50">{% tr "2. Tình trạng sức khỏe" "2. Health condition" %}</h4>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 mb-2 uppercase ml-1">{% tr "Vùng đau / Cần phục hồi" "Pain area / Rehabilitation need" %}</label>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            {% for group in exercises %}
+                                            <label class="flex items-center gap-2 p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-teal-500 transition-colors cursor-pointer group">
+                                                <input type="checkbox" name="area" value="{{ group.display_category_name }}" class="w-4 h-4 rounded border-slate-300 text-teal-600 focus:ring-teal-500">
+                                                <span class="text-[11px] font-bold text-slate-600 group-hover:text-teal-700">{{ group.display_category_name }}</span>
+                                            </label>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <textarea name="history" class="form-input h-24 text-sm" placeholder="{% tr 'Tiền sử bệnh lý (Phẫu thuật, chấn thương cũ...)' 'Medical history (surgery, past injuries...)' %}"></textarea>
+                                    </div>
+                                    <div>
+                                        <select name="duration" class="form-input text-sm">
+                                            <option value="">{% tr "Thời gian đau / gặp khó khăn" "Duration of pain / difficulty" %}</option>
+                                            <option value="1w">{% tr "Dưới 1 tuần" "Under 1 week" %}</option>
+                                            <option value="1m">{% tr "Khoảng 1 tháng" "About 1 month" %}</option>
+                                            <option value="6m">{% tr "Trên 6 tháng (Mãn tính)" "Over 6 months (chronic)" %}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-full py-5 bg-slate-900 hover:bg-teal-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-slate-900/20 active:scale-95 flex items-center justify-center gap-3 group">
+                                    {% tr "Gửi tờ khai cho bác sĩ" "Send form to doctor" %}
+                                    <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-width="2.5"></path></svg>
+                                </button>
+
+                                <p class="text-[9px] text-center text-slate-400 font-medium italic">{% tr "HandsViet cam kết bảo mật mọi dữ liệu y tế của khách hàng theo quy định." "HandsViet is committed to protecting all customer medical data in accordance with regulations." %}</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        function filterVideos(category) {
+            document.querySelectorAll('.cat-btn').forEach(function (btn) {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('.video-card').forEach(function (card) {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function playVideo(embedUrl, watchUrl, title) {
+            const player = document.getElementById('video-player');
+            const iframe = document.getElementById('player-iframe');
+            const titleEl = document.getElementById('player-title');
+            const openLink = document.getElementById('player-open-link');
+
+            const joinChar = embedUrl.includes('?') ? '&' : '?';
+            iframe.src = `${embedUrl}${joinChar}autoplay=1`;
+            titleEl.innerText = title;
+            openLink.href = watchUrl || '#';
+            player.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlayer() {
+            const player = document.getElementById('video-player');
+            const iframe = document.getElementById('player-iframe');
+
+            iframe.src = '';
+            player.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+
+</html>
+

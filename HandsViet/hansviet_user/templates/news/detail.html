@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+        }
+
+        .font-serif {
+            font-family: 'Merriweather', serif;
+        }
+
+        .prose-content p {
+            margin-bottom: 1.5em;
+            line-height: 1.8;
+            color: #4d6871;
+            font-size: 1.125rem;
+        }
+
+        .prose-content h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+        }
+
+        .prose-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #05858E;
+            margin-top: 2em;
+            margin-bottom: 0.75em;
+        }
+
+        .prose-content ul {
+            padding-left: 1.5em;
+            list-style-type: disc;
+            margin-bottom: 1.5em;
+        }
+
+        .prose-content li {
+            margin-bottom: 0.5em;
+        }
+
+        .prose-content blockquote {
+            border-left: 4px solid #05858E;
+            padding-left: 1.5em;
+            font-style: italic;
+            color: #4d6871;
+            margin: 2em 0;
+            background: #f0fdfa;
+            padding: 1.5em;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        #progressBar {
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #05858E, #CEF1F2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-100 {
+            animation-delay: 0.15s;
+        }
+
+        .delay-200 {
+            animation-delay: 0.3s;
+        }
+
+        .font-news {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #4d6871;
+        }
+
+        .font-news h2 {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: #133541;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.3;
+        }
+
+        .font-news h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #133541;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .font-news p {
+            margin-bottom: 1.5rem;
+        }
+
+        .font-news ul,
+        .font-news ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .font-news li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased">
+    {% include 'includes/loader.html' %}
+    <!-- Reading Progress Bar -->
+    <!-- <div id="progressBar"></div> -->
+
+    {% include 'pages/header_tailwind.html' %}
+
+    <!-- Article Hero Section -->
+    <div class="relative min-h-[450px] md:min-h-[550px] flex items-center pt-24 pb-32 overflow-hidden bg-slate-950">
+        <!-- Background Image with Gradient Overlay -->
+        <div class="absolute inset-0 z-0">
+            {% if article.thumbnail %}
+            <img src="{{ article.thumbnail.url }}" class="w-full h-full object-cover opacity-50 contrast-125 scale-105"
+                alt="{{ article.title }}">
+            {% else %}
+            <div class="w-full h-full bg-gradient-to-br from-teal-900 to-blue-900 opacity-60"></div>
+            {% endif %}
+
+            <!-- Dark Mesh Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20"></div>
+            <div class="absolute inset-0 bg-slate-950/20 backdrop-blur-[2px]"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl">
+                <!-- Category Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-500/20 backdrop-blur-md border border-teal-400/30 mb-8 transform -translate-y-4">
+                    <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                    <span class="text-sm font-bold text-teal-300 uppercase tracking-widest">
+                        {% if article.category %}
+                        {{ article.category.name }}
+                        {% else %}
+                        Tin tức
+                        {% endif %}
+                    </span>
+                </div>
+
+                <!-- Main Title -->
+                <h1
+                    class="text-4xl md:text-6xl font-extrabold text-white mb-8 leading-tight animate-fade-in-up delay-100 drop-shadow-2xl">
+                    {{ article.title }}
+                </h1>
+
+                <!-- Meta Info -->
+                <div
+                    class="flex flex-wrap items-center gap-6 text-slate-300 text-sm font-medium animate-fade-in-up delay-200">
+                    <div
+                        class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-2xl backdrop-blur-md border border-white/10">
+                        <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span>{{ article.created_at|date:"d \t\h\á\n\g m, Y" }}</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-2xl backdrop-blur-md border border-white/10">
+                        <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                        <span>{{ article.view_count }} lượt đọc</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-16 relative z-20">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <!-- Left Column: Article Content -->
+            <main class="lg:col-span-8">
+                <div class="bg-white rounded-3xl p-8 md:p-12 shadow-2xl shadow-slate-900/10 border border-slate-100">
+
+                    <!-- Article Summary/Lead -->
+                    <div
+                        class="text-xl font-medium text-slate-700 mb-10 leading-relaxed border-l-4 border-teal-500 pl-6 italic bg-slate-50 py-6 pr-6 rounded-r-2xl">
+                        {{ article.summary }}
+                    </div>
+
+                    <!-- Article Body Content -->
+                    <div
+                        class="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-800 prose-a:text-teal-600 hover:prose-a:text-teal-800 prose-img:rounded-3xl prose-img:shadow-2xl">
+                        <!-- Article Body Content -->
+                        <div class="font-news">
+                            {{ article.content|safe|linebreaks }}
+                        </div>
+                    </div>
+
+                    <!-- Share and Tags -->
+                    <div
+                        class="mt-16 pt-10 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-8">
+                        <div class="flex items-center gap-4">
+                            <span class="font-bold text-slate-700 uppercase tracking-wider text-sm">Chia sẻ:</span>
+                            <div class="flex gap-3">
+                                <button
+                                    class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-200 transition-all duration-300 group">
+                                    <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform"
+                                        fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center hover:bg-sky-500 hover:text-white hover:shadow-lg hover:shadow-sky-200 transition-all duration-300 group">
+                                    <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform"
+                                        fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                                    </svg>
+                                </button>
+                                <button
+                                    class="w-12 h-12 rounded-2xl bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-800 hover:text-white hover:shadow-lg hover:shadow-gray-200 transition-all duration-300 group"
+                                    onclick="navigator.clipboard.writeText(window.location.href); alert('Đã sao chép liên kết!');">
+                                    <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <a href="{% if article.category %}{% url 'news:news_category' category_slug=article.category.slug %}{% else %}{% url 'news:news_list' %}{% endif %}"
+                                class="px-8 py-3 rounded-2xl border-2 border-slate-100 text-slate-600 font-bold hover:bg-slate-50 hover:border-teal-500 hover:text-teal-600 transition-all duration-300 flex items-center gap-3 group">
+                                <svg class="w-5 h-5 transform group-hover:-translate-x-2 transition-transform"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                Quay lại danh sách
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Column: Sidebar -->
+            <aside class="lg:col-span-4 space-y-8">
+
+                <!-- Related Articles Widget -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-24">
+                    <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="w-1.5 h-6 bg-teal-500 rounded-full"></span>
+                        Bài viết liên quan
+                    </h3>
+
+                    <div class="space-y-6">
+                        {% if related_news %}
+                        {% for related in related_news %}
+                        <a href="{% url 'news:news_detail' slug=related.slug %}" class="group flex gap-4 items-start">
+                            <div class="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
+                                <img src="{% if related.thumbnail %}{{ related.thumbnail.url }}{% else %}https://placehold.co/150x150{% endif %}"
+                                    alt=""
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            </div>
+                            <div>
+                                <h4
+                                    class="font-bold text-slate-800 text-sm leading-snug group-hover:text-teal-600 transition-colors line-clamp-2 mb-1">
+                                    {{ related.title }}
+                                </h4>
+                                <span class="text-xs text-gray-400">{{ related.created_at|date:"d/m/Y" }}</span>
+                            </div>
+                        </a>
+                        {% endfor %}
+                        {% else %}
+                        <p class="text-sm text-gray-500">Chưa có bài viết liên quan.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Newsletter CTA -->
+                    <div class="mt-8 p-6 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 text-white text-center">
+                        <h4 class="font-bold text-lg mb-2">Đăng ký nhận tin</h4>
+                        <p class="text-sm text-teal-100 mb-4">Nhận thông tin sức khỏe mới nhất từ chuyên gia HandsViet.
+                        </p>
+                        <input type="email" placeholder="Email của bạn"
+                            class="w-full px-4 py-2 rounded-lg text-gray-800 text-sm mb-2 focus:outline-none ring-2 ring-transparent focus:ring-teal-300">
+                        <button
+                            class="w-full py-2 bg-slate-900 hover:bg-black text-white rounded-lg text-sm font-semibold transition-colors">Đăng
+                            ký ngay</button>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'pages/footer.html' %}
+
+    <script>
+        // Reading Progress Bar
+        window.addEventListener('scroll', function () {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById("progressBar");
+            if (progressBar) {
+                progressBar.style.width = scrolled + "%";
+            }
+        });
+    </script>
+</body>
+
+</html>

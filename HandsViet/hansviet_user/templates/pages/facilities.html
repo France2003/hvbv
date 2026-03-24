@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cơ sở vật chất - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .facility-card {
+            background: white;
+            border: 1px solid #f1f5f9;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .facility-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 50px 100px -20px rgba(15, 23, 42, 0.1);
+        }
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes revealUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <!-- Hero Section -->
+        <section class="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop" 
+                    class="w-full h-full object-cover scale-105" alt="Facilities HandsViet">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-10 animate-fade-in-up">
+                    Tiêu chuẩn quốc tế
+                </div>
+                <h1 class="text-3xl md:text-5xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
+                    Không gian <span class="text-teal-400">trị liệu</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200/90 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200 px-4">
+                    HandsViet đầu tư hệ thống phòng Lab và phòng trị liệu hiện đại, đảm bảo môi trường vô trùng, chuyên nghiệp và thư giãn tối đa cho bệnh nhân.
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Facility Showcase -->
+        <section class="max-w-7xl mx-auto px-4 py-32">
+            <div class="grid lg:grid-cols-2 gap-10">
+                <!-- Large Feature -->
+                <div class="reveal rounded-[4rem] overflow-hidden group relative h-[700px]">
+                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Clinic">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-16 left-16 right-16">
+                        <h3 class="text-4xl font-black text-white mb-4 tracking-tight">Khu vực Vận động Trị liệu</h3>
+                        <p class="text-slate-200 font-medium">Không gian rộng rãi 200m2 với hệ thống máy tập chuyên dụng nhập khẩu từ Đức và Mỹ.</p>
+                    </div>
+                </div>
+                
+                <!-- Secondary Grid -->
+                <div class="grid gap-10">
+                    <div class="reveal rounded-[4rem] overflow-hidden group relative h-[330px]">
+                        <img src="https://images.unsplash.com/photo-1504813184591-01592fd03cf7?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Equipment">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-2xl font-black text-white leading-tight">Phòng Vật lý Trị liệu <br>Công nghệ cao</h4>
+                        </div>
+                    </div>
+                    <div class="reveal rounded-[4rem] overflow-hidden group relative h-[330px]">
+                        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="Equipment">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-10 left-10">
+                            <h4 class="text-2xl font-black text-white leading-tight">Phòng Thăm khám <br>Tiêu chuẩn 5 Sao</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="bg-slate-50 py-32">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-10">
+                    <div class="max-w-xl">
+                        <h2 class="reveal text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1]">Trang thiết bị <br><span class="text-teal-600">Tiên tiến nhất</span></h2>
+                    </div>
+                    <p class="reveal-up text-lg text-slate-500 font-medium md:max-w-xs" style="animation-delay: 0.1s;">Chúng tôi sở hữu những công nghệ trị liệu tiên phong tại Việt Nam.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Tech Item 1 -->
+                    <div class="facility-card p-12 rounded-[3rem] reveal">
+                        <div class="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center text-3xl mb-8">⚡</div>
+                        <h4 class="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Shockwave Therapy</h4>
+                        <p class="text-slate-500 font-medium text-sm leading-relaxed">Sóng xung kích hội tụ cường độ cao giúp giải quyết các điểm đau xơ hóa và viêm mãn tính.</p>
+                    </div>
+                    <!-- Tech Item 2 -->
+                    <div class="facility-card p-12 rounded-[3rem] reveal-up" style="animation-delay: 0.3s;">
+                        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-8">🌊</div>
+                        <h4 class="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">High Power Laser</h4>
+                        <p class="text-slate-500 font-medium text-sm leading-relaxed">Laser thế hệ 4 giúp giảm viêm sâu, đẩy nhanh tốc độ tái tạo tế bào và giảm đau tức thì.</p>
+                    </div>
+                    <!-- Tech Item 3 -->
+                    <div class="facility-card p-12 rounded-[3rem] reveal-up" style="animation-delay: 0.4s;">
+                        <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl mb-8">🌀</div>
+                        <h4 class="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Decompression Table</h4>
+                        <p class="text-slate-500 font-medium text-sm leading-relaxed">Hệ thống kéo giãn cột sống DTS nhập khẩu từ Mỹ, điều khiển bằng vi tính cực kỳ chính xác.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="max-w-7xl mx-auto px-4 py-40">
+            <div class="relative rounded-[4rem] overflow-hidden bg-slate-100 p-20 text-center">
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-8 tracking-tight italic">Trải nghiệm trực tiếp</h2>
+                    <p class="text-slate-500 text-lg font-medium mb-12 max-w-xl mx-auto">HandsViet luôn chào đón bạn đến thăm quan cơ sở vật chất trước khi bắt đầu liệu trình.</p>
+                    <a href="{% url 'pages:booking' %}" class="inline-block px-12 py-6 bg-slate-900 hover:bg-teal-600 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-xl shadow-slate-900/10">Đặt lịch hẹn ngay</a>
+                </div>
+                <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        // Reveal animations on scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+
+</html>

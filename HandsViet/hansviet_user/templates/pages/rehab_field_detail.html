@@ -1,0 +1,234 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ field.title }} - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body class="bg-slate-50 text-slate-800 overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main>
+        <section class="relative h-[45vh] min-h-[300px] md:min-h-[380px] overflow-hidden">
+            <img src="{{ field.image }}" alt="{{ field.title }}" class="absolute inset-0 w-full h-full object-cover" data-fallback="{% static 'images/medical-bg.jpg' %}">
+            <div class="absolute inset-0 bg-slate-900/65"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-4 h-full flex items-end pb-12">
+                <div>
+                    <p class="inline-flex items-center rounded-full px-4 py-1 text-xs font-bold uppercase tracking-[0.18em] bg-teal-500/20 text-teal-200 border border-teal-400/30">
+                        {% tr "Lĩnh vực điều trị" "Treatment field" %}
+                    </p>
+                    <h1 class="mt-4 text-2xl sm:text-3xl md:text-5xl font-black text-white uppercase tracking-tight">{{ field.title }}</h1>
+                    <p class="mt-3 text-sm sm:text-base text-slate-200 max-w-3xl">{{ field.subtitle }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-10 md:py-16">
+            <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-8">
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h2 class="text-2xl font-extrabold text-slate-900">{% tr "Tổng quan lĩnh vực" "Field overview" %}</h2>
+                        <p class="mt-4 text-slate-600 leading-relaxed">{{ field.overview }}</p>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "HandsViet luôn bắt đầu bằng đánh giá toàn diện tình trạng hiện tại, mức độ hạn chế chức năng và những khó khăn thực tế trong sinh hoạt hằng ngày. Từ đó, kế hoạch can thiệp không chỉ tập trung vào triệu chứng mà còn hướng đến khả năng vận động bền vững, an toàn và phù hợp với mục tiêu cá nhân của từng người bệnh." "HandsViet always starts with a comprehensive review of the current condition, functional limitations, and real-life daily challenges. The intervention plan therefore addresses not only symptoms, but also safe, sustainable movement and the personal goals that matter to each patient." %}
+                        </p>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Bên cạnh điều trị tại cơ sở, chương trình còn chú trọng hướng dẫn bài tập tại nhà, điều chỉnh thói quen sinh hoạt và giáo dục dự phòng tái phát. Cách tiếp cận này giúp quá trình phục hồi diễn ra liên tục giữa các buổi trị liệu và tăng hiệu quả điều trị trong trung và dài hạn." "Alongside in-clinic treatment, the program emphasizes home exercise, daily habit adjustment, and relapse prevention education. This approach keeps recovery progressing between therapy sessions and improves medium-term and long-term results." %}
+                        </p>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Trong suốt lộ trình, người bệnh được theo dõi tiến triển định kỳ bằng các chỉ số chức năng cụ thể để cập nhật phác đồ kịp thời. Nhờ đó, mỗi giai đoạn đều có mục tiêu rõ ràng, giúp người bệnh chủ động hơn, gia đình dễ phối hợp hơn và kết quả phục hồi được tối ưu theo thực tế." "Throughout the pathway, progress is reviewed with clear functional indicators so the treatment plan can be updated at the right time. Each stage therefore has a clear target, making recovery more actionable for patients, easier for families to support, and more effective in practice." %}
+                        </p>
+                        <ul class="mt-6 space-y-3">
+                            {% for item in field.highlights %}
+                                <li class="flex items-start gap-3 text-slate-700">
+                                    <span class="mt-1 inline-block w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+                                    <span>{{ item }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Nhóm bệnh thường gặp" "Common conditions" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Đây là các nhóm bệnh lý và tình trạng chức năng thường gặp trong lĩnh vực này. Xác định đúng vấn đề ngay từ đầu giúp rút ngắn thời gian điều trị và tránh can thiệp sai hướng." "These are the common diagnoses and functional conditions seen in this field. Identifying the right problem from the start shortens treatment time and reduces the risk of going in the wrong direction." %}
+                        </p>
+                        <div class="mt-4 grid sm:grid-cols-2 gap-3">
+                            {% for c in field.conditions %}
+                                <div class="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-700">{{ c }}</div>
+                            {% endfor %}
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Phương pháp can thiệp" "Intervention methods" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Các phương pháp dưới đây được phối hợp linh hoạt theo từng giai đoạn phục hồi, không áp dụng máy móc một phác đồ chung cho mọi trường hợp. Việc cá nhân hóa can thiệp giúp giảm quá tải, tăng khả năng đáp ứng điều trị và duy trì kết quả ổn định sau khi kết thúc chương trình." "The methods below are combined flexibly according to each stage of recovery rather than applying one rigid protocol to every case. Personalizing intervention reduces overload, improves treatment response, and helps maintain stable results after the program ends." %}
+                        </p>
+                        <ul class="mt-4 grid sm:grid-cols-2 gap-3">
+                            {% for m in field.methods %}
+                                <li class="rounded-xl border border-teal-100 bg-teal-50/50 px-4 py-3 text-slate-700">{{ m }}</li>
+                            {% endfor %}
+                        </ul>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Quy trình điều trị tại HandsViet" "Treatment pathway at HandsViet" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Quy trình được chuẩn hóa theo tiêu chuẩn lâm sàng nhưng vẫn linh hoạt theo đáp ứng thực tế. Mỗi mốc đều có chỉ số theo dõi để đánh giá hiệu quả và quyết định điều chỉnh phác đồ." "The pathway is standardized to clinical principles while staying flexible to real patient response. Each milestone includes measurable checkpoints so the team can evaluate effectiveness and adjust the plan when needed." %}
+                        </p>
+                        <ol class="mt-5 space-y-3">
+                            {% for step in field.process %}
+                                <li class="flex items-start gap-3">
+                                    <span class="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-slate-900 text-white text-sm font-bold">{{ forloop.counter }}</span>
+                                    <span class="pt-1 text-slate-700">{{ step }}</span>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Kết quả kỳ vọng" "Expected outcomes" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Kết quả điều trị phụ thuộc vào mức độ tổn thương ban đầu, thời điểm bắt đầu can thiệp và mức độ tuân thủ chương trình tập luyện. HandsViet luôn đặt mục tiêu thực tế theo từng chặng để người bệnh nhìn thấy tiến bộ rõ ràng và duy trì động lực phục hồi." "Results depend on the initial level of injury, how early intervention begins, and how consistently the patient follows the exercise plan. HandsViet sets realistic stage-by-stage goals so progress is visible and motivation stays strong throughout recovery." %}
+                        </p>
+                        <ul class="mt-4 space-y-3">
+                        {% for o in field.outcomes %}
+                            <li class="flex items-start gap-3 text-slate-700">
+                                <span class="mt-1 inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                <span>{{ o }}</span>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Đối tượng phù hợp" "Who is this program for?" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Chương trình phù hợp với người bệnh đang gặp hạn chế vận động, đau kéo dài sau chấn thương hoặc phẫu thuật, người cần phục hồi chuyên sâu để quay lại công việc, học tập và sinh hoạt bình thường." "This program is suitable for patients with movement limitation, persistent pain after injury or surgery, and anyone who needs focused rehabilitation to return to work, study, and normal daily life." %}
+                        </p>
+                        <ul class="mt-4 space-y-3 text-slate-700">
+                            <li class="flex gap-3"><span class="text-emerald-600 font-bold">01.</span><span>{% tr "Người bệnh cấp tính cần can thiệp sớm sau biến cố y khoa." "Patients in the acute stage who need early intervention after a medical event." %}</span></li>
+                            <li class="flex gap-3"><span class="text-emerald-600 font-bold">02.</span><span>{% tr "Người bệnh mạn tính cần quản lý đau và duy trì chức năng lâu dài." "Patients with chronic conditions who need pain management and long-term functional support." %}</span></li>
+                            <li class="flex gap-3"><span class="text-emerald-600 font-bold">03.</span><span>{% tr "Người chơi thể thao hoặc lao động nặng cần phục hồi hiệu suất và phòng tái chấn thương." "People returning to sport or physically demanding work who need performance recovery and reinjury prevention." %}</span></li>
+                        </ul>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Khi nào cần đi khám sớm?" "When should you seek assessment early?" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Nếu có các dấu hiệu dưới đây, bạn nên khám sớm để được đánh giá chuyên môn và can thiệp kịp thời:" "If you notice any of the signs below, you should seek an early assessment so treatment can begin at the right time:" %}
+                        </p>
+                        <div class="mt-4 grid sm:grid-cols-2 gap-3">
+                            <div class="rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-slate-700">{% tr "Đau kéo dài trên 7 ngày, không giảm dù đã nghỉ ngơi" "Pain lasting more than 7 days without improvement despite rest" %}</div>
+                            <div class="rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-slate-700">{% tr "Tê bì, yếu cơ, giảm thăng bằng hoặc đi lại khó khăn" "Numbness, muscle weakness, balance loss, or difficulty walking" %}</div>
+                            <div class="rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-slate-700">{% tr "Hạn chế biên độ vận động ảnh hưởng sinh hoạt hằng ngày" "Restricted range of motion affecting daily activity" %}</div>
+                            <div class="rounded-xl border border-rose-100 bg-rose-50 px-4 py-3 text-slate-700">{% tr "Sau chấn thương hoặc phẫu thuật nhưng hồi phục chậm" "Slow recovery after injury or surgery" %}</div>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Lộ trình điều trị mẫu 8 tuần" "Sample 8-week rehabilitation roadmap" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "Đây là lộ trình tham khảo để người bệnh hình dung tiến độ. Kế hoạch thực tế sẽ được điều chỉnh theo chẩn đoán, thể trạng và đáp ứng điều trị của từng người." "This is a sample roadmap to help patients understand the expected pace of progress. The actual plan will be adjusted according to diagnosis, physical capacity, and treatment response." %}
+                        </p>
+                        <div class="mt-5 grid md:grid-cols-4 gap-3 text-sm">
+                            <div class="rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900">{% tr "Tuần 1-2" "Weeks 1-2" %}</p><p class="mt-2 text-slate-600">{% tr "Giảm đau, kiểm soát viêm, phục hồi vận động nền." "Control pain and inflammation, restore basic movement." %}</p></div>
+                            <div class="rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900">{% tr "Tuần 3-4" "Weeks 3-4" %}</p><p class="mt-2 text-slate-600">{% tr "Tăng tầm vận động, bắt đầu bài tập sức mạnh cơ bản." "Increase range of motion and begin basic strengthening." %}</p></div>
+                            <div class="rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900">{% tr "Tuần 5-6" "Weeks 5-6" %}</p><p class="mt-2 text-slate-600">{% tr "Tập chức năng chuyên sâu theo công việc và sinh hoạt." "Progress to more advanced functional training for work and daily activity." %}</p></div>
+                            <div class="rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900">{% tr "Tuần 7-8" "Weeks 7-8" %}</p><p class="mt-2 text-slate-600">{% tr "Đánh giá kết quả và bàn giao chương trình duy trì tại nhà." "Review results and hand over the home maintenance program." %}</p></div>
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-5 md:p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Cam kết chuyên môn" "Clinical commitment" %}</h3>
+                        <p class="mt-4 text-slate-600 leading-relaxed">
+                            {% tr "HandsViet cam kết minh bạch mục tiêu điều trị, theo dõi bằng chỉ số chức năng rõ ràng và đồng hành liên tục trong suốt lộ trình phục hồi. Người bệnh và gia đình luôn được cập nhật tiến độ để phối hợp điều trị hiệu quả hơn." "HandsViet is committed to transparent treatment goals, clear functional tracking, and continuous support throughout the rehabilitation journey. Patients and families are kept informed so they can participate effectively in care." %}
+                        </p>
+                        <div class="mt-5 grid md:grid-cols-2 gap-4">
+                            <img src="{% static 'images/rehabilitation.png' %}" alt="{% tr 'Phục hồi chức năng' 'Rehabilitation care' %}" class="w-full h-56 object-cover rounded-xl border border-slate-200" data-fallback="{% static 'images/logo.png' %}">
+                            <img src="{% static 'images/rehabilitation_therapy_illustration_1769856338709.png' %}" alt="{% tr 'Trị liệu phục hồi' 'Therapy session' %}" class="w-full h-56 object-cover rounded-xl border border-slate-200" data-fallback="{% static 'images/logo.png' %}">
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Hình ảnh hoạt động" "Treatment gallery" %}</h3>
+                        <div class="mt-5 grid md:grid-cols-2 gap-4">
+                            {% for img in field.gallery %}
+                                <img src="{{ img }}" alt="{{ field.title }}" class="w-full h-56 object-cover rounded-xl border border-slate-200" data-fallback="{% static 'images/medical-bg.jpg' %}">
+                            {% endfor %}
+                        </div>
+                    </article>
+
+                    <article class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+                        <h3 class="text-xl font-extrabold text-slate-900">{% tr "Câu hỏi thường gặp" "Frequently asked questions" %}</h3>
+                        <div class="mt-5 space-y-4">
+                            {% for f in field.faqs %}
+                                <div class="rounded-xl border border-slate-200 p-4">
+                                    <p class="font-bold text-slate-900">{{ f.q }}</p>
+                                    <p class="mt-2 text-slate-600">{{ f.a }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </article>
+                </div>
+
+                <aside class="bg-white rounded-2xl border border-slate-200 p-5 md:p-6 shadow-sm h-fit lg:sticky lg:top-24">
+                    <h3 class="text-xl font-extrabold text-slate-900">{% tr "Đăng ký tư vấn nhanh" "Request a quick consultation" %}</h3>
+                    <p class="text-sm text-slate-500 mt-1">{% tr "Để lại thông tin, đội ngũ HandsViet sẽ liên hệ với bạn." "Leave your details and the HandsViet team will contact you." %}</p>
+                    <form method="post" class="mt-5 space-y-4">
+                        {% csrf_token %}
+                        {{ lead_form.page }}
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">{% tr "Họ tên" "Full name" %}</label>
+                            <input name="name" required class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-teal-500" placeholder="{% tr 'Nhập họ tên của bạn' 'Enter your full name' %}" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">{% tr "Số điện thoại" "Phone number" %}</label>
+                            <input name="phone" class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-teal-500" placeholder="{% tr 'Nhập số điện thoại' 'Enter your phone number' %}" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">Email</label>
+                            <input type="email" name="email" class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-teal-500" placeholder="{% tr 'Nhập email của bạn' 'Enter your email address' %}" />
+                        </div>
+                        <div>
+                            <label class="text-sm font-semibold text-slate-700">{% tr "Nhu cầu" "Your needs" %}</label>
+                            <textarea name="message" rows="4" class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-2.5 outline-none focus:border-teal-500" placeholder="{% tr 'Mô tả ngắn tình trạng hoặc nhu cầu tư vấn' 'Briefly describe your condition or consultation needs' %}"></textarea>
+                        </div>
+                        <button type="submit" class="w-full rounded-xl bg-teal-500 hover:bg-teal-600 text-white font-bold py-3">
+                            {% tr "Gửi yêu cầu" "Send request" %}
+                        </button>
+                    </form>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+    <script>
+        (function () {
+            function setFallback(img) {
+                if (!img || img.dataset.fallbackApplied === '1') return;
+                var fb = img.getAttribute('data-fallback');
+                if (!fb) return;
+                img.dataset.fallbackApplied = '1';
+                img.src = fb;
+            }
+            document.addEventListener('error', function (e) {
+                if (e.target && e.target.tagName === 'IMG') setFallback(e.target);
+            }, true);
+            window.addEventListener('load', function () {
+                document.querySelectorAll('img[data-fallback]').forEach(function (img) {
+                    if (img.complete && img.naturalWidth === 0) setFallback(img);
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Về chúng tôi - Bệnh viện HandsViet" "About us - HandsViet Hospital" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main>
+        <section class="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop"
+                    class="w-full h-full object-cover scale-105" alt="{% tr 'Bệnh viện HandsViet' 'HandsViet Hospital' %}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-10">
+                    {% tr "Về chúng tôi" "About us" %}
+                </div>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.25]">
+                    <span class="block">{% tr "Bệnh viện Phục hồi chức năng" "Rehabilitation Hospital" %}</span>
+                    <span class="block mt-2">{% tr "- Y học thể thao -" "and Sports Medicine" %}</span>
+                    <span class="text-teal-400 inline-block mt-4">HANDSVIET</span>
+                </h1>
+                <p class="mt-8 text-lg md:text-xl text-slate-200/90 max-w-4xl mx-auto leading-[1.8]">
+                    {% tr "HandsViet là đơn vị tiên phong trong lĩnh vực phục hồi chức năng tại Việt Nam, kết hợp phương pháp điều trị hiện đại từ Nhật Bản với sự tận tâm của đội ngũ y bác sĩ giàu kinh nghiệm." "HandsViet is a pioneer in rehabilitation care in Vietnam, combining modern treatment approaches inspired by Japan with the dedication of an experienced medical team." %}
+                </p>
+            </div>
+        </section>
+
+        <section class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-8 md:gap-12">
+                <div class="reveal bg-gradient-to-br from-teal-50 to-emerald-50 rounded-3xl p-10 shadow-xl border border-teal-100/50">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg mb-8">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">{% tr "Sứ mệnh" "Mission" %}</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed">
+                        {% tr "Mang đến dịch vụ phục hồi chức năng chất lượng cao, giúp bệnh nhân lấy lại sức khỏe, sự tự tin và chất lượng sống bền vững. Chúng tôi đồng hành cùng người bệnh ở từng giai đoạn phục hồi, từ đánh giá ban đầu đến khi quay lại cuộc sống thường ngày." "Deliver high-quality rehabilitation services that help patients regain health, confidence, and sustainable quality of life. We support each patient through every stage of recovery, from the first assessment to returning to daily life." %}
+                    </p>
+                </div>
+
+                <div class="reveal bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-10 shadow-xl border border-blue-100/50">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg mb-8">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">{% tr "Tầm nhìn" "Vision" %}</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed">
+                        {% tr "Trở thành bệnh viện phục hồi chức năng hàng đầu tại Việt Nam, được ghi nhận về chất lượng lâm sàng, sự chuyên nghiệp và khả năng xây dựng lộ trình phục hồi cá nhân hóa cho từng người bệnh." "Become a leading rehabilitation hospital in Vietnam, recognized for clinical quality, professionalism, and the ability to build personalized recovery pathways for every patient." %}
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl font-extrabold text-slate-900 mb-4">{% tr "Giá trị cốt lõi" "Core values" %}</h2>
+                    <div class="w-20 h-1.5 bg-teal-500 mx-auto rounded-full mb-6"></div>
+                    <p class="text-slate-600 max-w-2xl mx-auto text-lg">
+                        {% tr "Những giá trị định hướng mọi quyết định chuyên môn và cách chúng tôi chăm sóc bệnh nhân tại HandsViet." "The values that guide every clinical decision and every patient experience at HandsViet." %}
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                    <div class="reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center">
+                        <div class="w-16 h-16 bg-teal-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">{% tr "Tận tâm" "Compassion" %}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">{% tr "Đặt lợi ích và sự phục hồi của bệnh nhân lên hàng đầu trong mọi quyết định điều trị." "Put patient welfare and recovery at the center of every treatment decision." %}</p>
+                    </div>
+                    <div class="reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center">
+                        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">{% tr "Chuyên nghiệp" "Professionalism" %}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">{% tr "Áp dụng quy trình lâm sàng rõ ràng, tiêu chuẩn quốc tế và cải tiến liên tục." "Apply clear clinical pathways, international standards, and continuous improvement." %}</p>
+                    </div>
+                    <div class="reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center">
+                        <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">{% tr "Đồng hành" "Partnership" %}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">{% tr "Đồng hành cùng bệnh nhân và gia đình trên toàn bộ hành trình phục hồi." "Work alongside patients and families throughout the entire recovery journey." %}</p>
+                    </div>
+                    <div class="reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center">
+                        <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">{% tr "Cải tiến" "Innovation" %}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">{% tr "Không ngừng cập nhật công nghệ, kỹ thuật và mô hình điều trị hiệu quả hơn." "Continually upgrade technology, techniques, and models of care that deliver better outcomes." %}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-slate-900 text-white relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <div class="absolute top-10 left-10 w-64 h-64 bg-teal-500 rounded-full blur-[120px]"></div>
+                <div class="absolute bottom-10 right-10 w-80 h-80 bg-blue-600 rounded-full blur-[140px]"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="text-4xl font-bold mb-6">{% tr "Thành tựu của chúng tôi" "Our impact" %}</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto text-lg">{% tr "Những con số thể hiện năng lực chuyên môn, độ tin cậy và sự gắn bó lâu dài của HandsViet với người bệnh." "Numbers that reflect HandsViet's clinical capability, trust, and long-term commitment to patients." %}</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
+                    <div class="text-center reveal"><div class="text-5xl md:text-6xl font-black text-teal-400 mb-4 tabular-nums">10+</div><div class="text-slate-300 font-medium uppercase tracking-wider text-sm">{% tr "Năm kinh nghiệm" "Years of experience" %}</div></div>
+                    <div class="text-center reveal"><div class="text-5xl md:text-6xl font-black text-blue-400 mb-4 tabular-nums">5000+</div><div class="text-slate-300 font-medium uppercase tracking-wider text-sm">{% tr "Bệnh nhân điều trị" "Patients treated" %}</div></div>
+                    <div class="text-center reveal"><div class="text-5xl md:text-6xl font-black text-emerald-400 mb-4 tabular-nums">95%</div><div class="text-slate-300 font-medium uppercase tracking-wider text-sm">{% tr "Tỷ lệ hài lòng" "Satisfaction rate" %}</div></div>
+                    <div class="text-center reveal"><div class="text-5xl md:text-6xl font-black text-indigo-400 mb-4 tabular-nums">50+</div><div class="text-slate-300 font-medium uppercase tracking-wider text-sm">{% tr "Chuyên gia y tế" "Medical specialists" %}</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    <div class="flex-1 reveal">
+                        <h2 class="text-4xl font-extrabold text-slate-900 mb-8 leading-tight">
+                            {% tr "Hơn 10 năm xây dựng niềm tin" "More than 10 years of building trust" %}
+                        </h2>
+                        <div class="space-y-6 text-slate-600 text-lg leading-relaxed">
+                            <p>{% tr "HandsViet khởi đầu vào năm 2014 với mục tiêu đưa dịch vụ phục hồi chức năng chuẩn quốc tế đến gần hơn với người Việt. Từ một đơn vị nhỏ, chúng tôi từng bước phát triển thành nơi bệnh nhân có thể tìm thấy đánh giá chính xác, chương trình điều trị bài bản và sự đồng hành dài hạn." "HandsViet started in 2014 with the goal of bringing international-standard rehabilitation services closer to Vietnamese patients. From a small practice, we have grown into a place where patients can find accurate assessment, structured treatment programs, and long-term support." %}</p>
+                            <p>{% tr "Với sự tư vấn và chuyển giao kỹ thuật từ các chuyên gia phục hồi chức năng hàng đầu Nhật Bản, HandsViet xây dựng mô hình điều trị đa chuyên khoa kết hợp công nghệ hiện đại với kỹ thuật trị liệu bằng tay chuyên sâu." "With consulting support and technical transfer from leading Japanese rehabilitation experts, HandsViet has built a multidisciplinary model that combines modern technology with advanced hands-on therapy." %}</p>
+                            <p class="font-medium text-slate-900 bg-slate-50 p-6 rounded-2xl border-l-4 border-teal-500 italic">
+                                {% tr '"Mỗi nụ cười và mỗi bước chân vững hơn của người bệnh là lý do chúng tôi tiếp tục nâng chuẩn chất lượng mỗi ngày."' '"Every stronger step and every recovered smile is why we keep raising the quality of care every day."' %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex-1 reveal relative">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-4 pt-12">
+                                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop" class="rounded-3xl shadow-lg border-4 border-white" alt="{% tr 'Phục hồi chức năng' 'Rehabilitation care' %}">
+                                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop" class="rounded-3xl shadow-lg border-4 border-white" alt="{% tr 'Bác sĩ' 'Doctor' %}">
+                            </div>
+                            <div class="space-y-4">
+                                <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=2070&auto=format&fit=crop" class="rounded-3xl shadow-lg border-4 border-white" alt="{% tr 'Chăm sóc người bệnh' 'Patient care' %}">
+                                <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=2034&auto=format&fit=crop" class="rounded-3xl shadow-lg border-4 border-white" alt="{% tr 'Điều trị phục hồi' 'Recovery treatment' %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="doi-tac" class="py-24 bg-white border-y border-slate-100">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-14 reveal">
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">{% tr "Đối tác chiến lược" "Strategic partners" %}</h2>
+                    <p class="text-slate-600 max-w-3xl mx-auto text-lg">
+                        {% tr "HandsViet hợp tác với bệnh viện, tổ chức y tế và đơn vị công nghệ để chuẩn hóa chất lượng điều trị phục hồi chức năng." "HandsViet collaborates with hospitals, healthcare organizations, and technology partners to standardize rehabilitation quality." %}
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="reveal bg-slate-50 rounded-3xl p-8 text-center border border-slate-200"><span class="text-xl md:text-2xl font-black text-slate-500 uppercase tracking-tight">MEDIC-JAPAN</span></div>
+                    <div class="reveal bg-slate-50 rounded-3xl p-8 text-center border border-slate-200"><span class="text-xl md:text-2xl font-black text-slate-500 uppercase tracking-tight">GLOBAL-CARE</span></div>
+                    <div class="reveal bg-slate-50 rounded-3xl p-8 text-center border border-slate-200"><span class="text-xl md:text-2xl font-black text-slate-500 uppercase tracking-tight">TECH-REHAB</span></div>
+                    <div class="reveal bg-slate-50 rounded-3xl p-8 text-center border border-slate-200"><span class="text-xl md:text-2xl font-black text-slate-500 uppercase tracking-tight">VINA-HOSPITAL</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 bg-slate-50 overflow-hidden relative">
+            <div class="max-w-5xl mx-auto px-4 text-center reveal">
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6">{% tr "Sẵn sàng để phục hồi?" "Ready to start recovery?" %}</h2>
+                <p class="text-xl text-slate-600 mb-12 max-w-3xl mx-auto">{% tr "HandsViet luôn sẵn sàng lắng nghe và đồng hành cùng bạn trên hành trình phục hồi sức khỏe." "HandsViet is ready to listen and support you throughout your recovery journey." %}</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a href="{% url 'pages:contact' %}" class="px-10 py-5 bg-teal-600 text-white rounded-2xl font-black text-lg shadow-xl shadow-teal-500/30 hover:bg-teal-700 hover:-translate-y-1 transition-all duration-300">{% tr "Liên hệ tư vấn" "Contact our team" %}</a>
+                    <a href="https://zalo.me/0281234567" class="px-10 py-5 bg-white text-teal-600 border-2 border-teal-600 rounded-2xl font-black text-lg hover:bg-teal-50 hover:-translate-y-1 transition-all duration-300">{% tr "Liên hệ qua Zalo" "Chat on Zalo" %}</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 120;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>

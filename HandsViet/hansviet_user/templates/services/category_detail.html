@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category.name }} - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="min-h-screen">
+        <!-- Hero Section - Exact match with about.html style -->
+        <section class="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0">
+                <img src="{% static 'images/medical-bg.jpg' %}" 
+                    class="w-full h-full object-cover scale-105" alt="{{ category.name }}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-10 animate-fade-in-up">
+                    Lĩnh vực phục hồi
+                </div>
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-8 leading-[1.25] tracking-tight animate-fade-in-up delay-100">
+                    {{ category.name }}
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200/90 max-w-4xl mx-auto leading-[1.8] animate-fade-in-up delay-200 px-4">
+                    {{ category.summary|default:"Khám phá giải pháp phục hồi toàn diện từ đội ngũ chuyên gia HandsViet." }}
+                </p>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <section class="py-24 bg-white relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <!-- Left: Educational Content -->
+                    <div class="lg:col-span-8">
+                        <div class="reveal active">
+                            <!-- Category Content (Rich Text from DB) -->
+                            <div class="prose prose-slate max-w-none 
+                                prose-headings:text-slate-900 prose-headings:font-extrabold prose-headings:tracking-tight
+                                prose-p:text-slate-600 prose-p:leading-relaxed prose-p:text-lg
+                                prose-li:text-slate-600 prose-li:text-lg
+                                prose-img:rounded-[2.5rem] prose-img:shadow-xl">
+                                {{ category.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Sidebar -->
+                    <div class="lg:col-span-4">
+                        <div class="sticky top-32 space-y-8 reveal active" style="transition-delay: 0.1s">
+                            <!-- Consultation Card -->
+                            <div class="bg-slate-50 p-10 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50">
+                                <div class="mb-8">
+                                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg mb-6">
+                                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Tư vấn chuyên khoa</h3>
+                                    <p class="text-slate-500 text-base leading-relaxed">Đội ngũ bác sĩ HandsViet sẵn sàng hỗ trợ bạn về chuyên môn <strong>{{ category.name }}</strong>.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <a href="tel:19001234" class="flex items-center justify-center gap-3 w-full py-5 bg-teal-600 text-white rounded-2xl font-bold hover:bg-teal-700 transition-all shadow-lg active:scale-95">
+                                        Gọi trực tiếp
+                                    </a>
+                                    <a href="https://zalo.me/your_number" target="_blank" class="flex items-center justify-center gap-3 w-full py-5 border-2 border-slate-200 text-slate-900 rounded-2xl font-bold hover:border-teal-500 hover:text-teal-600 transition-all">
+                                        Nhắn tin Zalo
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Commitment -->
+                            <div class="bg-slate-900 p-10 rounded-3xl text-white relative overflow-hidden group">
+                                <h4 class="text-xl font-bold mb-4 relative z-10">Cam kết HandsViet</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed relative z-10">Chúng tôi cam kết đồng hành cùng bệnh nhân trên mọi bước đường phục hồi, mang lại hiệu quả tốt nhất và sự an tâm tuyệt đối.</p>
+                                <div class="absolute -right-5 -bottom-5 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500">🛡️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA full-width + footer-style info -->
+        <section class="w-full">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 md:px-12 py-14 text-center">
+                <p class="text-sm font-bold uppercase tracking-[0.25em] mb-3">Cần tư vấn thêm về gói dịch vụ?</p>
+                <h2 class="text-3xl md:text-4xl font-black mb-3">Đội ngũ chuyên gia sẵn sàng hỗ trợ bạn</h2>
+                <p class="text-blue-100 mb-8">Chúng tôi giúp bạn chọn gói dịch vụ và lộ trình phục hồi phù hợp nhất.</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="{% url 'pages:booking' %}" class="px-6 py-3 rounded-xl bg-white text-blue-700 font-semibold hover:-translate-y-0.5 transition shadow-md">Đặt lịch tư vấn</a>
+                    <a href="{% url 'pages:contact' %}" class="px-6 py-3 rounded-xl border border-white text-white font-semibold hover:bg-white/10 transition">Liên hệ ngay</a>
+                </div>
+            </div>
+            <div class="bg-slate-900 text-slate-100 px-6 md:px-12 py-10 grid md:grid-cols-4 gap-8 text-sm">
+                <div class="space-y-2">
+                    <div class="text-lg font-black">HandsViet</div>
+                    <p class="text-slate-400">Phòng khám phục hồi chức năng hàng đầu Việt Nam, chăm sóc chuyên nghiệp và tận tâm.</p>
+                    <div class="flex gap-3 text-xl text-slate-300">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-base font-bold">Liên kết nhanh</div>
+                    <ul class="space-y-1 text-slate-300">
+                        <li><a href="/" class="hover:text-white">Trang chủ</a></li>
+                        <li><a href="/rehab/" class="hover:text-white">Lĩnh vực phục hồi</a></li>
+                        <li><a href="/booking/" class="hover:text-white">Đặt lịch khám</a></li>
+                        <li><a href="/about/" class="hover:text-white">Về chúng tôi</a></li>
+                        <li><a href="/news/" class="hover:text-white">Tin tức</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-base font-bold">Thông tin liên hệ</div>
+                    <ul class="space-y-2 text-slate-300">
+                        <li>123 Đường ABC, Quận 1, TP. Hồ Chí Minh</li>
+                        <li>028 1234 567</li>
+                        <li>info@handsviet.vn</li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-base font-bold text-red-400">Khẩn cấp</div>
+                    <div class="bg-red-600 text-white text-center rounded-2xl py-4 text-2xl font-black">1900-1234</div>
+                    <div class="text-slate-400 text-xs">Đường dây nóng 24/7</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        // Simple scroll reveal
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('active'); }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

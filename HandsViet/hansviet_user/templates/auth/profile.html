@@ -1,0 +1,119 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Thông tin người dùng" "User Profile" %} - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body class="bg-slate-50 text-slate-800">
+    {% include 'pages/header_tailwind.html' %}
+    <main class="max-w-4xl mx-auto px-4 py-10">
+        <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+            <h1 class="text-2xl font-extrabold text-slate-900">{% tr "Trang người dùng" "User Profile" %}</h1>
+            <div class="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
+                <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+                    <p class="text-slate-500">{% tr "Tên đăng nhập" "Username" %}</p>
+                    <p class="mt-1 font-semibold text-slate-900">{{ request.user.username }}</p>
+                </div>
+                <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+                    <p class="text-slate-500">Email</p>
+                    <p class="mt-1 font-semibold text-slate-900">
+                        {% if request.user.email %}
+                            {{ request.user.email }}
+                        {% else %}
+                            {% tr "Chưa cập nhật" "Not updated yet" %}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+                    <p class="text-slate-500">{% tr "Họ tên" "Full name" %}</p>
+                    <p class="mt-1 font-semibold text-slate-900">
+                        {% if request.user.get_full_name %}
+                        {{ request.user.get_full_name }}
+                        {% else %}
+                        {{ request.user.username }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+                    <p class="text-slate-500">{% tr "Ngày tham gia" "Joined on" %}</p>
+                    <p class="mt-1 font-semibold text-slate-900">{{ request.user.date_joined|date:"d/m/Y H:i" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+                <h2 class="text-xl font-extrabold text-slate-900">{% tr "Gói tập của bạn" "Your Packages" %}</h2>
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-teal-100 text-teal-700 border border-teal-200">
+                    {% tr "Tổng" "Total" %}: {{ purchase_count }}
+                </span>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-700 mb-3">{% tr "Gói đang hoạt động" "Active packages" %}</h3>
+                {% if active_purchases %}
+                <div class="space-y-3">
+                    {% for purchase in active_purchases %}
+                    <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-base font-bold text-slate-900">{{ purchase.package.name }}</p>
+                                <p class="text-sm text-slate-600 mt-1">{{ purchase.package.price }} VND • {{ purchase.package.duration_days }} {% tr "ngày" "days" %}</p>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-full bg-emerald-600 text-white">{% tr "Đang hoạt động" "Active" %}</span>
+                        </div>
+                        <div class="mt-3 grid sm:grid-cols-2 gap-2 text-xs text-slate-600">
+                            <p>{% tr "Bắt đầu" "Started" %}: <span class="font-semibold text-slate-800">{{ purchase.started_at|date:"d/m/Y H:i" }}</span></p>
+                            <p>{% tr "Hết hạn" "Expires" %}: <span class="font-semibold text-slate-800">{{ purchase.expires_at|date:"d/m/Y H:i" }}</span></p>
+                            <p class="sm:col-span-2">{% tr "Mã thanh toán" "Payment reference" %}: <span class="font-semibold text-slate-800">{{ purchase.payment_ref|default:"-" }}</span></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                    {% tr "Bạn chưa có gói nào đang hoạt động." "You do not have any active package yet." %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-sm font-bold uppercase tracking-wider text-slate-600 mb-3">{% tr "Lịch sử gói tập" "Package history" %}</h3>
+                {% if purchase_history %}
+                <div class="space-y-3">
+                    {% for purchase in purchase_history %}
+                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-base font-bold text-slate-900">{{ purchase.package.name }}</p>
+                                <p class="text-sm text-slate-600 mt-1">{{ purchase.package.price }} VND • {{ purchase.package.duration_days }} {% tr "ngày" "days" %}</p>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-full {% if purchase.status == 'canceled' %}bg-rose-600 text-white{% else %}bg-slate-700 text-white{% endif %}">
+                                {{ purchase.status }}
+                            </span>
+                        </div>
+                        <div class="mt-3 grid sm:grid-cols-2 gap-2 text-xs text-slate-600">
+                            <p>{% tr "Bắt đầu" "Started" %}: <span class="font-semibold text-slate-800">{{ purchase.started_at|date:"d/m/Y H:i" }}</span></p>
+                            <p>{% tr "Hết hạn" "Expires" %}: <span class="font-semibold text-slate-800">{{ purchase.expires_at|date:"d/m/Y H:i" }}</span></p>
+                            <p class="sm:col-span-2">{% tr "Mã thanh toán" "Payment reference" %}: <span class="font-semibold text-slate-800">{{ purchase.payment_ref|default:"-" }}</span></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                    {% tr "Chưa có lịch sử mua gói." "No package purchase history yet." %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+    {% include 'pages/footer.html' %}
+</body>
+</html>

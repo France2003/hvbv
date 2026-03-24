@@ -1,0 +1,97 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% tr "Lĩnh vực điều trị - HandsViet" "Treatment areas - HandsViet" %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body class="bg-slate-50 text-slate-800">
+  {% include 'includes/loader.html' %}
+  {% include 'pages/header_tailwind.html' %}
+
+  <main>
+    <section class="pt-28 pb-14 bg-white border-b">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold">{% tr "Lĩnh vực điều trị" "Treatment areas" %}</h1>
+        <p class="text-slate-600 mt-3 max-w-3xl mx-auto">
+          {% tr "Gộp dịch vụ theo phương pháp trị liệu, giúp khách hàng hiểu nhanh mình phù hợp hướng can thiệp nào." "Services are grouped by treatment method so patients can quickly find the right intervention path." %}
+        </p>
+      </div>
+    </section>
+
+    <section class="py-14 bg-white">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-6">
+        <article class="rounded-2xl border bg-slate-50 p-6">
+          <h2 class="text-xl font-bold">PHCN</h2>
+          <p class="text-sm text-slate-600 mt-2">{% tr "Cho bệnh nhân cần phục hồi chức năng vận động và sinh hoạt sau bệnh lý/chấn thương." "For patients recovering movement and daily living function after illness or injury." %}</p>
+          <ul class="mt-3 text-sm list-disc ml-5 space-y-1">
+            <li>PHCN toàn diện</li>
+            <li>PHCN sau tai biến</li>
+            <li>PHCN trước/sau phẫu thuật</li>
+          </ul>
+        </article>
+        <article class="rounded-2xl border bg-slate-50 p-6">
+          <h2 class="text-xl font-bold">VLTL</h2>
+          <p class="text-sm text-slate-600 mt-2">{% tr "Cho nhóm đau cơ xương khớp, hạn chế biên độ, chấn thương thể thao." "For musculoskeletal pain, reduced range of motion, and sports injuries." %}</p>
+          <ul class="mt-3 text-sm list-disc ml-5 space-y-1">
+            <li>Điện trị liệu, nhiệt trị liệu</li>
+            <li>Manual therapy</li>
+            <li>Bài tập chức năng cá nhân hoá</li>
+          </ul>
+        </article>
+        <article class="rounded-2xl border bg-slate-50 p-6">
+          <h2 class="text-xl font-bold">{% tr "Chỉnh hình bàn chân" "Foot orthotics" %}</h2>
+          <p class="text-sm text-slate-600 mt-2">{% tr "Cho tình trạng bàn chân bẹt, đau gan chân, lệch trục khi đi đứng." "For flat feet, plantar pain, and gait alignment issues." %}</p>
+          <ul class="mt-3 text-sm list-disc ml-5 space-y-1">
+            <li>Đánh giá dáng đi</li>
+            <li>Tư vấn chỉnh hình</li>
+            <li>Theo dõi hiệu quả theo mốc</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="py-14">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl md:text-3xl font-extrabold">{% tr "Danh sách dịch vụ chi tiết" "Detailed services" %}</h2>
+          <span class="text-sm text-slate-500">{{ services|length }} {% tr "dịch vụ" "services" %}</span>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for service in services %}
+          <article class="bg-white border rounded-2xl overflow-hidden hover:shadow-lg transition">
+            <div class="h-44 bg-slate-100">
+              {% if service.thumbnail %}
+              <img src="{{ service.thumbnail.url }}" alt="{{ service.display_title|default:service.title }}" class="w-full h-full object-cover" />
+              {% else %}
+              <img src="{% static 'images/rehabilitation.png' %}" alt="{{ service.display_title|default:service.title }}" class="w-full h-full object-cover" />
+              {% endif %}
+            </div>
+            <div class="p-5">
+              <p class="text-xs uppercase tracking-wider text-emerald-700 font-semibold">{{ service.display_category_name|default:service.category.name }}</p>
+              <h3 class="text-lg font-bold mt-1">{{ service.display_title|default:service.title }}</h3>
+              <p class="text-sm text-slate-600 mt-2 line-clamp-3">{{ service.display_summary|default:service.summary }}</p>
+              <div class="mt-4 text-sm space-y-1">
+                <p><b>{% tr "Chu kỳ" "Duration" %}:</b> {{ service.display_duration }}</p>
+                <p><b>{% tr "Giá" "Price" %}:</b> <span class="text-emerald-700 font-semibold">{{ service.display_price }}</span></p>
+              </div>
+              <a href="{{ service.get_absolute_url }}" class="mt-4 inline-flex items-center text-emerald-700 font-semibold">{% tr "Xem chi tiết" "View details" %} →</a>
+            </div>
+          </article>
+          {% empty %}
+          <p class="text-slate-500">{% tr "Chưa có dữ liệu dịch vụ." "No service data yet." %}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  {% include 'pages/footer.html' %}
+</body>
+</html>

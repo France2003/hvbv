@@ -1,0 +1,237 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if current_category %}{{ current_category.name }}{% else %}Tin tức & Sự kiện{% endif %} - HandsViet
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'includes/loader.html' %}
+
+    {% include 'pages/header_tailwind.html' %}
+
+
+
+    <!-- Modern Hero Section -->
+    <div class="relative bg-gradient-to-br from-slate-50 via-teal-50 to-blue-50 pt-20 pb-24 overflow-hidden">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-200/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-teal-100 shadow-sm mb-6">
+                    <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                    <span class="text-xs font-semibold text-teal-600 uppercase tracking-wide">Tin mới & Cập nhật</span>
+                </div>
+
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">
+                    {% if current_category %}
+                    {{ current_category.name }}
+                    {% else %}
+                    Tin tức & <span class="text-teal-600">Sự kiện</span>
+                    {% endif %}
+                </h1>
+
+                <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-10">
+                    {% if current_category.slug == 'tin-tuc-y-khoa' %}
+                    Cập nhật kiến thức y khoa, chế độ dinh dưỡng và bí quyết sống khỏe mỗi ngày cùng chuyên gia
+                    {% elif current_category.slug == 'cau-chuyen-khach-hang' %}
+                    Những câu chuyện người thật việc thật về hành trình tìm lại sức khỏe
+                    {% elif current_category.slug == 'tin-truyen-thong' %}
+                    Hoạt động cộng đồng, hợp tác chiến lược và dấu ấn HandsViet trên báo chí
+                    {% elif current_category.slug == 'tu-van-phcn' %}
+                    Hướng dẫn bài tập và tư vấn sức khỏe miễn phí từ chuyên gia
+                    {% elif current_category.slug == 'khuyen-mai-su-kien' %}
+                    Đừng bỏ lỡ các ưu đãi hấp dẫn và sự kiện đặc biệt trong tháng
+                    {% else %}
+                    Nơi chia sẻ kiến thức, kinh nghiệm và những câu chuyện truyền cảm hứng trên hành trình phục hồi sức
+                    khỏe toàn diện.
+                    {% endif %}
+                </p>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-10 relative z-20">
+
+        <!-- Featured Post (Huge Card) -->
+        {% if featured_news %}
+        <div class="mb-16 group">
+            <a href="{% url 'news:news_detail' slug=featured_news.slug %}"
+                class="block relative h-[500px] w-full rounded-3xl overflow-hidden shadow-2xl transition-transform duration-500 hover:scale-[1.01]">
+                <div class="absolute inset-0">
+                    <img src="{% if featured_news.thumbnail %}{{ featured_news.thumbnail.url }}{% else %}https://placehold.co/1200x800/teal/white?text=Featured{% endif %}"
+                        alt="{{ featured_news.title }}"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-80 group-hover:opacity-70 transition-opacity">
+                </div>
+
+                <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full md:w-2/3">
+                    {% if featured_news.category %}
+                    <span
+                        class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-white uppercase bg-teal-500/80 backdrop-blur-sm rounded-full">
+                        {{ featured_news.category.name }}
+                    </span>
+                    {% endif %}
+                    <h2
+                        class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight group-hover:text-teal-200 transition-colors">
+                        {{ featured_news.title }}
+                    </h2>
+                    <p class="text-lg text-gray-200 line-clamp-2 md:line-clamp-3 mb-6 font-light">
+                        {{ featured_news.summary }}
+                    </p>
+                    <div class="flex items-center gap-4 text-white/80 text-sm">
+                        <span>{{ featured_news.created_at|date:"d \t\h\á\n\g m, Y" }}</span>
+                        <span class="w-1 h-1 bg-white/50 rounded-full"></span>
+                        <span>{{ featured_news.view_count }} lượt xem</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Latest News Grid -->
+        <div class="flex items-center justify-between mb-10">
+            <h3 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <span class="w-2 h-8 bg-teal-500 rounded-full"></span>
+                Mới cập nhật
+            </h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in latest_news %}
+            <article
+                class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 overflow-hidden transition-all duration-300 hover:-translate-y-1 group flex flex-col h-full">
+                <!-- Image Wrapper -->
+                <a href="{% url 'news:news_detail' slug=article.slug %}"
+                    class="relative aspect-video overflow-hidden block">
+                    <img src="{% if article.thumbnail %}{{ article.thumbnail.url }}{% else %}https://placehold.co/600x400/e2e8f0/1e293b?text=News{% endif %}"
+                        alt="{{ article.title }}"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    {% if article.category %}
+                    <div class="absolute top-4 left-4">
+                        <span
+                            class="px-3 py-1 text-xs font-bold text-teal-800 bg-white/90 backdrop-blur-md rounded-full shadow-sm">
+                            {{ article.category.name }}
+                        </span>
+                    </div>
+                    {% endif %}
+                </a>
+
+                <!-- Content -->
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-2 text-xs text-gray-400 mb-3 font-medium uppercase tracking-wide">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        {{ article.created_at|date:"d \t\h\á\n\g m, Y" }}
+                    </div>
+
+                    <a href="{% url 'news:news_detail' slug=article.slug %}" class="block mb-3">
+                        <h3
+                            class="text-xl font-bold text-slate-800 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2">
+                            {{ article.title }}
+                        </h3>
+                    </a>
+
+                    <p class="text-gray-500 text-sm line-clamp-3 mb-6 leading-relaxed flex-grow">
+                        {{ article.summary }}
+                    </p>
+
+                    <div class="pt-4 border-t border-gray-50 flex items-center justify-between mt-auto">
+                        <a href="{% url 'news:news_detail' slug=article.slug %}"
+                            class="inline-flex items-center text-sm font-semibold text-teal-600 hover:text-teal-800 transition-colors group/link">
+                            Đọc tiếp
+                            <svg class="ml-1 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                        <div class="flex items-center gap-1 text-gray-400 text-xs">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                </path>
+                            </svg>
+                            {{ article.view_count }}
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="col-span-full py-20 text-center">
+                <div class="inline-block p-6 rounded-full bg-gray-50 mb-4">
+                    <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-gray-600">Chưa có bài viết nào</h3>
+                <p class="text-gray-400 mt-2">Vui lòng quay lại sau.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'pages/footer.html' %}
+
+
+    <script>
+    <!-- Managed loading script is now inside includes/loader.html -->
+
+        // Scroll to top on page load and navigation
+        window.addEventListener('load', function () {
+            window.scrollTo(0, 0);
+        });
+
+        // Scroll to top when navigating (for single page apps or hash changes)
+        window.addEventListener('beforeunload', function () {
+            window.scrollTo(0, 0);
+        });
+
+        // Force scroll to top on page show (handles back/forward navigation)
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                window.scrollTo(0, 0);
+            }
+        });
+    </script>
+</body>
+
+</html>

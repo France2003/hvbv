@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="py-10 max-w-2xl mx-auto px-4">
+  <h1 class="text-3xl font-bold mb-4">Mua gói: {{ package.name }}</h1>
+  <p class="mb-2 text-gray-700">{{ package.description }}</p>
+  <p class="mb-6 text-lg font-semibold">Giá: {{ package.price }} / {{ package.duration_days }} ngày</p>
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Thanh toán & kích hoạt ngay</button>
+  </form>
+</section>
+{% endblock %}

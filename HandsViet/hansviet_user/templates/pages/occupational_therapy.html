@@ -1,0 +1,280 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Hoạt động trị liệu - Bệnh viện HandsViet" "Occupational therapy - HandsViet Hospital" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style type="text/tailwindcss">
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+
+        .service-content h2 {
+            @apply text-3xl md:text-4xl font-black text-slate-900 mb-8 tracking-tight uppercase flex items-center gap-4;
+        }
+
+        .service-content h2::before {
+            @apply content-[''] w-2 h-10 bg-teal-500 rounded-full inline-block;
+        }
+
+        .service-content p {
+            @apply text-lg text-slate-600 leading-relaxed mb-6 font-medium;
+        }
+
+        .service-content ul {
+            @apply space-y-4 mb-10;
+        }
+
+        .service-content li {
+            @apply flex items-start gap-3 text-slate-600 text-lg;
+        }
+
+        .service-content li svg {
+            @apply w-6 h-6 text-teal-500 mt-1 flex-shrink-0;
+        }
+
+        .image-card {
+            @apply relative rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-700 hover:scale-[1.02] border-4 border-white;
+        }
+
+        .zig-zag-section {
+            @apply py-24 md:py-32 relative overflow-hidden;
+        }
+
+        .reveal.active {
+            @apply opacity-100 translate-y-0 transition-all duration-1000;
+        }
+
+        .reveal {
+            @apply opacity-0 translate-y-10;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-bubble {
+            @apply w-12 h-12 rounded-full bg-teal-500 text-white flex items-center justify-center font-black text-xl mb-4 shadow-lg shadow-teal-500/30;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <section class="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu-9.jpg"
+                    class="w-full h-full object-cover" alt="{% tr 'Hoạt động trị liệu' 'Occupational therapy' %}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs uppercase tracking-[0.2em] mb-8 animate-fade-in-up">
+                    {% tr "Trị liệu chức năng chuyên sâu tại HandsViet" "Functional therapy expertise at HandsViet" %}
+                </div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
+                    {% tr "Hoạt động" "Occupational" %} <span class="text-teal-400">{% tr "trị liệu" "therapy" %}</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200/90 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200 px-4">
+                    {% tr "Khôi phục sự độc lập trong sinh hoạt, học tập, làm việc và những hoạt động có ý nghĩa nhất với từng người bệnh." "Restore independence in daily life, learning, work, and the activities that matter most to each patient." %}
+                </p>
+            </div>
+        </section>
+
+        <div class="relative z-20">
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <div class="image-card lg:order-1 h-[400px] md:h-[500px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu.jpg" alt="{% tr 'Giới thiệu hoạt động trị liệu' 'Occupational therapy overview' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content lg:order-2">
+                            <h2>{% tr "Hoạt động trị liệu là gì?" "What is occupational therapy?" %}</h2>
+                            <p>{% tr "Hoạt động trị liệu là chuyên ngành phục hồi chức năng giúp người bệnh lấy lại khả năng thực hiện các hoạt động sinh hoạt hằng ngày như ăn uống, mặc đồ, vệ sinh cá nhân, học tập, làm việc và tham gia xã hội." "Occupational therapy is a rehabilitation specialty that helps patients regain the ability to perform daily activities such as eating, dressing, self-care, studying, working, and participating in society." %}</p>
+                            <p>{% tr "Phương pháp này không chỉ quan tâm đến vận động tay chân mà còn đánh giá cách người bệnh tương tác với môi trường sống, công việc và các vai trò xã hội của họ." "This approach goes beyond limb movement and evaluates how the patient interacts with home, work, and social roles." %}</p>
+                            <p>{% tr "Mục tiêu cuối cùng là đưa bệnh nhân trở lại cuộc sống độc lập, an toàn và có ý nghĩa, thay vì chỉ dừng lại ở việc cải thiện một vài động tác riêng lẻ." "The final goal is to bring patients back to an independent, safe, and meaningful life, rather than improving a few isolated movements only." %}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section bg-slate-50 reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <div class="service-content order-2 lg:order-1">
+                            <h2>{% tr "Vai trò của hoạt động trị liệu" "The role of occupational therapy" %}</h2>
+                            <p>{% tr "OT là cầu nối giữa điều trị y khoa và khả năng sống độc lập. Chương trình can thiệp được thiết kế quanh nhu cầu thực tế của từng người bệnh thay vì chỉ tập trung vào triệu chứng." "OT bridges medical treatment and independent living. Intervention plans are built around each patient's real-life needs instead of focusing on symptoms alone." %}</p>
+                            <ul>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Phục hồi kỹ năng sinh hoạt" "Daily living skills recovery" %}:</strong> {% tr "Ăn uống, mặc quần áo, tắm rửa, viết, sử dụng điện thoại hoặc thao tác trong bếp." "Eating, dressing, bathing, writing, using a phone, or handling kitchen tasks." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Cải thiện vận động tinh" "Fine motor improvement" %}:</strong> {% tr "Tăng độ khéo léo của bàn tay, khả năng phối hợp mắt tay và kiểm soát lực cầm nắm." "Increase hand dexterity, eye-hand coordination, and grip control." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Thích nghi môi trường" "Environmental adaptation" %}:</strong> {% tr "Điều chỉnh không gian sống, lựa chọn dụng cụ hỗ trợ và xây dựng thói quen an toàn để giảm lệ thuộc." "Adjust living spaces, choose assistive devices, and build safe routines that reduce dependency." %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="image-card order-1 lg:order-2 h-[400px] md:h-[500px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu-1.jpg" alt="{% tr 'Vai trò của hoạt động trị liệu' 'Role of occupational therapy' %}" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <div class="image-card h-[400px] md:h-[500px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu-2.png" alt="{% tr 'Đối tượng phù hợp với hoạt động trị liệu' 'Who benefits from occupational therapy' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content">
+                            <h2>{% tr "Đối tượng được chỉ định" "Who should receive occupational therapy?" %}</h2>
+                            <p>{% tr "Hoạt động trị liệu phù hợp cho trẻ em, người trưởng thành và người cao tuổi gặp khó khăn khi thực hiện các nhiệm vụ thường ngày do vấn đề thần kinh, cơ xương khớp hoặc phát triển." "Occupational therapy is suitable for children, adults, and older adults who struggle with everyday tasks due to neurological, musculoskeletal, or developmental conditions." %}</p>
+                            <ul>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Thần kinh" "Neurological conditions" %}:</strong> {% tr "Sau đột quỵ, chấn thương sọ não, tổn thương tủy sống hoặc bệnh Parkinson." "After stroke, brain injury, spinal cord injury, or Parkinson's disease." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Cơ xương khớp" "Musculoskeletal conditions" %}:</strong> {% tr "Sau phẫu thuật bàn tay, đau mạn tính, thoái hóa khớp hoặc hạn chế vận động chi trên." "After hand surgery, chronic pain, osteoarthritis, or upper-limb movement limitations." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Nhi khoa" "Pediatrics" %}:</strong> {% tr "Trẻ chậm phát triển, bại não, tự kỷ hoặc khó tham gia các hoạt động học đường và tự chăm sóc." "Children with developmental delay, cerebral palsy, autism, or difficulty participating in school and self-care routines." %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section bg-slate-900 text-white reveal border-y border-white/10">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="service-content mb-20 text-center">
+                        <h2 class="!text-white justify-center">{% tr "Quy trình điều trị hoạt động trị liệu" "Occupational therapy treatment process" %}</h2>
+                        <div class="w-24 h-1 bg-teal-500 mx-auto -mt-4 mb-4"></div>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-8">
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/10 hover:bg-white/10 transition-all">
+                            <div class="step-bubble">1</div>
+                            <h3 class="text-xl font-bold mb-4">{% tr "Lượng giá" "Assessment" %}</h3>
+                            <p class="text-slate-400 text-sm">{% tr "Đánh giá khả năng thực hiện ADL, vận động tinh, nhận thức và nhu cầu thực tế của người bệnh." "Evaluate ADL performance, fine motor function, cognition, and the patient's real-life needs." %}</p>
+                        </div>
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/10 hover:bg-white/10 transition-all">
+                            <div class="step-bubble">2</div>
+                            <h3 class="text-xl font-bold mb-4">{% tr "Lập kế hoạch" "Goal planning" %}</h3>
+                            <h4 class="text-white/50 text-xs mb-4">{% tr "Phối hợp cùng bác sĩ và gia đình" "Coordinated with doctors and family" %}</h4>
+                            <p class="text-slate-400 text-sm">{% tr "Xác định mục tiêu ưu tiên và xây dựng lộ trình cá nhân hóa theo môi trường sống của bệnh nhân." "Define priority goals and build a personalized pathway that matches the patient's living environment." %}</p>
+                        </div>
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/10 hover:bg-white/10 transition-all">
+                            <div class="step-bubble">3</div>
+                            <h3 class="text-xl font-bold mb-4">{% tr "Can thiệp" "Intervention" %}</h3>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu-4.jpg" class="w-full h-32 object-cover rounded-xl mb-4 opacity-80" alt="{% tr 'Can thiệp hoạt động trị liệu' 'Occupational therapy intervention' %}">
+                            <p class="text-slate-400 text-sm">{% tr "Huấn luyện kỹ năng, điều chỉnh môi trường và thử nghiệm dụng cụ hỗ trợ để tăng mức độ độc lập." "Train practical skills, adapt the environment, and trial assistive devices to increase independence." %}</p>
+                        </div>
+                        <div class="p-8 bg-white/5 rounded-3xl border border-white/10 hover:bg-white/10 transition-all">
+                            <div class="step-bubble">4</div>
+                            <h3 class="text-xl font-bold mb-4">{% tr "Tái đánh giá" "Reassessment" %}</h3>
+                            <p class="text-slate-400 text-sm">{% tr "Theo dõi tiến bộ định kỳ và tinh chỉnh chương trình để bảo đảm mục tiêu đạt được ngoài đời thực." "Track progress regularly and refine the program so goals are achieved in real-world settings." %}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <div class="image-card lg:order-2 h-[400px] md:h-[500px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu-6.jpg" alt="{% tr 'Lợi ích của hoạt động trị liệu' 'Benefits of occupational therapy' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content lg:order-1">
+                            <h2>{% tr "Lợi ích khi tập hoạt động trị liệu" "Benefits of occupational therapy" %}</h2>
+                            <p>{% tr "Can thiệp đúng thời điểm giúp người bệnh tiến bộ cả về thể chất, tâm lý và khả năng hòa nhập xã hội." "Timely intervention improves physical capacity, confidence, and social participation at the same time." %}</p>
+                            <ul>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Tăng tính độc lập" "More independence" %}:</strong> {% tr "Giảm sự phụ thuộc vào người thân trong sinh hoạt hằng ngày." "Less dependence on caregivers during everyday routines." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Khôi phục vai trò xã hội" "Return to meaningful roles" %}:</strong> {% tr "Từng bước quay lại việc học, công việc và những hoạt động yêu thích." "Step back into school, work, and activities that matter." %}</span>
+                                </li>
+                                <li>
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg>
+                                    <span><strong>{% tr "Giảm nguy cơ biến chứng" "Lower complication risk" %}:</strong> {% tr "Hạn chế té ngã, co rút, đau thứ phát và tình trạng mất tự tin kéo dài." "Reduce falls, contractures, secondary pain, and long-term loss of confidence." %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 md:py-32 bg-slate-50 reveal">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="grid lg:grid-cols-2 gap-16 items-center">
+                        <div class="service-content">
+                            <h2>{% tr "Hoạt động trị liệu tại HandsViet" "Occupational therapy at HandsViet" %}</h2>
+                            <p>{% tr "HandsViet xây dựng môi trường mô phỏng thực tế, từ kỹ năng tự chăm sóc đến các nhiệm vụ bàn tay tinh vi, để việc luyện tập bám sát cuộc sống thật của người bệnh." "HandsViet builds a real-life practice environment, from self-care skills to complex hand tasks, so therapy stays closely connected to the patient's daily life." %}</p>
+                            <div class="grid grid-cols-2 gap-4 mt-8">
+                                <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/06/hoat-dong-tri-lieu-8.jpg" class="rounded-3xl shadow-lg h-40 w-full object-cover" alt="{% tr 'Không gian hoạt động trị liệu' 'Occupational therapy space' %}">
+                                <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/lieu-phap-xung-kich.jpg" class="rounded-3xl shadow-lg h-40 w-full object-cover" alt="{% tr 'Thiết bị hỗ trợ trị liệu' 'Therapy support equipment' %}">
+                            </div>
+                            <p class="mt-8">{% tr "Đội ngũ kỹ thuật viên và bác sĩ phối hợp chặt chẽ để mỗi mục tiêu điều trị đều có tính khả thi, rõ ràng và đo được bằng kết quả thực tế." "Therapists and doctors work closely together so every treatment goal is practical, clear, and measured by real-life outcomes." %}</p>
+                        </div>
+                        <div class="bg-slate-900 p-12 rounded-[4rem] text-white shadow-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-teal-500/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                            <h3 class="text-3xl font-black mb-6 leading-tight">{% tr "Bắt đầu hành trình phục hồi ngay hôm nay" "Start your recovery journey today" %}</h3>
+                            <p class="text-slate-400 mb-10 font-medium">{% tr "Nếu bạn hoặc người thân đang gặp khó khăn trong sinh hoạt, hãy bắt đầu với một buổi lượng giá để xác định điều gì đang cản trở sự độc lập." "If you or a family member are struggling with daily activities, begin with an assessment to identify what is limiting independence." %}</p>
+                            <div class="flex flex-col gap-4">
+                                <a href="{% url 'pages:booking' %}" class="px-8 py-4 bg-teal-500 text-slate-900 rounded-2xl font-black text-center uppercase tracking-widest hover:bg-teal-400 transition-all">{% tr "Đặt lịch thăm khám" "Book an assessment" %}</a>
+                                <a href="{% url 'pages:contact' %}" class="px-8 py-4 bg-white/10 text-white border border-white/20 rounded-2xl font-black text-center uppercase tracking-widest hover:bg-white/20 transition-all">{% tr "Liên hệ tư vấn" "Speak with our team" %}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>

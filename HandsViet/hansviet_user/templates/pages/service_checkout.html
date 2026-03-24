@@ -1,0 +1,213 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Thanh toán gói" "Package Checkout" %} | {{ service.display_title|default:service.title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="pt-24 pb-16">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900">{% tr "Thanh toán gói dịch vụ" "Service package checkout" %}</h1>
+                <p class="text-slate-600 mt-2">{% tr "Quét mã QR để thanh toán đúng số tiền và kích hoạt gói tự động." "Scan the QR code to pay the exact amount and activate your package automatically." %}</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900 mb-4">{% tr "Thông tin giao dịch" "Transaction information" %}</h2>
+                        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <p class="text-slate-500 mb-1">{% tr "Tên gói" "Package name" %}</p>
+                                <p class="font-semibold text-slate-900">{{ service.display_title|default:package.name }}</p>
+                            </div>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <p class="text-slate-500 mb-1">{% tr "Giá thanh toán" "Payment amount" %}</p>
+                                <p class="font-semibold text-teal-700 text-lg">
+                                    {% if service.display_price %}
+                                        {{ service.display_price }}
+                                    {% elif service.price_text %}
+                                        {{ service.price_text }}
+                                    {% else %}
+                                        {% tr "Liên hệ" "Contact us" %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <p class="text-slate-500 mb-1">{% tr "Thời lượng gói" "Package duration" %}</p>
+                                <p class="font-semibold text-slate-900">
+                                    {% if service.display_duration %}
+                                        {{ service.display_duration }}
+                                    {% elif service.duration %}
+                                        {{ service.duration }}
+                                    {% else %}
+                                        {% tr "Chưa cập nhật" "Not updated yet" %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <p class="text-slate-500 mb-1">{% tr "Mã giao dịch" "Transaction code" %}</p>
+                                <p class="font-semibold text-slate-900">{{ transaction.txn_ref }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900 mb-4">{% tr "Thông tin người mua" "Buyer information" %}</h2>
+                        <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <p class="text-slate-500 mb-1">{% tr "Họ tên" "Full name" %}</p>
+                                <p class="font-semibold text-slate-900">{{ buyer_name }}</p>
+                            </div>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <p class="text-slate-500 mb-1">{% tr "Tài khoản" "Username" %}</p>
+                                <p class="font-semibold text-slate-900">{{ buyer_username }}</p>
+                            </div>
+                            <div class="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:col-span-2">
+                                <p class="text-slate-500 mb-1">Email</p>
+                                <p class="font-semibold text-slate-900">{{ buyer_email }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900 mb-4">{% tr "Nội dung chuyển khoản" "Transfer content" %}</h2>
+                        <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4">
+                            <p id="transferContent" class="font-semibold text-slate-900 break-all">{{ transfer_content }}</p>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-3">
+                            {% tr "Nội dung này đã gồm tên gói, thời lượng gói và mã tham chiếu để hệ thống tự đối soát." "This transfer content already includes package name, package duration, and reference code for automatic reconciliation." %}
+                        </p>
+                    </div>
+                </div>
+                <aside class="lg:col-span-5">
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-sm sticky top-24">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4">{% tr "Quét mã QR để thanh toán" "Scan QR to pay" %}</h3>
+
+                        <div class="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-center">
+                            <p class="text-xs text-slate-500 mb-1">{% tr "Thời gian còn lại" "Time remaining" %}</p>
+                            <p id="countdown" class="text-3xl font-extrabold text-rose-600">03:00</p>
+                        </div>
+
+                        <div id="statusBox" class="mb-4 rounded-xl border border-amber-200 bg-amber-50 text-amber-700 px-4 py-3 text-sm font-semibold">
+                            {% tr "Đang chờ thanh toán..." "Waiting for payment..." %}
+                        </div>
+
+                        {% if qr_error %}
+                        <div class="rounded-xl border border-rose-200 bg-rose-50 text-rose-700 px-4 py-3 text-sm">
+                            {{ qr_error }}
+                        </div>
+                        {% else %}
+                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                            <img src="{{ qr_url }}" alt="{% tr 'Mã QR thanh toán' 'Payment QR code' %}" class="w-full h-auto rounded-xl">
+                        </div>
+                        {% endif %}
+
+                        <div class="mt-5 flex gap-3">
+                            <a href="{% url 'services:service_detail' slug=service.slug %}" class="flex-1 inline-flex items-center justify-center px-4 py-3 rounded-xl border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50">
+                                {% tr "Về trang dịch vụ" "Back to service" %}
+                            </a>
+                            <a href="{% url 'auth:profile' %}" class="flex-1 inline-flex items-center justify-center px-4 py-3 rounded-xl bg-teal-600 text-white font-semibold hover:bg-teal-700">
+                                {% tr "Trang thông tin" "Profile" %}
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        (function () {
+            const statusUrl = "{{ status_url }}";
+            const deadlineIso = "{{ deadline_iso }}";
+            const countdownEl = document.getElementById("countdown");
+            const statusBox = document.getElementById("statusBox");
+            const pendingText = "{% tr 'Đang chờ thanh toán...' 'Waiting for payment...' %}";
+            const successText = "{% tr 'Thanh toán thành công. Gói đã kích hoạt.' 'Payment successful. Your package is now active.' %}";
+            const failedText = "{% tr 'Thanh toán thất bại hoặc đã hết thời gian.' 'Payment failed or timed out.' %}";
+
+            const deadline = new Date(deadlineIso).getTime();
+            let countdownTimer = null;
+            let statusTimer = null;
+
+            function setStatus(message, type) {
+                statusBox.textContent = message;
+                statusBox.className = "mb-4 rounded-xl px-4 py-3 text-sm font-semibold";
+                if (type === "success") {
+                    statusBox.classList.add("border", "border-emerald-200", "bg-emerald-50", "text-emerald-700");
+                    return;
+                }
+                if (type === "failed") {
+                    statusBox.classList.add("border", "border-rose-200", "bg-rose-50", "text-rose-700");
+                    return;
+                }
+                statusBox.classList.add("border", "border-amber-200", "bg-amber-50", "text-amber-700");
+            }
+
+            function formatCountdown(seconds) {
+                const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
+                const secs = (seconds % 60).toString().padStart(2, "0");
+                return `${mins}:${secs}`;
+            }
+
+            function tickCountdown() {
+                const remaining = Math.max(0, Math.floor((deadline - Date.now()) / 1000));
+                countdownEl.textContent = formatCountdown(remaining);
+                if (remaining <= 0) {
+                    clearInterval(countdownTimer);
+                }
+            }
+            async function pollStatus() {
+                try {
+                    const response = await fetch(statusUrl, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+                    if (!response.ok) {
+                        return;
+                    }
+                    const data = await response.json();
+                    if (typeof data.remaining_seconds === "number") {
+                        countdownEl.textContent = formatCountdown(Math.max(0, data.remaining_seconds));
+                    }
+                    if (data.status === "success") {
+                        setStatus(data.message || successText, "success");
+                        clearInterval(statusTimer);
+                        clearInterval(countdownTimer);
+                        if (data.redirect_url) {
+                            setTimeout(() => { window.location.href = data.redirect_url; }, 2200);
+                        }
+                        return;
+                    }
+                    if (data.status === "failed") {
+                        setStatus(data.message || failedText, "failed");
+                        clearInterval(statusTimer);
+                        clearInterval(countdownTimer);
+                        return;
+                    }
+                    setStatus(pendingText, "pending");
+                } catch (err) {
+                    console.error("Status polling error", err);
+                }
+            }
+
+            tickCountdown();
+            pollStatus();
+            countdownTimer = setInterval(tickCountdown, 1000);
+            statusTimer = setInterval(pollStatus, 4000);
+        })();
+    </script>
+</body>
+
+</html>

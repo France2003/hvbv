@@ -1,0 +1,94 @@
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập quản trị HandsViet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body{font-family:"Be Vietnam Pro",sans-serif;min-height:100vh;margin:0;padding:24px;display:flex;align-items:center;justify-content:center;background:linear-gradient(130deg,#0f6370 0%,#0a4853 100%);color:#0f172a}
+        .wrap{width:100%;max-width:960px;display:grid;grid-template-columns:1fr 1fr;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(2,32,38,.3)}
+        .aside{padding:36px;background:linear-gradient(155deg,rgba(15,133,141,.14),rgba(10,76,83,.06));border-right:1px solid #d9f2ef}
+        .main{padding:36px}
+        .logo{width:min(300px,100%);display:block;margin-bottom:20px}
+        .features{padding-left:18px;color:#334155;line-height:1.7}
+        .badge{position:fixed;top:20px;right:20px;display:flex;gap:4px;padding:4px;border:1px solid #cbd5e1;border-radius:14px;background:#fff}
+        .badge button{border:0;background:transparent;padding:6px 10px;border-radius:10px;font-weight:700;cursor:pointer}
+        .active{background:#e2e8f0}
+        .field{margin-bottom:16px}
+        .field label{display:block;margin-bottom:6px;font-size:14px;font-weight:600;color:#334155}
+        .field input{width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc}
+        .field input:focus{outline:none;border-color:#0ea5a4;box-shadow:0 0 0 3px rgba(20,184,166,.16);background:#fff}
+        .msg{padding:10px 12px;border-radius:12px;font-size:13px;margin-bottom:12px}
+        .error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+        .btn{width:100%;padding:13px 14px;border:0;border-radius:12px;background:linear-gradient(135deg,#0f8e95,#0f5f6b);color:#fff;font-weight:700;cursor:pointer}
+        .sub{font-size:13px;color:#64748b}
+        .links{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:16px 0;font-size:13px}
+        .links a{color:#0f766e;text-decoration:none;font-weight:600}
+        @media (max-width:900px){.wrap{grid-template-columns:1fr}.aside{border-right:0;border-bottom:1px solid #d9f2ef}}
+    </style>
+</head>
+<body>
+    <form action="/i18n/setlang/" method="post" class="badge">
+        <input type="hidden" name="csrfmiddlewaretoken" value="UdJTYk7LITY5ROcpr9ePjyEyyEZ6r83tHs2OTCvnP3s4c9i37MMv0biVrhCNyJDl">
+        <input type="hidden" name="next" value="/handsviet_admin/login/">
+        <button type="submit" name="language" value="vi" class="active">VI</button>
+        <button type="submit" name="language" value="en" class="">EN</button>
+    </form>
+    <div class="wrap">
+        <div class="aside">
+            <img src="/static/images/HandsVietLogo.png" alt="HandsViet Logo" class="logo">
+            <h2>Khu vực quản trị HandsViet</h2>
+            <p class="sub">Không gian vận hành dành cho quản trị nội dung, dữ liệu và quy trình điều phối.</p>
+            <ul class="features">
+                <li>Quản lý người dùng và phân quyền truy cập</li>
+                <li>Điều phối dịch vụ, tin tức và video bài tập</li>
+                <li>Theo dõi booking và phản hồi hỗ trợ</li>
+                <li>Kiểm soát nội dung hiển thị toàn hệ thống</li>
+            </ul>
+        </div>
+        <div class="main">
+            <h3>Đăng nhập admin</h3>
+            <p class="sub">Vui lòng xác thực để truy cập dashboard quản trị.</p>
+            
+            
+            <form method="post" action="/handsviet_admin/login/" id="admin-login-form">
+                <input type="hidden" name="csrfmiddlewaretoken" value="UdJTYk7LITY5ROcpr9ePjyEyyEZ6r83tHs2OTCvnP3s4c9i37MMv0biVrhCNyJDl">
+                <input type="hidden" name="next" value="/handsviet_admin/">
+                <div class="field">
+                    <label for="id_username">Tên đăng nhập</label>
+                    <input type="text" id="id_username" name="username" value="" placeholder="admin" autocomplete="username" required autofocus>
+                    
+                </div>
+                <div class="field">
+                    <label for="id_password">Mật khẩu</label>
+                    <input type="password" id="id_password" name="password" placeholder="Nhập mật khẩu" autocomplete="current-password" required>
+                    
+                </div>
+                <div class="links">
+                    <a href="/auth/login/">Chuyển sang login user</a>
+                    <span>Kết nối HTTPS bảo mật</span>
+                </div>
+                <button type="submit" class="btn" id="admin-login-btn">Đăng nhập quản trị</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('admin-login-form');
+        const submitBtn = document.getElementById('admin-login-btn');
+        const loadingLabel = 'Đang xác thực...';
+        form.addEventListener('submit', function () {
+            const username = form.querySelector('input[name="username"]').value;
+            const password = form.querySelector('input[name="password"]').value;
+            if (username && password) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = loadingLabel;
+            }
+        });
+    </script>
+</body>
+</html>

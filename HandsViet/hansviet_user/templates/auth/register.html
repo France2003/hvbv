@@ -1,0 +1,443 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HandsViet - Create Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Be Vietnam Pro", sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(13, 88, 101, 0.75), rgba(6, 68, 76, 0.8)),
+                url("{% static 'images/bgrLogin.jpg' %}") center/cover no-repeat fixed;
+            color: #133541;
+        }
+
+        .login-shell {
+            width: 100%;
+            max-width: 980px;
+        }
+
+        .login-card {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 24px 55px rgba(15, 23, 42, 0.28);
+            backdrop-filter: blur(3px);
+            animation: fadeUp 0.45s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand-pane {
+            padding: 36px 34px;
+            background: linear-gradient(155deg, rgba(15, 133, 141, 0.12), rgba(10, 76, 83, 0.08));
+            border-right: 1px solid rgba(15, 133, 141, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: min(230px, 100%);
+            height: auto;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            color: #133541;
+            font-size: 15px;
+            line-height: 1.65;
+            max-width: 420px;
+        }
+
+        .form-pane {
+            padding: 38px 36px;
+        }
+
+        .form-pane h1 {
+            font-size: 30px;
+            color: #133541;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .form-subtitle {
+            color: #4d6871;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            color: #4d6871;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            border: 1px solid #CEF1F2;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: #FFFFFF;
+            color: #133541;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #05858E;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.16);
+        }
+
+        input::placeholder {
+            color: #4d6871;
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-input-wrapper input {
+            padding-right: 72px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #05858E;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 6px;
+        }
+
+        .toggle-password:hover {
+            background: rgba(15, 118, 110, 0.1);
+        }
+
+        .form-help {
+            margin-top: 6px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .btn-login {
+            width: 100%;
+            border: 1px solid #F6BE4A;
+            border-radius: 10px;
+            padding: 13px 14px;
+            background: #F6BE4A;
+            color: #133541;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-1px);
+            background: #efb23a;
+            box-shadow: 0 12px 25px rgba(246, 190, 74, 0.36);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .error-message,
+        .success-message,
+        .info-message,
+        .warning-message {
+            border-radius: 10px;
+            padding: 11px 12px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            border: 1px solid transparent;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #166534;
+        }
+
+        .info-message {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #05858E;
+        }
+
+        .warning-message {
+            background: #fffbeb;
+            border-color: #fde68a;
+            color: #92400e;
+        }
+
+        .field-error {
+            margin-top: 6px;
+            color: #b91c1c;
+            font-size: 12px;
+        }
+
+        .login-footer {
+            margin-top: 18px;
+            text-align: center;
+            color: #4d6871;
+            font-size: 13px;
+        }
+
+        .login-footer a {
+            color: #05858E;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .login-footer a:hover {
+            color: #133541;
+        }
+
+        .version {
+            margin-top: 10px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid rgba(19, 53, 65, 0.25);
+            border-top-color: #133541;
+            margin-right: 8px;
+            vertical-align: middle;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 880px) {
+            body {
+                padding: 16px;
+            }
+
+            .login-card {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-pane {
+                border-right: none;
+                border-bottom: 1px solid rgba(15, 133, 141, 0.15);
+            }
+
+            .brand-logo {
+                width: min(200px, 100%);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .brand-pane,
+            .form-pane {
+                padding: 26px 20px;
+            }
+
+            .form-pane h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-shell">
+        <div class="login-card">
+            <section class="brand-pane">
+                <img src="{% static 'images/LogoHandsviet.jpg' %}" alt="HandsViet logo" class="brand-logo">
+                <p class="brand-text">
+                    Create your patient account to manage care schedules, treatment progress, and recovery resources.
+                </p>
+            </section>
+
+            <section class="form-pane">
+                <h1>Create Account</h1>
+                <p class="form-subtitle">Đăng ký để lưu hồ sơ, nhận lịch điều trị và theo dõi tiến độ phục hồi theo từng mốc.</p>
+
+                {% if messages %}
+                {% for message in messages %}
+                <div class="{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}-message">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                <form method="POST" action="{% url 'auth:register' %}" id="register-form" novalidate>
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="id_username">Username</label>
+                        <input
+                            type="text"
+                            id="id_username"
+                            name="username"
+                            placeholder="Choose a username"
+                            value="{{ form_data.username|default:'' }}"
+                            required
+                            autofocus
+                            minlength="3"
+                        >
+                        {% if errors.username %}
+                        <div class="field-error">{{ errors.username }}</div>
+                        {% endif %}
+                        <div class="form-help">At least 3 characters. Letters, numbers, underscore and dash are recommended.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email">Email</label>
+                        <input
+                            type="email"
+                            id="id_email"
+                            name="email"
+                            placeholder="your.email@example.com"
+                            value="{{ form_data.email|default:'' }}"
+                            required
+                        >
+                        {% if errors.email %}
+                        <div class="field-error">{{ errors.email }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input
+                                type="password"
+                                id="id_password"
+                                name="password"
+                                placeholder="Minimum 6 characters"
+                                required
+                                minlength="6"
+                            >
+                            <button type="button" class="toggle-password" onclick="togglePassword('id_password', this)">Show</button>
+                        </div>
+                        {% if errors.password %}
+                        <div class="field-error">{{ errors.password }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password_confirm">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input
+                                type="password"
+                                id="id_password_confirm"
+                                name="password_confirm"
+                                placeholder="Re-enter your password"
+                                required
+                                minlength="6"
+                            >
+                            <button type="button" class="toggle-password" onclick="togglePassword('id_password_confirm', this)">Show</button>
+                        </div>
+                        {% if errors.password_confirm %}
+                        <div class="field-error">{{ errors.password_confirm }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn-login" id="register-btn">Create Account</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Already have an account? <a href="{% url 'auth:login' %}">Login now</a></p>
+                    <p style="margin-top: 8px;">&copy; 2026 HandsViet. All rights reserved.</p>
+                    <div class="version">v1.0.0</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(fieldId, button) {
+            const field = document.getElementById(fieldId);
+            const isText = field.type === "text";
+            field.type = isText ? "password" : "text";
+            button.textContent = isText ? "Show" : "Hide";
+        }
+
+        const registerForm = document.getElementById("register-form");
+        const registerBtn = document.getElementById("register-btn");
+
+        registerForm.addEventListener("submit", function (e) {
+            const password = document.getElementById("id_password").value;
+            const passwordConfirm = document.getElementById("id_password_confirm").value;
+
+            if (password !== passwordConfirm) {
+                e.preventDefault();
+                alert("Password confirmation does not match.");
+                return;
+            }
+
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<span class="spinner"></span>Creating account...';
+        });
+    </script>
+</body>
+</html>
+

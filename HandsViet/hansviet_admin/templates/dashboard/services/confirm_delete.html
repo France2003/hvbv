@@ -1,0 +1,27 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+{% block title %}{% tr "Xóa dịch vụ - HandsViet Dashboard" "Delete service - HandsViet Dashboard" %}{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'dashboard:service_list' %}" class="hover:text-teal-600">{% tr "Dịch vụ" "Services" %}</a>
+<span class="text-gray-300">/</span>
+<span class="text-gray-900 font-medium">{% tr "Xóa dịch vụ" "Delete service" %}</span>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto py-20 text-center">
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tighter">{% tr "Xác nhận xóa?" "Confirm deletion?" %}</h1>
+    <p class="text-gray-500 mb-12 text-lg">
+        {% if request.LANGUAGE_CODE|slice:':2' == 'en' %}
+        Are you sure you want to delete <span class="font-bold text-gray-900">"{{ service.title }}"</span>? This action cannot be undone.
+        {% else %}
+        Bạn có chắc chắn muốn xóa dịch vụ <span class="font-bold text-gray-900">"{{ service.title }}"</span>? Hành động này không thể hoàn tác.
+        {% endif %}
+    </p>
+    <form method="post" class="flex items-center justify-center gap-6">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest transition-all">{% tr "Đồng ý xóa" "Delete" %}</button>
+        <a href="{% url 'dashboard:service_list' %}" class="px-10 py-4 rounded-2xl text-[11px] font-black text-slate-400 hover:text-slate-900 border border-slate-200 hover:bg-white transition-all uppercase tracking-widest">{% tr "Hủy quay lại" "Cancel" %}</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,210 @@
+{% load static i18n i18n_extras %}
+<footer class="bg-gradient-to-br from-white via-[#f6faff] to-[#eaf2ff] text-slate-800 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+            <div class="space-y-6">
+                <div class="flex items-center">
+                    <img src="{% static 'images/LogoHandsviet.jpg' %}" alt="HandsViet Logo" class="h-20 w-20 object-contain">
+                </div>
+                <p class="text-slate-600 leading-relaxed text-sm">
+                    {% tr "Bệnh viện phục hồi chức năng hàng đầu Việt Nam, mang đến dịch vụ chăm sóc sức khỏe chuyên nghiệp và tận tâm." "A leading rehabilitation hospital in Vietnam, delivering professional and compassionate healthcare services." %}
+                </p>
+                <div class="flex space-x-3">
+                    <a href="#" class="group p-3 rounded-full bg-white text-[#0090A1] border border-[#cfe1f5] hover:bg-[#0090A1] hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-blue-500/25" aria-label="Facebook">
+                        <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="group p-3 rounded-full bg-white text-[#0090A1] border border-[#cfe1f5] hover:bg-[#0090A1] hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-blue-500/25" aria-label="X">
+                        <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="group p-3 rounded-full bg-white text-[#0090A1] border border-[#cfe1f5] hover:bg-[#0090A1] hover:text-white transition-all duration-300 hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-blue-500/25" aria-label="Instagram">
+                        <svg class="w-5 h-5 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-slate-900">{% tr "Liên kết nhanh" "Quick links" %}</h4>
+                <ul class="space-y-3">
+                    <li>
+                        <a href="/" class="text-slate-600 hover:text-[#0090A1] transition-colors duration-200 flex items-center group">
+                            <span class="w-1.5 h-1.5 bg-[#0090A1] rounded-full mr-2 group-hover:w-2 group-hover:h-2 transition-all"></span>
+                            {% tr "Trang chủ" "Home" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pages:rehab_fields' %}" class="text-slate-600 hover:text-[#0090A1] transition-colors duration-200 flex items-center group">
+                            <span class="w-1.5 h-1.5 bg-[#0090A1] rounded-full mr-2 group-hover:w-2 group-hover:h-2 transition-all"></span>
+                            {% tr "Lĩnh vực phục hồi" "Rehabilitation fields" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pages:booking' %}" class="text-slate-600 hover:text-[#0090A1] transition-colors duration-200 flex items-center group">
+                            <span class="w-1.5 h-1.5 bg-[#0090A1] rounded-full mr-2 group-hover:w-2 group-hover:h-2 transition-all"></span>
+                            {% tr "Đặt lịch khám" "Book an appointment" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pages:about' %}" class="text-slate-600 hover:text-[#0090A1] transition-colors duration-200 flex items-center group">
+                            <span class="w-1.5 h-1.5 bg-[#0090A1] rounded-full mr-2 group-hover:w-2 group-hover:h-2 transition-all"></span>
+                            {% tr "Về chúng tôi" "About us" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'pages:contact' %}" class="text-slate-600 hover:text-[#0090A1] transition-colors duration-200 flex items-center group">
+                            <span class="w-1.5 h-1.5 bg-[#0090A1] rounded-full mr-2 group-hover:w-2 group-hover:h-2 transition-all"></span>
+                            {% tr "Liên hệ" "Contact" %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'news:news_list' %}" class="text-slate-600 hover:text-[#0090A1] transition-colors duration-200 flex items-center group">
+                            <span class="w-1.5 h-1.5 bg-[#0090A1] rounded-full mr-2 group-hover:w-2 group-hover:h-2 transition-all"></span>
+                            {% tr "Tin tức" "News" %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-slate-900">{% tr "Thông tin liên hệ" "Contact information" %}</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start group">
+                        <div class="bg-[#e6f2ff] p-2 rounded-lg mr-3 group-hover:bg-[#d6e9ff] transition-colors">
+                            <svg class="w-5 h-5 text-[#0090A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-slate-600 text-sm text-left leading-relaxed">
+                            {% tr "227b Nguyễn Công Trứ, An Hải, Sơn Trà, Đà Nẵng, Việt Nam" "227b Nguyen Cong Tru Street, An Hai Ward, Son Tra District, Da Nang, Vietnam" %}
+                        </span>
+                    </li>
+                    <li class="flex items-center group">
+                        <div class="bg-[#e6f2ff] p-2 rounded-lg mr-3 group-hover:bg-[#d6e9ff] transition-colors">
+                            <svg class="w-5 h-5 text-[#0090A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                        </div>
+                        <a href="tel:19001234" class="text-slate-600 hover:text-[#0090A1] transition-colors text-sm">1900-1234</a>
+                    </li>
+                    <li class="flex items-center group">
+                        <div class="bg-[#e6f2ff] p-2 rounded-lg mr-3 group-hover:bg-[#d6e9ff] transition-colors">
+                            <svg class="w-5 h-5 text-[#0090A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <a href="mailto:info@handsviet.vn" class="text-slate-600 hover:text-[#0090A1] transition-colors text-sm">info@handsviet.vn</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold mb-6 text-slate-900">{% tr "Khẩn cấp" "Emergency" %}</h4>
+                <div class="bg-gradient-to-br from-[#2a77c7] to-[#0090A1] rounded-2xl p-6 mb-6 shadow-2xl hover:shadow-blue-500/35 transition-all duration-300 hover:scale-105 border border-[#9dc8f2]/45">
+                    <p class="text-sm mb-3 text-cyan-100">{% tr "Đường dây nóng 24/7" "24/7 hotline" %}</p>
+                    <a href="tel:1900-1234" class="text-3xl font-black text-white hover:text-sky-100 transition-colors block">1900-1234</a>
+                </div>
+                <div class="space-y-3 bg-white rounded-xl p-4 border border-[#cfe1f5]">
+                    <div class="flex items-center text-slate-600 text-sm">
+                        <svg class="w-4 h-4 mr-3 text-[#0090A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>{% tr "Thứ 2-6:" "Mon-Fri:" %} <strong class="text-slate-900">8:00 - 20:00</strong></span>
+                    </div>
+                    <div class="flex items-center text-slate-600 text-sm">
+                        <svg class="w-4 h-4 mr-3 text-[#0090A1]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>{% tr "Thứ 7-CN:" "Sat-Sun:" %} <strong class="text-slate-900">8:00 - 17:00</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-[#cfe1f5] pt-8">
+            <div class="text-center space-y-3">
+                <p class="text-slate-500 text-sm">
+                    {% tr "© 2026 CÔNG TY TNHH BỆNH VIỆN PHỤC HỒI CHỨC NĂNG - Y HỌC THỂ THAO HANDSVIET. Tất cả quyền được bảo lưu." "© 2026 HANDSVIET REHABILITATION HOSPITAL AND SPORTS MEDICINE CO., LTD. All rights reserved." %}
+                </p>
+                <div class="flex flex-wrap justify-center gap-2 text-sm">
+                    <a href="#" class="text-slate-500 hover:text-[#0090A1] transition-colors px-3 py-1 rounded-full hover:bg-[#e9f3ff]">{% tr "Chính sách bảo mật" "Privacy policy" %}</a>
+                    <span class="text-[#9cbbe3]">&bull;</span>
+                    <a href="#" class="text-slate-500 hover:text-[#0090A1] transition-colors px-3 py-1 rounded-full hover:bg-[#e9f3ff]">{% tr "Điều khoản sử dụng" "Terms of use" %}</a>
+                    <span class="text-[#9cbbe3]">&bull;</span>
+                    <a href="{% url 'pages:faq' %}" class="text-slate-500 hover:text-[#0090A1] transition-colors px-3 py-1 rounded-full hover:bg-[#e9f3ff]">{% tr "Câu hỏi thường gặp" "Frequently asked questions" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-[180px] right-[25px] z-50 flex flex-col gap-3">
+        <a href="https://zalo.me/" target="_blank" rel="noopener" class="w-12 h-12 rounded-full bg-sky-500 text-white flex items-center justify-center shadow-lg hover:scale-110 transition" title="Zalo">Z</a>
+        <a href="sms:19001234" class="w-12 h-12 rounded-full bg-[#05858E] text-white flex items-center justify-center shadow-lg hover:scale-110 transition" title="SMS">S</a>
+        <a href="https://wa.me/84900000000" target="_blank" rel="noopener" class="w-12 h-12 rounded-full bg-green-500 text-white flex items-center justify-center shadow-lg hover:scale-110 transition" title="WhatsApp">W</a>
+    </div>
+
+    <button id="backToTop"
+        class="fixed bottom-[100px] right-[25px] z-50 w-[60px] h-[60px] flex items-center justify-center bg-gradient-to-r from-[#0090A1] to-[#2563eb] text-white rounded-full shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 hover:scale-110 active:scale-95 group focus:outline-none focus:ring-4 focus:ring-blue-500/30"
+        title="{% tr 'Lên đầu trang' 'Back to top' %}">
+        <svg class="w-6 h-6 transform transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path>
+        </svg>
+        <span class="absolute bottom-full right-0 mb-4 px-3 py-1.5 bg-[#0b3a5e]/90 text-white text-xs font-bold rounded-lg opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity pointer-events-none backdrop-blur-sm">
+            {% tr "Lên đầu trang" "Back to top" %}
+        </span>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (!backToTopBtn) {
+                return;
+            }
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 400) {
+                    backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+                    backToTopBtn.classList.add('translate-y-0', 'opacity-100');
+                } else {
+                    backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+                    backToTopBtn.classList.remove('translate-y-0', 'opacity-100');
+                }
+            });
+
+            backToTopBtn.addEventListener('click', function () {
+                const scrollStep = -window.scrollY / (1000 / 15);
+                const scrollInterval = setInterval(function () {
+                    if (window.scrollY !== 0) {
+                        window.scrollBy(0, scrollStep);
+                    } else {
+                        clearInterval(scrollInterval);
+                    }
+                }, 15);
+
+                const stopScroll = function () {
+                    clearInterval(scrollInterval);
+                };
+                window.addEventListener('wheel', stopScroll, { once: true });
+                window.addEventListener('touchstart', stopScroll, { once: true });
+                window.addEventListener('mousedown', stopScroll, { once: true });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6982ee5e6273081c3ac0e164/1jgjn68kr';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+</footer>

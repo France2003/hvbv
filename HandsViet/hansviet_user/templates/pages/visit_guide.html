@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn thăm khám - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .step-card {
+            background: white;
+            border: 1px solid #f1f5f9;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .step-card:hover {
+            transform: translateX(10px);
+            border-color: #133541;
+            box-shadow: 20px 20px 60px -15px rgba(15, 23, 42, 0.05);
+        }
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes revealUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <!-- Hero Section -->
+        <section class="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2053&auto=format&fit=crop" 
+                    class="w-full h-full object-cover scale-105" alt="Visit Guide HandsViet">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-10 animate-fade-in-up">
+                    Quy trình chuyên nghiệp
+                </div>
+                <h1 class="text-3xl md:text-5xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
+                    Quy trình <span class="text-teal-400">thăm khám</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200/90 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200 px-4">
+                    Tại HandsViet, chúng tôi thiết lập một hành trình 5 bước chuẩn y khoa, minh bạch và tận tâm để đảm bảo kết quả phục hồi tốt nhất cho bạn.
+                </p>
+            </div>
+        </section>
+
+        <!-- Timeline Workflow -->
+        <section class="max-w-4xl mx-auto px-4 py-32 relative">
+            <!-- Central Line -->
+            <div class="absolute left-[2.45rem] top-32 bottom-32 w-1 bg-gradient-to-b from-teal-100 via-teal-500 to-teal-100 hidden md:block opacity-30"></div>
+            
+            <div class="space-y-16">
+                <!-- Step 1 -->
+                <div class="relative reveal flex flex-col md:flex-row gap-12 group">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-xl shadow-teal-500/20 z-10 shrink-0 group-hover:scale-110 transition-transform">01</div>
+                    <div class="step-card flex-1 p-10 rounded-[3rem]">
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Đặt lịch & Tư vấn sơ bộ</h3>
+                        <p class="text-lg text-slate-500 leading-relaxed font-medium">Bạn có thể đặt lịch qua Website hoặc Hotline. Đội ngũ chuyên môn sẽ liên hệ để thu thập thông tin cơ bản và xác nhận lịch hẹn trong vòng 15-30 phút.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative reveal-up flex flex-col md:flex-row gap-12 group" style="animation-delay: 0.4s;">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-xl shadow-teal-500/20 z-10 shrink-0 group-hover:scale-110 transition-transform">02</div>
+                    <div class="step-card flex-1 p-10 rounded-[3rem]">
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Thăm khám lâm sàng</h3>
+                        <p class="text-lg text-slate-500 leading-relaxed font-medium">Bác sĩ chuyên khoa trực tiếp thăm khám, đánh giá biên độ vận động, sức cơ và chỉ định các xét nghiệm hình ảnh cần thiết để chẩn đoán chính xác.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative reveal-up flex flex-col md:flex-row gap-12 group" style="animation-delay: 0.5s;">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-xl shadow-teal-500/20 z-10 shrink-0 group-hover:scale-110 transition-transform">03</div>
+                    <div class="step-card flex-1 p-10 rounded-[3rem]">
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Thiết kế phác đồ cá nhân</h3>
+                        <p class="text-lg text-slate-500 leading-relaxed font-medium">Dựa trên kết quả khám, bác sĩ xây dựng liệu trình riêng biệt kết hợp: Vật lý trị liệu, Công nghệ cao và Vận động trị liệu phù hợp với cơ địa.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative reveal-up flex flex-col md:flex-row gap-12 group" style="animation-delay: 0.6s;">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-xl shadow-teal-500/20 z-10 shrink-0 group-hover:scale-110 transition-transform">04</div>
+                    <div class="step-card flex-1 p-10 rounded-[3rem]">
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Tiến hành trị liệu 1-1</h3>
+                        <p class="text-lg text-slate-500 leading-relaxed font-medium">Bệnh nhân được kỹ thuật viên hỗ trợ trực tiếp trọn vẹn liệu trình với trang thiết bị hiện đại. Trạng thái được ghi nhật ký và theo dõi sát sao mỗi buổi.</p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="relative reveal-up flex flex-col md:flex-row gap-12 group" style="animation-delay: 0.7s;">
+                    <div class="w-14 h-14 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-xl shadow-teal-500/20 z-10 shrink-0 group-hover:scale-110 transition-transform">05</div>
+                    <div class="step-card flex-1 p-10 rounded-[3rem]">
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 tracking-tight uppercase">Đánh giá & Theo dõi sau đó</h3>
+                        <p class="text-lg text-slate-500 leading-relaxed font-medium">Sau liệu trình, bác sĩ đánh giá mức độ hồi phục và hướng dẫn bài tập duy trì tại nhà qua ứng dụng/video để ngăn ngừa tái phát.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pre-visit Notice -->
+        <section class="max-w-7xl mx-auto px-4 pb-40">
+            <div class="bg-amber-50 rounded-[4rem] p-12 md:p-20 border border-amber-100 flex flex-col md:flex-row items-center gap-16 reveal">
+                <div class="w-24 h-24 bg-amber-500 rounded-3xl flex items-center justify-center text-white text-4xl shadow-2xl shadow-amber-500/30 shrink-0">📍</div>
+                <div class="space-y-8 flex-1">
+                    <h2 class="text-3xl font-black text-amber-900 tracking-tight uppercase">Chuẩn bị trước khi đến thăm khám</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 rounded-full bg-amber-500 mt-2 shrink-0"></div>
+                            <p class="text-amber-800 font-bold">Mang theo toàn bộ phim chụp (X-ray, MRI) và hồ sơ bệnh án gần nhất nếu có.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 rounded-full bg-amber-500 mt-2 shrink-0"></div>
+                            <p class="text-amber-800 font-bold">Lựa chọn trang phục co giãn, thoải mái để thuận tiện cho việc kiểm tra vận động.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 rounded-full bg-amber-500 mt-2 shrink-0"></div>
+                            <p class="text-amber-800 font-bold">Nên đến trước lịch hẹn khoảng 10-15 phút để hoàn thiện thủ tục hồ sơ điện tử.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-2 h-2 rounded-full bg-amber-500 mt-2 shrink-0"></div>
+                            <p class="text-amber-800 font-bold">Thông báo chi tiết cho bác sĩ về tiền sử dị ứng hoặc các phẫu thuật cũ.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        // Reveal animations on scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+
+</html>
+

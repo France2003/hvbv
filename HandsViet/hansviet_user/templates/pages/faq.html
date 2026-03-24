@@ -1,0 +1,203 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Câu hỏi thường gặp - HandsViet" "Frequently asked questions - HandsViet" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .reveal { opacity: 0; transform: translateY(24px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; opacity: 0; }
+        .accordion-item.active .accordion-content { max-height: 500px; opacity: 1; padding-bottom: 2rem; }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); background-color: #133541; color: white; }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <section class="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2080&auto=format&fit=crop"
+                    class="w-full h-full object-cover scale-105" alt="{% tr 'FAQ HandsViet' 'HandsViet FAQ' %}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[1px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs md:text-sm uppercase tracking-[0.2em] mb-10">
+                    {% tr "Hỗ trợ khách hàng" "Customer support" %}
+                </div>
+                <h1 class="text-3xl md:text-5xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight">
+                    {% tr "Giải đáp" "Answers to" %} <span class="text-teal-400">{% tr "thắc mắc" "your questions" %}</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200/90 max-w-3xl mx-auto leading-relaxed px-4">
+                    {% tr "Tìm kiếm nhanh các câu trả lời về quy trình điều trị, chi phí và chính sách tại HandsViet." "Find quick answers about treatment processes, pricing, and policies at HandsViet." %}
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-2xl mx-auto px-4 -mt-10 relative z-30 reveal">
+            <div class="relative group">
+                <input id="faqSearch" type="text" placeholder="{% tr 'Bạn đang thắc mắc điều gì?...' 'What would you like to know?...' %}"
+                    class="w-full pl-14 pr-6 py-6 bg-white rounded-3xl shadow-2xl shadow-slate-200/50 border border-slate-100 focus:ring-4 focus:ring-teal-500/10 focus:border-teal-500 transition-all text-sm font-bold placeholder:text-slate-300">
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-teal-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="3"></path></svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-4xl mx-auto px-4 py-32">
+            <div class="grid gap-16">
+                <div class="reveal">
+                    <div class="flex items-center gap-4 mb-10">
+                        <div class="w-10 h-10 bg-teal-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-teal-500/20 font-black">?</div>
+                        <h2 class="text-xs font-black text-slate-400 uppercase tracking-widest">{% tr "Quy trình và điều trị" "Process and treatment" %}</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="accordion-item bg-white rounded-[2rem] border border-slate-100 hover:border-teal-100 transition-all duration-300 group shadow-sm overflow-hidden">
+                            <button class="w-full flex items-center justify-between p-8 text-left focus:outline-none" onclick="toggleAccordion(this)">
+                                <span class="text-lg md:text-xl font-extrabold text-slate-800 pr-10 leading-snug group-hover:text-teal-700 transition-colors">{% tr "Đặt lịch khám tại HandsViet như thế nào?" "How do I book an appointment at HandsViet?" %}</span>
+                                <div class="accordion-icon w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 transition-all duration-300 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3"></path></svg>
+                                </div>
+                            </button>
+                            <div class="accordion-content px-8">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-medium leading-relaxed">
+                                    {% tr "Bạn có thể đặt lịch dễ dàng qua website, hotline hoặc Zalo OA của HandsViet. Sau khi tiếp nhận yêu cầu, đội ngũ sẽ xác nhận thời gian phù hợp và hướng dẫn chuẩn bị trước buổi khám." "You can book easily through the website, hotline, or HandsViet's Zalo OA. Once your request is received, our team will confirm a suitable time and guide you on how to prepare before the appointment." %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item bg-white rounded-[2rem] border border-slate-100 hover:border-teal-100 transition-all duration-300 group shadow-sm overflow-hidden">
+                            <button class="w-full flex items-center justify-between p-8 text-left focus:outline-none" onclick="toggleAccordion(this)">
+                                <span class="text-lg md:text-xl font-extrabold text-slate-800 pr-10 leading-snug group-hover:text-teal-700 transition-colors">{% tr "Một liệu trình thường kéo dài bao lâu?" "How long does a typical treatment program last?" %}</span>
+                                <div class="accordion-icon w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 transition-all duration-300 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3"></path></svg>
+                                </div>
+                            </button>
+                            <div class="accordion-content px-8">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-medium leading-relaxed">
+                                    {% tr "Thời gian phụ thuộc vào chẩn đoán, mức độ tổn thương và mục tiêu phục hồi. Nhiều chương trình cơ bản kéo dài từ 6 đến 12 buổi, nhưng bác sĩ và kỹ thuật viên sẽ điều chỉnh theo tiến triển thực tế." "Duration depends on the diagnosis, severity of impairment, and recovery goals. Many basic programs run for 6 to 12 sessions, but the doctor and therapists will adjust the plan according to real progress." %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item bg-white rounded-[2rem] border border-slate-100 hover:border-teal-100 transition-all duration-300 group shadow-sm overflow-hidden">
+                            <button class="w-full flex items-center justify-between p-8 text-left focus:outline-none" onclick="toggleAccordion(this)">
+                                <span class="text-lg md:text-xl font-extrabold text-slate-800 pr-10 leading-snug group-hover:text-teal-700 transition-colors">{% tr "Có cần mang theo kết quả khám trước đó không?" "Should I bring previous medical records or scans?" %}</span>
+                                <div class="accordion-icon w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 transition-all duration-300 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3"></path></svg>
+                                </div>
+                            </button>
+                            <div class="accordion-content px-8">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-medium leading-relaxed">
+                                    {% tr "Có. Các toa thuốc, phim chụp, kết quả MRI, CT, X-quang hoặc hồ sơ điều trị cũ sẽ giúp đội ngũ đánh giá nhanh hơn và hạn chế chỉ định trùng lặp." "Yes. Prescriptions, imaging, MRI, CT, X-ray results, or previous treatment records help the team assess you faster and avoid unnecessary duplication." %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal">
+                    <div class="flex items-center gap-4 mb-10">
+                        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20 font-black">$</div>
+                        <h2 class="text-xs font-black text-slate-400 uppercase tracking-widest">{% tr "Chi phí và chính sách" "Pricing and policy" %}</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="accordion-item bg-white rounded-[2rem] border border-slate-100 hover:border-blue-100 transition-all duration-300 group shadow-sm overflow-hidden">
+                            <button class="w-full flex items-center justify-between p-8 text-left focus:outline-none" onclick="toggleAccordion(this)">
+                                <span class="text-lg md:text-xl font-extrabold text-slate-800 pr-10 leading-snug group-hover:text-blue-700 transition-colors">{% tr "HandsViet có áp dụng bảo hiểm y tế không?" "Does HandsViet accept health insurance?" %}</span>
+                                <div class="accordion-icon w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 transition-all duration-300 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3"></path></svg>
+                                </div>
+                            </button>
+                            <div class="accordion-content px-8">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-medium leading-relaxed">
+                                    {% tr "Hiện tại HandsViet chưa thanh toán trực tiếp bảo hiểm y tế nhà nước. Tuy nhiên, chúng tôi hỗ trợ xuất hóa đơn tài chính và hồ sơ cần thiết để bệnh nhân làm việc với các gói bảo hiểm sức khỏe tư nhân." "HandsViet does not currently process direct payment through the national health insurance system. However, we can provide financial invoices and the necessary documents for patients using private health insurance plans." %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item bg-white rounded-[2rem] border border-slate-100 hover:border-blue-100 transition-all duration-300 group shadow-sm overflow-hidden">
+                            <button class="w-full flex items-center justify-between p-8 text-left focus:outline-none" onclick="toggleAccordion(this)">
+                                <span class="text-lg md:text-xl font-extrabold text-slate-800 pr-10 leading-snug group-hover:text-blue-700 transition-colors">{% tr "Chi phí điều trị được báo như thế nào?" "How is treatment pricing explained?" %}</span>
+                                <div class="accordion-icon w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 transition-all duration-300 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="3"></path></svg>
+                                </div>
+                            </button>
+                            <div class="accordion-content px-8">
+                                <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-slate-500 font-medium leading-relaxed">
+                                    {% tr "Sau khi thăm khám và xác định mục tiêu phục hồi, đội ngũ sẽ tư vấn rõ gói điều trị, số buổi dự kiến và chi phí tương ứng. Chúng tôi ưu tiên minh bạch trước khi bệnh nhân bắt đầu chương trình." "After assessment and goal setting, the team will explain the recommended treatment package, estimated number of sessions, and the corresponding cost. We prioritize full clarity before a patient starts the program." %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 pb-40">
+            <div class="bg-slate-900 rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden reveal">
+                <div class="relative z-10">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-8 tracking-tight">{% tr "Vẫn còn thắc mắc khác?" "Still have more questions?" %}</h2>
+                    <p class="text-slate-400 text-lg font-medium mb-12 max-w-xl mx-auto">{% tr "Đội ngũ HandsViet luôn sẵn sàng hỗ trợ bạn với thông tin rõ ràng và hướng dẫn phù hợp." "The HandsViet team is always ready to support you with clear information and practical guidance." %}</p>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                        <a href="{% url 'pages:contact' %}" class="px-10 py-5 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-teal-500/20 transition-all">{% tr "Liên hệ ngay" "Contact us now" %}</a>
+                        <a href="tel:028XXXX" class="text-white font-black hover:text-teal-400 transition-colors flex items-center gap-3">
+                            <span class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">☎</span>
+                            028.XXXX.XXXX
+                        </a>
+                    </div>
+                </div>
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 border-[40px] border-white/5 rounded-full"></div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        function toggleAccordion(btn) {
+            const item = btn.parentElement;
+            item.classList.toggle('active');
+        }
+
+        const searchInput = document.getElementById('faqSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const val = e.target.value.toLowerCase();
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    const text = item.innerText.toLowerCase();
+                    item.style.display = text.includes(val) ? 'block' : 'none';
+                });
+            });
+        }
+
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 120;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>
+

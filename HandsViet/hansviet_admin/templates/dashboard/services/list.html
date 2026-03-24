@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+{% block title %}{% tr "Dịch vụ - HandsViet Dashboard" "Services - HandsViet Dashboard" %}{% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-slate-900 font-extrabold">{% tr "Dịch vụ & Giải pháp" "Services & solutions" %}</span>
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div>
+        <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">{% tr "Quản lý dịch vụ" "Service management" %}</h1>
+        <p class="text-gray-500 mt-1">{% tr "Quản lý và cập nhật bài viết dịch vụ, giải pháp công nghệ." "Manage service pages and related solution content." %}</p>
+        {% if current_category %}
+        <p class="text-sm text-teal-600 font-semibold mt-2">{% tr "Đang lọc theo chuyên mục:" "Filtered by category:" %} {{ current_category.display_name|default:current_category.name }}</p>
+        {% endif %}
+    </div>
+    <div class="flex items-center gap-3">
+        {% if current_category %}
+        <a href="{% url 'dashboard:service_list' %}" class="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 px-6 py-3 rounded-2xl font-bold transition-all">{% tr "Bỏ lọc" "Clear filter" %}</a>
+        {% endif %}
+        <a href="{% url 'dashboard:category_list' %}" class="bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 px-6 py-3 rounded-2xl font-bold transition-all">{% tr "Chuyên mục" "Categories" %}</a>
+        <a href="{% url 'dashboard:service_create' %}" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-2xl font-bold transition-all">+ {% tr "Thêm dịch vụ" "Add service" %}</a>
+    </div>
+</div>
+<div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+    <div class="overflow-x-auto text-sm">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-gray-50/50">
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Dịch vụ" "Service" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Chuyên mục" "Category" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Giá & Thời gian" "Price & duration" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Đã bán" "Sold" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px]">{% tr "Nổi bật" "Featured" %}</th>
+                    <th class="px-8 py-5 font-bold text-gray-400 uppercase tracking-widest text-[10px] text-right">{% tr "Hành động" "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                {% for service in services %}
+                <tr class="hover:bg-gray-50/40 transition-colors group">
+                    <td class="px-8 py-5">
+                        <div class="flex items-center gap-4">
+                            {% if service.thumbnail %}<img src="{{ service.thumbnail.url }}" class="w-12 h-12 rounded-xl object-cover border border-gray-100" alt="{{ service.display_title|default:service.title }}">{% else %}<div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-gray-300">S</div>{% endif %}
+                            <div>
+                                <div class="font-bold text-gray-900">{{ service.display_title|default:service.title }}</div>
+                                <div class="text-[11px] text-gray-400 mt-1 uppercase font-semibold">{% tr "Thứ tự" "Order" %}: {{ service.order }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-5"><span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-blue-50 text-blue-600 border border-blue-100 uppercase tracking-wider">{{ service.display_category_name|default:"-" }}</span></td>
+                    <td class="px-8 py-5">
+                        <div class="text-gray-800 font-bold">{{ service.price_text|default:"-" }}</div>
+                        <div class="text-xs text-gray-400 mt-1">{{ service.display_duration|default:service.duration|default:"" }}</div>
+                    </td>
+                    <td class="px-8 py-5 text-center"><span class="inline-flex items-center justify-center min-w-10 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">{{ service.sold_count|default:0 }}</span></td>
+                    <td class="px-8 py-5 text-center">{% if service.is_featured %}<span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-teal-50 text-teal-600 border border-teal-100">{{ service.display_featured_tag|default:service.featured_tag|default:"Featured" }}</span>{% else %}<span class="text-gray-300">-</span>{% endif %}</td>
+                    <td class="px-8 py-5 text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            <a href="{% url 'dashboard:service_edit' service.pk %}" class="px-3 py-2 text-xs font-bold text-blue-600 hover:bg-blue-50 rounded-xl">{% tr "Sửa" "Edit" %}</a>
+                            <a href="{% url 'dashboard:service_delete' service.pk %}" class="px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl">{% tr "Xóa" "Delete" %}</a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="px-8 py-20 text-center text-gray-400 font-medium">{% tr "Chưa có dịch vụ nào." "No services available yet." %}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

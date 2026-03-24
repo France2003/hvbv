@@ -1,0 +1,277 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Vật lý trị liệu chuyên sâu - Bệnh viện HandsViet" "Advanced physical therapy - HandsViet Hospital" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style type="text/tailwindcss">
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+
+        .service-content h2 {
+            @apply text-3xl md:text-4xl font-black text-slate-900 mb-8 tracking-tighter uppercase flex items-center gap-4;
+        }
+
+        .service-content h2::before {
+            @apply content-[''] w-2 h-10 bg-teal-500 rounded-full inline-block;
+        }
+
+        .service-content p {
+            @apply text-lg text-slate-600 leading-relaxed mb-6 font-medium;
+        }
+
+        .service-content h3 {
+            @apply text-2xl font-extrabold text-slate-800 mb-4 mt-8 uppercase tracking-tight;
+        }
+
+        .service-content ul {
+            @apply space-y-4 mb-10;
+        }
+
+        .service-content li {
+            @apply flex items-start gap-3 text-slate-600 text-lg;
+        }
+
+        .service-content li svg {
+            @apply w-6 h-6 text-teal-500 mt-1 flex-shrink-0;
+        }
+
+        .image-card {
+            @apply relative rounded-[3rem] overflow-hidden shadow-2xl transition-all duration-700 hover:scale-[1.01] border-4 border-white;
+        }
+
+        .zig-zag-section {
+            @apply py-24 md:py-32 relative overflow-hidden;
+        }
+
+        .reveal.active {
+            @apply opacity-100 translate-y-0 transition-all duration-1000;
+        }
+
+        .reveal {
+            @apply opacity-0 translate-y-10;
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .method-card {
+            @apply bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col h-full border-t-4 border-t-transparent hover:border-t-teal-500;
+        }
+
+        .highlight-box {
+            @apply bg-teal-50 p-8 rounded-3xl border-l-4 border-teal-500 mb-8;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="bg-white min-h-screen">
+        <section class="relative h-[60vh] min-h-[450px] flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="https://myrehab-matsuoka.com/wp-content/uploads/2023/06/homepage_1-2.png"
+                    class="w-full h-full object-cover" alt="{% tr 'Vật lý trị liệu chuyên sâu' 'Advanced physical therapy' %}">
+                <div class="absolute inset-0 bg-slate-900/65 backdrop-blur-[2px]"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-300 font-bold text-xs uppercase tracking-[0.2em] mb-10 animate-fade-in-up">
+                    {% tr "Phục hồi chức năng chuẩn quốc tế" "International rehabilitation standards" %}
+                </div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-tight tracking-tight animate-fade-in-up delay-100">
+                    {% tr "Vật lý" "Physical" %} <span class="text-teal-400">{% tr "trị liệu" "therapy" %}</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-200/90 max-w-4xl mx-auto leading-relaxed animate-fade-in-up delay-200 px-4 font-light italic">
+                    {% tr "Giải quyết nguyên nhân của đau và hạn chế vận động bằng đánh giá cơ sinh học chính xác và chương trình can thiệp cá nhân hóa." "Address pain and movement limitations at the source with precise biomechanical assessment and personalized intervention plans." %}
+                </p>
+            </div>
+        </section>
+
+        <div class="relative z-20">
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="image-card lg:order-1 h-[450px] md:h-[600px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/bai-tap-vat-ly-tri-lieu-khop-goi.jpg" alt="{% tr 'Định nghĩa vật lý trị liệu' 'Physical therapy overview' %}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="service-content lg:order-2">
+                            <h2>{% tr "Vật lý trị liệu là gì?" "What is physical therapy?" %}</h2>
+                            <p>{% tr "Vật lý trị liệu là chuyên ngành phục hồi chức năng sử dụng vận động trị liệu, trị liệu bằng tay và các tác nhân vật lý để giảm đau, cải thiện biên độ vận động và khôi phục chức năng mà không phụ thuộc vào thuốc hoặc can thiệp xâm lấn." "Physical therapy is a rehabilitation specialty that uses therapeutic exercise, manual therapy, and physical agents to reduce pain, improve range of motion, and restore function without relying on medication or invasive procedures." %}</p>
+
+                            <div class="highlight-box">
+                                <p class="mb-0 text-slate-800 font-bold italic">{% tr "HandsViet không chỉ điều trị vùng tổn thương. Chúng tôi phục hồi cả cách cơ thể bạn vận hành trong cuộc sống hàng ngày." "HandsViet does not only treat the injured area. We restore how your body performs in daily life." %}</p>
+                            </div>
+
+                            <p>{% tr "Tại HandsViet, quá trình đánh giá dựa trên cơ sinh học giúp xác định mất cân bằng giữa khớp, cơ, dây chằng và thói quen vận động. Từ đó, kỹ thuật viên xây dựng lộ trình phù hợp với mục tiêu của từng người bệnh, từ giảm đau cấp tính đến quay lại thể thao hoặc công việc." "At HandsViet, biomechanical assessment identifies imbalances across joints, muscles, ligaments, and movement habits. Therapists then build a plan aligned with each patient's goals, from acute pain relief to returning to sports or work." %}</p>
+
+                            <p>{% tr "Phương pháp này đặc biệt hiệu quả với đau cổ vai gáy, đau thắt lưng, thoái hóa khớp, chấn thương thể thao, hậu phẫu chỉnh hình và các rối loạn vận động kéo dài." "This approach is especially effective for neck and shoulder pain, low back pain, osteoarthritis, sports injuries, post-operative orthopedic recovery, and persistent movement disorders." %}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section bg-slate-50 reveal border-y border-slate-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="service-content order-2 lg:order-1">
+                            <h2>{% tr "Vai trò lâm sàng của vật lý trị liệu" "The clinical role of physical therapy" %}</h2>
+                            <p>{% tr "Vật lý trị liệu là mắt xích trung tâm trong phục hồi chức năng hiện đại vì nó tác động đồng thời lên triệu chứng, nguyên nhân cơ học và khả năng quay lại sinh hoạt bình thường." "Physical therapy is a central part of modern rehabilitation because it addresses symptoms, underlying mechanical causes, and the ability to return to normal activities at the same time." %}</p>
+
+                            <div class="grid md:grid-cols-1 gap-6">
+                                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                                    <h3 class="!mt-0 !text-xl text-teal-600">{% tr "Kiểm soát đau và viêm" "Pain and inflammation control" %}</h3>
+                                    <p class="text-sm mb-0">{% tr "Kết hợp điện trị liệu, siêu âm, nhiệt trị liệu và hướng dẫn vận động để giảm đau, tăng tuần hoàn và hỗ trợ mô lành nhanh hơn." "Combine electrotherapy, ultrasound, thermotherapy, and guided movement to relieve pain, improve circulation, and support faster tissue healing." %}</p>
+                                </div>
+                                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                                    <h3 class="!mt-0 !text-xl text-blue-600">{% tr "Phục hồi tầm vận động" "Range of motion restoration" %}</h3>
+                                    <p class="text-sm mb-0">{% tr "Di động khớp, kéo giãn mô mềm và các bài tập có kiểm soát giúp giải phóng co cứng, giảm dính mô và đưa khớp trở lại quỹ đạo chuyển động hiệu quả." "Joint mobilization, soft tissue stretching, and controlled exercise release stiffness, reduce adhesions, and return joints to efficient movement patterns." %}</p>
+                                </div>
+                                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                                    <h3 class="!mt-0 !text-xl text-slate-800">{% tr "Tăng sức mạnh và độ bền" "Strength and endurance rebuilding" %}</h3>
+                                    <p class="text-sm mb-0">{% tr "Chương trình tập được thiết kế để tái huấn luyện nhóm cơ ổn định, cải thiện kiểm soát thân mình và giảm nguy cơ tái phát chấn thương." "Exercise programs are designed to retrain stabilizing muscle groups, improve trunk control, and reduce the risk of reinjury." %}</p>
+                                </div>
+                                <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-200">
+                                    <h3 class="!mt-0 !text-xl text-emerald-600">{% tr "Tối ưu chức năng thực tế" "Functional performance optimization" %}</h3>
+                                    <p class="text-sm mb-0">{% tr "Mỗi buổi trị liệu được gắn với mục tiêu cụ thể như đi lại, leo cầu thang, ngồi lâu, bế trẻ hoặc trở lại sân tập." "Each treatment session is linked to concrete goals such as walking, climbing stairs, sitting for longer periods, carrying a child, or returning to training." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-card order-1 lg:order-2 h-[450px] md:h-[600px]">
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2023/06/Thiet-ke-chua-co-ten-4-1024x683.png" alt="{% tr 'Vai trò chuyên sâu của vật lý trị liệu' 'Advanced physical therapy care' %}" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="zig-zag-section reveal">
+                <div class="max-w-7xl mx-auto px-4">
+                    <div class="service-content text-center mb-24">
+                        <h2 class="justify-center">{% tr "Phương pháp vật lý trị liệu tại HandsViet" "Physical therapy methods at HandsViet" %}</h2>
+                        <p class="max-w-3xl mx-auto mt-6 text-slate-500">{% tr "HandsViet kết hợp kỹ thuật tay chuyên sâu với hệ thống thiết bị phục hồi hiện đại để tạo ra phác đồ can thiệp toàn diện, an toàn và đo lường được tiến triển." "HandsViet combines advanced hands-on techniques with modern rehabilitation equipment to deliver comprehensive, safe, and measurable treatment plans." %}</p>
+                        <div class="w-24 h-1 bg-teal-500 mx-auto mt-8 rounded-full"></div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-3 gap-10">
+                        <div class="lg:col-span-3 mb-16">
+                            <div class="bg-slate-900 rounded-[4rem] overflow-hidden flex flex-col lg:flex-row items-stretch shadow-2xl">
+                                <div class="lg:w-1/2 h-[500px]">
+                                    <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/01/chuyen-gia-tri-lieu-vakazono-kenichi-lam-viec-tai-trung-tam-myrehab-matsuoka-4.jpg" class="w-full h-full object-cover opacity-90" alt="{% tr 'Đội ngũ chuyên gia vật lý trị liệu' 'Physical therapy specialists' %}">
+                                </div>
+                                <div class="lg:w-1/2 p-16 text-white flex flex-col justify-center">
+                                    <span class="text-teal-400 font-bold uppercase tracking-widest text-sm mb-6">{% tr "Tiêu chuẩn quốc tế" "International standard" %}</span>
+                                    <h3 class="text-4xl font-black mb-8 text-white">{% tr "Chuyên gia dẫn dắt phục hồi" "Specialists leading recovery" %}</h3>
+                                    <p class="text-slate-400 text-lg leading-relaxed mb-8">{% tr "Mỗi bài tập tại HandsViet đều được chỉ định theo mục tiêu chức năng, cường độ và tiến độ rõ ràng. Chúng tôi theo dõi sát đáp ứng của bệnh nhân để điều chỉnh lộ trình kịp thời và hiệu quả." "Every exercise at HandsViet is prescribed with clear functional goals, intensity, and progression. We closely monitor patient response to adjust the plan in time and keep recovery effective." %}</p>
+                                    <div class="flex gap-4">
+                                        <div class="w-12 h-1 bg-teal-500"></div>
+                                        <div class="w-12 h-1 bg-teal-500/30"></div>
+                                        <div class="w-12 h-1 bg-teal-500/30"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-card">
+                            <div class="mb-8">
+                                <h3 class="text-teal-600">{% tr "Bài tập tăng sức mạnh điều trị" "Therapeutic strengthening exercise" %}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{% tr "Bài tập kháng lực và kiểm soát vận động giúp phục hồi lực cơ, khả năng giữ thăng bằng và kiểm soát trục cơ thể cho từng vùng tổn thương cụ thể." "Resistance and motor-control exercise rebuild muscle force, balance, and body alignment for the specific area being treated." %}</p>
+                            </div>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/bai-tap-vat-ly-tri-lieu-khop-goi.jpg" class="w-full h-48 object-cover rounded-3xl mt-auto" alt="{% tr 'Bài tập tăng sức mạnh' 'Strengthening exercise' %}">
+                        </div>
+
+                        <div class="method-card">
+                            <div class="mb-8">
+                                <h3 class="text-blue-600">{% tr "Trị liệu bằng tay" "Manual therapy" %}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{% tr "Kỹ thuật viên sử dụng các kỹ thuật mô mềm, di động khớp và giải phóng hạn chế để giảm đau, tăng tầm vận động và cải thiện chất lượng vận động." "Therapists use soft tissue techniques, joint mobilization, and restriction release to reduce pain, increase range of motion, and improve movement quality." %}</p>
+                            </div>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/phuong-phap-di-dong-mo-mem-2.jpg" class="w-full h-48 object-cover rounded-3xl mt-auto" alt="{% tr 'Trị liệu bằng tay' 'Manual therapy' %}">
+                        </div>
+
+                        <div class="method-card">
+                            <div class="mb-8">
+                                <h3 class="text-slate-800">{% tr "Kéo giãn giảm áp cột sống" "Spinal decompression traction" %}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{% tr "Hệ thống kéo giãn hỗ trợ giảm áp lực lên đĩa đệm và rễ thần kinh, phù hợp cho người bệnh đau cổ, đau lưng hoặc chèn ép thần kinh cơ học." "Traction systems help reduce pressure on discs and nerve roots, making them suitable for patients with neck pain, back pain, or mechanical nerve compression." %}</p>
+                            </div>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/may-enraf-2.jpeg" class="w-full h-48 object-cover rounded-3xl mt-auto" alt="{% tr 'Kéo giãn cột sống' 'Spinal traction' %}">
+                        </div>
+
+                        <div class="method-card">
+                            <div class="mb-8">
+                                <h3 class="text-teal-600">{% tr "Laser cường độ cao" "High intensity laser therapy" %}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{% tr "Laser công suất cao hỗ trợ giảm viêm, giảm đau sâu và kích thích quá trình sửa chữa mô cho gân, cơ và dây chằng." "High-power laser therapy helps control inflammation, relieve deep pain, and stimulate tissue repair in tendons, muscles, and ligaments." %}</p>
+                            </div>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/dieu-tri-bang-tia-laser.jpg" class="w-full h-48 object-cover rounded-3xl mt-auto" alt="{% tr 'Laser trị liệu' 'Laser therapy' %}">
+                        </div>
+
+                        <div class="method-card">
+                            <div class="mb-8">
+                                <h3 class="text-blue-600">{% tr "Sóng xung kích" "Shockwave therapy" %}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{% tr "Sóng xung kích tập trung vào vùng đau mạn tính, điểm bám gân hoặc vôi hóa để kích thích tuần hoàn và phản ứng tái tạo mô." "Shockwave therapy targets chronic painful areas, tendon insertions, or calcification to stimulate circulation and tissue regeneration." %}</p>
+                            </div>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2024/05/lieu-phap-xung-kich.jpg" class="w-full h-48 object-cover rounded-3xl mt-auto" alt="{% tr 'Sóng xung kích' 'Shockwave therapy' %}">
+                        </div>
+
+                        <div class="method-card">
+                            <div class="mb-8">
+                                <h3 class="text-slate-800">{% tr "Thiết bị phục hồi hiện đại" "Modern rehabilitation equipment" %}</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">{% tr "Hệ thống điện xung, siêu âm, vi sóng và các thiết bị hỗ trợ tập luyện được lựa chọn dựa trên mục tiêu điều trị để tăng hiệu quả và rút ngắn thời gian phục hồi." "Electrotherapy, ultrasound, microwave, and training support devices are selected according to the treatment goal to increase effectiveness and shorten recovery time." %}</p>
+                            </div>
+                            <img src="https://myrehab-matsuoka.com/wp-content/uploads/2023/06/May-dien-xung-dien-phan-ket-hop-sieu-am-BTL-5825S-CombiBTL-5825S-Combi.jpg" class="w-full h-48 object-cover rounded-3xl mt-auto" alt="{% tr 'Thiết bị y khoa phục hồi' 'Rehabilitation equipment' %}">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-32 bg-slate-900 text-white reveal relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-blue-500 to-teal-500 opacity-30"></div>
+                <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+                    <span class="text-teal-400 font-black uppercase tracking-[0.3em] text-sm mb-6 block">{% tr "HandsViet đồng hành cùng bạn" "HandsViet stays with you" %}</span>
+                    <h2 class="text-white !mt-0 justify-center text-4xl md:text-6xl mb-10 leading-tight">{% tr "Đừng để cơn đau trở thành rào cản" "Do not let pain become a barrier" %}</h2>
+                    <p class="text-slate-400 text-xl mb-16 max-w-3xl mx-auto font-medium leading-relaxed">{% tr "Hãy bắt đầu với một buổi đánh giá đúng chuyên môn để hiểu rõ nguyên nhân gây đau và chọn hướng phục hồi phù hợp nhất cho cơ thể bạn." "Start with a professional assessment to understand the true source of pain and choose the recovery path that fits your body best." %}</p>
+
+                    <div class="flex flex-col sm:flex-row gap-8 justify-center">
+                        <a href="{% url 'pages:booking' %}" class="px-16 py-5 bg-teal-500 text-slate-900 rounded-[2rem] font-black text-sm uppercase tracking-widest hover:bg-teal-400 transition-all shadow-xl shadow-teal-500/20">{% tr "Đặt lịch thăm khám" "Book an assessment" %}</a>
+                        <a href="{% url 'pages:contact' %}" class="px-16 py-5 bg-white/5 text-white border border-white/20 rounded-[2rem] font-black text-sm uppercase tracking-widest hover:bg-white/10 transition-all">{% tr "Liên hệ tư vấn" "Contact the care team" %}</a>
+                    </div>
+                </div>
+                <div class="absolute bottom-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-[120px] -mb-48 -mr-48"></div>
+            </section>
+        </div>
+    </main>
+
+    {% include 'pages/footer.html' %}
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>

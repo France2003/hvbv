@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        .contact-hero {
+            background: linear-gradient(135deg, #133541 0%, #133541 100%);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+
+        .pulse-ring {
+            animation: ring-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes ring-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div id="pageLoader" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
+        <div class="flex flex-col items-center gap-4">
+            <div class="relative flex items-center justify-center w-20 h-20 bg-teal-500/10 rounded-full loader-pulse">
+                <svg class="w-10 h-10 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h3l2-4 2 8 2-4h3"></path>
+                </svg>
+                <div class="absolute inset-0 border-4 border-teal-500/30 rounded-full pulse-ring"></div>
+            </div>
+            <p class="text-teal-500 font-medium tracking-wider loader-text">HandsViet...</p>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- Header with Tailwind CSS -->
+    <header class="bg-[#EAEDEC] shadow-md sticky top-0 z-50 header-slide-down">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/" class="flex items-center flex-shrink-0 group">
+                <img src="{% static 'images/LogoHandsviet.jpg' %}" alt="HandsViet Logo"
+                    class="h-12 w-12 object-contain group-hover:scale-[1.02] transition-transform duration-300">
+            </a>
+
+            <!-- Desktop Navigation (hidden on mobile) -->
+            <nav class="hidden lg:flex items-center gap-6 flex-1 justify-center">
+                <a href="/" class="text-gray-700 hover:text-blue-600 transition font-medium">Trang chủ</a>
+
+                <!-- Giới thiệu Dropdown -->
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-blue-600 transition font-medium flex items-center gap-1">
+                        Giới thiệu
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div
+                        class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="{% url 'pages:about' %}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-t-lg">â„¹ï¸
+                            VỠ chúng tôi</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ‘¥ Äội
+                            ngũ Bác sĩ - KTV</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">â“ Câu hỠi
+                            thưỠng gặp</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ¥ Cơ sở
+                            vẨ­t chất</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ¤ Äối
+                            tác</a>
+                        <a href="#"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-b-lg">ðŸ“
+                            Hướng dẫn thăm khám</a>
+                    </div>
+                </div>
+
+                <!-- Lĩnh vực phục hồi Dropdown -->
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-blue-600 transition font-medium flex items-center gap-1">
+                        Lĩnh vực phục hồi
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div
+                        class="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="#"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-t-lg">ðŸ¦´
+                            PHCN cơ xương khớp</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ©º PHCN
+                            chấn thương chỉnh hình</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ§  PHCN
+                            tổn thương thần kinh</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ’š PHCN
+                            sau tai biến</a>
+                        <a href="#"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-b-lg">âœ‚ï¸
+                            PHCN sau phẫu thuẨ­t</a>
+                    </div>
+                </div>
+
+                <!-- Phương pháp trị liệu Dropdown -->
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-blue-600 transition font-medium flex items-center gap-1">
+                        Phương pháp trị liệu
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div
+                        class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="#"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-t-lg">ðŸ“‹
+                            BÃ i tẨ­p</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ’ª VẨ­t lý
+                            trị liệu</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ‘¥ Hoạt
+                            động trị liệu</a>
+                        <a href="#"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-b-lg">ðŸ’¬
+                            Ngôn ngữ trị liệu</a>
+                    </div>
+                </div>
+
+                <!-- Tin tức Dropdown -->
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-blue-600 transition font-medium flex items-center gap-1">
+                        Tin tức
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div
+                        class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="{% url 'news:news_category' category_slug='tin-tuc-y-khoa' %}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-t-lg">ðŸ“°
+                            Tin tức Y khoa</a>
+                        <a href="{% url 'news:news_category' category_slug='cau-chuyen-khach-hang' %}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ‘¤ Câu
+                            chuyện khách hÃ ng</a>
+                        <a href="{% url 'news:news_category' category_slug='tin-truyen-thong' %}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ“¢ Tin
+                            truyỠn thông</a>
+                        <a href="{% url 'news:news_category' category_slug='tu-van-phcn' %}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">ðŸ“– Tư vấn
+                            PHCN</a>
+                        <a href="{% url 'news:news_category' category_slug='khuyen-mai-su-kien' %}"
+                            class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-b-lg">ðŸŽ
+                            Khuyến mãi sự kiện</a>
+                    </div>
+                </div>
+
+                <a href="{% url 'pages:contact' %}"
+                    class="text-gray-700 hover:text-blue-600 transition font-medium">Liên hệ</a>
+                <a href="{% url 'pages:booking' %}" class="text-gray-700 hover:text-blue-600 transition font-medium">Äặt
+                    lịch</a>
+            </nav>
+
+            <!-- User Menu (Desktop) - Dropdown -->
+            <div class="hidden lg:block relative">
+                <button id="userMenuBtn"
+                    class="flex items-center gap-2 hover:bg-gray-50 rounded-lg p-2 transition cursor-pointer">
+                    <div
+                        class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                        {{ user.username|first|upper }}
+                    </div>
+                    <div class="text-left">
+                        <div class="text-sm font-semibold text-gray-800">{{ user.get_full_name|default:user.username }}
+                        </div>
+                        <div class="text-xs text-gray-500">{% if user.is_staff %}Quản Trị{% else %}NgưỠi Dùng{% endif %}
+                        </div>
+                    </div>
+                    <svg class="w-4 h-4 text-gray-600 transition-transform" id="userMenuArrow" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div id="userDropdown"
+                    class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible transition-all duration-200 z-50">
+                    <!-- Dashboard -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition border-b border-gray-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                            </path>
+                        </svg>
+                        <span class="font-medium">Bảng điỠu khiển</span>
+                    </a>
+
+                    <!-- Profile -->
+                    <a href="#"
+                        class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition border-b border-gray-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        <span class="font-medium">Hồ sơ</span>
+                    </a>
+
+                    <!-- Logout -->
+                    <form action="{% url 'auth:logout' %}" method="POST" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="w-full flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition rounded-b-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                                </path>
+                            </svg>
+                            <span class="font-medium">Äăng xuất</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button (visible on mobile) -->
+            <button id="mobileMenuBtn" class="lg:hidden text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </header>
+

@@ -1,0 +1,224 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<style>
+    html { scrollbar-width: thin !important; scrollbar-color: #05858E #CEF1F2 !important; }
+    ::-webkit-scrollbar { width: 14px !important; height: 14px !important; display: block !important; }
+    ::-webkit-scrollbar-track { background: #CEF1F2 !important; border-radius: 100px !important; }
+    ::-webkit-scrollbar-thumb { background: #05858E !important; border-radius: 100px !important; border: 3px solid #CEF1F2 !important; }
+    ::-webkit-scrollbar-thumb:hover { background: #133541 !important; }
+    .mobile-menu-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: all .3s; z-index: 40; }
+    .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+<aside id="mobileDrawer" class="fixed top-0 right-0 h-screen w-[85vw] max-w-[360px] bg-white border-l border-slate-200 shadow-2xl translate-x-full transition-transform duration-300 z-50 lg:hidden">
+    <div class="h-full flex flex-col">
+        <div class="px-4 py-4 border-b border-slate-200 flex items-center justify-between">
+            <a href="{% url 'pages:home' %}" class="flex items-center gap-3">
+                <img src="{% static 'images/LogoHandsviet.jpg' %}" alt="HandsViet Logo" class="h-12 w-12 object-contain">
+                <div class="leading-tight">
+                    <p class="text-[#133541] font-extrabold text-sm tracking-wide">HANDSVIET</p>
+                    <p class="text-[#05858E] text-[11px] font-semibold">{% tr "Phục hồi chức năng" "Rehabilitation" %}</p>
+                </div>
+            </a>
+            <button id="mobileMenuClose" class="p-2 rounded-lg hover:bg-slate-100" aria-label="{% tr 'Đóng menu' 'Close menu' %}">
+                <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto no-scrollbar px-4 py-4 space-y-1">
+            <a href="{% url 'pages:home' %}" class="block px-3 py-2 rounded-lg hover:bg-[#CEF1F2] text-slate-700">{% tr "Trang chủ" "Home" %}</a>
+
+            <a href="{% url 'pages:about' %}" class="block px-3 py-2 rounded-lg hover:bg-[#CEF1F2] text-slate-700">{% tr "Giới thiệu" "Introduce" %}</a>
+            <a href="{% url 'pages:about' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Về chúng tôi" "About us" %}</a>
+            <a href="{% url 'pages:experts' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Đội ngũ Bác sĩ - KTV" "Team of Doctors - KTV" %}</a>
+            <a href="{% url 'pages:faq' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Câu hỏi thường gặp" "FAQ" %}</a>
+            <a href="{% url 'pages:facilities' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Cơ sở vật chất" "Facilities" %}</a>
+            <a href="{% url 'pages:visit_guide' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Hướng dẫn thăm khám" "Instructions for medical examination" %}</a>
+            <a href="{% url 'pages:rehab_fields' %}" class="block px-3 py-2 rounded-lg hover:bg-[#CEF1F2] text-slate-700">{% tr "Lĩnh vực điều trị" "Treatment field" %}</a>
+            <a href="{% url 'rehab:detail' slug='co-xuong-khop' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "PHCN Cơ xương khớp" "Musculoskeletal and Joint Rehabilitation" %}</a>
+            <a href="{% url 'rehab:detail' slug='chan-thuong-chinh-hinh' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "PHCN Chấn thương chỉnh hình" "Orthopedic trauma rehabilitation" %}</a>
+            <a href="{% url 'rehab:detail' slug='than-kinh' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "PHCN Tổn thương thần kinh" "Rehabilitation of nerve damage" %}</a>
+            <a href="{% url 'rehab:detail' slug='sau-tai-bien' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "PHCN Sau tai biến" "Rehabilitation after stroke" %}</a>
+            <a href="{% url 'rehab:detail' slug='sau-phau-thuat' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "PHCN Sau phẫu thuật" "Rehabilitation after surgery" %}</a>
+
+            <a href="{% url 'pages:exercise_library' %}" class="block px-3 py-2 rounded-lg hover:bg-[#CEF1F2] text-slate-700">{% tr "Phương pháp trị liệu" "Treatment methods" %}</a>
+            <a href="{% url 'pages:exercise_library' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Bài tập & Tờ khai" "Exercises & Declarations" %}</a>
+            <a href="{% url 'pages:physical_therapy' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Vật lý trị liệu" "Physical therapy" %}</a>
+            <a href="{% url 'pages:occupational_therapy' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Hoạt động trị liệu" "Therapeutic activities" %}</a>
+            <a href="{% url 'pages:speech_therapy' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Ngôn ngữ trị liệu" "Speech therapy" %}</a>
+
+            <!-- services merged into Lĩnh vực điều trị -->
+
+            <a href="{% url 'news:news_list' %}" class="block px-3 py-2 rounded-lg hover:bg-[#CEF1F2] text-slate-700">{% tr "Tin tức" "News" %}</a>
+            <a href="{% url 'news:news_category' category_slug='tin-tuc-y-khoa' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Tin tức Y khoa" "Medical News" %}</a>
+            <a href="{% url 'news:news_category' category_slug='cau-chuyen-khach-hang' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Câu chuyện khách hàng" "Customer stories" %}</a>
+            <a href="{% url 'news:news_category' category_slug='tin-truyen-thong' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Tin truyền thông" "Media news" %}</a>
+            <a href="{% url 'news:news_category' category_slug='khuyen-mai-su-kien' %}" class="block pl-6 pr-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50">{% tr "Khuyến mãi sự kiện" "Event promotion" %}</a>
+
+            <a href="{% url 'pages:contact' %}" class="block px-3 py-2 rounded-lg hover:bg-[#CEF1F2] text-slate-700">{% tr "Liên hệ" "Contact" %}</a>
+        </nav>
+        <div class="px-4 py-4 border-t border-slate-200">
+            <a href="{% url 'pages:booking' %}" class="block text-center px-4 py-3 rounded-xl bg-[#05858E] text-white font-bold border border-[#05858E] shadow-md">
+                {% tr "Đặt lịch" "Book now" %}
+            </a>
+        </div>
+    </div>
+</aside>
+
+<header class="bg-white border-b border-[#CEF1F2] shadow-md fixed top-0 inset-x-0 z-40 header-slide-down font-sans">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        <a href="{% url 'pages:home' %}" class="flex items-center flex-shrink-0 group gap-3">
+            <img src="{% static 'images/LogoHandsviet.jpg' %}" alt="HandsViet Logo" class="h-12 w-12 object-contain group-hover:scale-[1.02] transition-transform duration-300">
+            <div class="hidden sm:block leading-tight">
+                <p class="text-[#133541] font-extrabold text-base tracking-wide">HANDSVIET</p>
+                <p class="text-[#05858E] text-xs font-semibold">{% tr "Phục hồi chức năng" "Rehabilitation" %}</p>
+            </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-4 xl:gap-8 justify-center">
+            <a href="{% url 'pages:home' %}" class="{% if request.resolver_match.url_name == 'home' %}text-[#05858E] border-b-2 border-[#05858E]{% else %}text-gray-700 hover:text-[#05858E]{% endif %} transition font-medium whitespace-nowrap">{% tr "Trang chủ" "Home" %}</a>
+
+            <div class="relative group">
+                <button class="{% if request.resolver_match.url_name == 'about' %}text-[#05858E] border-b-2 border-[#05858E]{% else %}text-gray-700 hover:text-[#05858E]{% endif %} transition font-medium flex items-center gap-1 whitespace-nowrap">
+                    {% tr "Giới thiệu" "Introduce" %}
+                    <svg class="group-hover:translate-y-0.5 transition-all duration-150" style="width:14px;height:14px;min-width:14px;display:inline-block;color:#4d6871;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
+                <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="{% url 'pages:about' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-t-lg">{% tr "Về chúng tôi" "About us" %}</a>
+                    <a href="{% url 'pages:experts' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Đội ngũ Bác sĩ - KTV" "Team of Doctors - KTV" %}</a>
+                    <a href="{% url 'pages:faq' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Câu hỏi thường gặp" "FAQ" %}</a>
+                    <a href="{% url 'pages:facilities' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Cơ sở vật chất" "Facilities" %}</a>
+                    <a href="{% url 'pages:visit_guide' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-b-lg">{% tr "Hướng dẫn thăm khám" "Instructions for medical examination" %}</a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button class="text-gray-700 hover:text-[#05858E] transition font-medium flex items-center gap-1 whitespace-nowrap">
+                    {% tr "Lĩnh vực điều trị" "Treatment field" %}
+                    <svg class="group-hover:translate-y-0.5 transition-all duration-150" style="width:14px;height:14px;min-width:14px;display:inline-block;color:#4d6871;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
+                <div class="absolute left-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="{% url 'rehab:detail' slug='co-xuong-khop' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-t-lg">{% tr "PHCN cơ xương Khớp" "Musculoskeletal and Joint Rehabilitation" %}</a>
+                    <a href="{% url 'rehab:detail' slug='chan-thuong-chinh-hinh' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "PHCN chấn thương chỉnh hình" "Orthopedic trauma rehabilitation" %}</a>
+                    <a href="{% url 'rehab:detail' slug='than-kinh' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "PHCN tổn thương thần kinh" "Rehabilitation of nerve damage" %}</a>
+                    <a href="{% url 'rehab:detail' slug='sau-tai-bien' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "PHCN sau tai biến" "Rehabilitation after stroke" %}</a>
+                    <a href="{% url 'rehab:detail' slug='sau-phau-thuat' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-b-lg">{% tr "PHCN sau phẫu thuật" "Rehabilitation after surgery" %}</a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button class="text-gray-700 hover:text-[#05858E] transition font-medium flex items-center gap-1 whitespace-nowrap">
+                    {% tr "Phương pháp trị liệu" "Treatment methods" %}
+                    <svg class="group-hover:translate-y-0.5 transition-all duration-150" style="width:14px;height:14px;min-width:14px;display:inline-block;color:#4d6871;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
+                <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="{% url 'pages:exercise_library' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-t-lg">{% tr "Bài tập & Tờ khai" "Exercises & Declarations" %}</a>
+                    <a href="{% url 'pages:physical_therapy' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Vật lý trị liệu" "Physical therapy" %}</a>
+                    <a href="{% url 'pages:occupational_therapy' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Hoạt động trị liệu" "Therapeutic activities" %}</a>
+                    <a href="{% url 'pages:speech_therapy' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-b-lg">{% tr "Ngôn ngữ trị liệu" "Speech therapy" %}</a>
+                </div>
+            </div>
+
+            <div class="relative group">
+                <button class="{% if 'news' in request.resolver_match.app_name or '/news/' in request.path %}text-[#05858E] border-b-2 border-[#05858E]{% else %}text-gray-700 hover:text-[#05858E]{% endif %} transition font-medium flex items-center gap-1 whitespace-nowrap">
+                    {% tr "Tin tức" "News" %}
+                    <svg class="group-hover:translate-y-0.5 transition-all duration-150" style="width:14px;height:14px;min-width:14px;display:inline-block;color:#4d6871;" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </button>
+                <div class="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="{% url 'news:news_category' category_slug='tin-tuc-y-khoa' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-t-lg">{% tr "Tin tức Y khoa" "Medical News" %}</a>
+                    <a href="{% url 'news:news_category' category_slug='cau-chuyen-khach-hang' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Câu chuyện khách hàng" "Customer stories" %}</a>
+                    <a href="{% url 'news:news_category' category_slug='tin-truyen-thong' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E]">{% tr "Tin truyền thông" "Media news" %}</a>
+                    <a href="{% url 'news:news_category' category_slug='khuyen-mai-su-kien' %}" class="block px-4 py-2 text-gray-700 hover:bg-[#CEF1F2] hover:text-[#05858E] rounded-b-lg">{% tr "Khuyến mãi sự kiện" "Event promotion" %}</a>
+                </div>
+            </div>
+
+            <a href="{% url 'pages:services' %}" class="{% if request.resolver_match.url_name == 'services' %}text-[#05858E] border-b-2 border-[#05858E]{% else %}text-gray-700 hover:text-[#05858E]{% endif %} transition font-medium whitespace-nowrap">{% tr "Lĩnh vực điều trị" "Treatment areas" %}</a>
+            <a href="{% url 'pages:contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}text-[#05858E] border-b-2 border-[#05858E]{% else %}text-gray-700 hover:text-[#05858E]{% endif %} transition font-medium whitespace-nowrap">{% tr "Liên hệ" "Contact" %}</a>
+        </nav>
+
+        <div class="hidden lg:flex items-center gap-3 flex-shrink-0">
+            <form action="{% url 'set_language' %}" method="post" class="flex items-center gap-1 rounded-md border border-slate-300 bg-white p-1">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button type="submit" name="language" value="vi" class="px-2 py-1 text-xs font-semibold rounded-md {% if CURRENT_LANGUAGE|slice:':2' == 'vi' %}bg-slate-200 text-slate-900{% else %}text-slate-600 hover:bg-slate-100{% endif %}">VI</button>
+                <button type="submit" name="language" value="en" class="px-2 py-1 text-xs font-semibold rounded-md {% if CURRENT_LANGUAGE|slice:':2' == 'en' %}bg-slate-200 text-slate-900{% else %}text-slate-600 hover:bg-slate-100{% endif %}">EN</button>
+            </form>
+            <a href="{% url 'pages:booking' %}" class="px-5 py-2.5 rounded-xl bg-[#05858E] text-white font-bold border border-[#05858E] shadow-md hover:shadow-lg transition-all">
+                {% tr "Đặt lịch" "Book now" %}
+            </a>
+        </div>
+
+        <button id="mobileMenuOpen" class="lg:hidden inline-flex items-center justify-center p-2 rounded-lg bg-white border border-slate-300 shadow-sm" aria-label="{% tr 'Mở menu' 'Open menu' %}">
+            <svg class="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+    </div>
+</header>
+<div class="h-[72px]" aria-hidden="true"></div>
+
+<script>
+    (function () {
+        const overlay = document.getElementById('mobileMenuOverlay');
+        const drawer = document.getElementById('mobileDrawer');
+        const openBtn = document.getElementById('mobileMenuOpen');
+        const closeBtn = document.getElementById('mobileMenuClose');
+        const drawerLinks = drawer ? drawer.querySelectorAll('a') : [];
+
+        function openMenu() {
+            if (!overlay || !drawer) return;
+            overlay.classList.add('active');
+            drawer.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            if (!overlay || !drawer) return;
+            overlay.classList.remove('active');
+            drawer.classList.add('translate-x-full');
+            document.body.style.overflow = '';
+        }
+        if (openBtn) {
+            openBtn.addEventListener('click', function () {
+                if (drawer.classList.contains('translate-x-full')) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            });
+        }
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+        drawerLinks.forEach(function (link) { link.addEventListener('click', closeMenu); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        function applyFallback(img) {
+            if (!img || img.dataset.fallbackApplied === '1') return;
+            img.dataset.fallbackApplied = '1';
+            img.src = "{% static 'images/LogoHandsviet.jpg' %}";
+        }
+
+        document.addEventListener('error', function (event) {
+            if (event.target && event.target.tagName === 'IMG') {
+                applyFallback(event.target);
+            }
+        }, true);
+
+        window.addEventListener('load', function () {
+            document.querySelectorAll('img').forEach(function (img) {
+                if (img.complete && img.naturalWidth === 0) {
+                    applyFallback(img);
+                }
+            });
+        });
+    })();
+</script>

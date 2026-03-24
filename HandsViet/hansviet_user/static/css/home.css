@@ -1,0 +1,368 @@
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+  --hv-primary: #133541;
+  --hv-accent: #f6be4a;
+  --hv-secondary: #05858e;
+  --hv-soft: #cef1f2;
+  --hv-white: #ffffff;
+  --hv-text: #133541;
+  --hv-muted: #4d6871;
+  --hv-btn-primary-bg: #f6be4a;
+  --hv-btn-primary-text: #133541;
+  --hv-btn-secondary-bg: #ffffff;
+  --hv-btn-secondary-border: #05858e;
+  --hv-btn-secondary-text: #133541;
+}
+
+/* Global brand baseline */
+html {
+  color: var(--hv-text);
+  font-size: 16px;
+}
+
+body {
+  font-family: "Be Vietnam Pro", sans-serif;
+  color: var(--hv-text);
+  background: var(--hv-white);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--hv-primary);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2rem, 2vw + 1.25rem, 3.5rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 1.2vw + 1.1rem, 2.5rem);
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: clamp(1.2rem, 0.8vw + 1rem, 1.75rem);
+  line-height: 1.35;
+}
+
+p {
+  color: var(--hv-muted);
+  font-size: 1rem;
+}
+
+small,
+.text-xs {
+  font-size: 0.8rem;
+}
+
+/* Utility color bridge:
+   Maps old Tailwind blue/teal/cyan/indigo/purple/emerald/etc classes to the brand palette. */
+[class*="text-blue-"],
+[class*="text-teal-"],
+[class*="text-cyan-"],
+[class*="text-indigo-"],
+[class*="text-purple-"],
+[class*="text-emerald-"],
+[class*="text-green-"] {
+  color: var(--hv-secondary) !important;
+}
+
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-slate-900,
+.text-slate-800,
+.text-slate-700 {
+  color: var(--hv-text) !important;
+}
+
+.text-gray-600,
+.text-gray-500,
+.text-gray-400,
+.text-slate-600,
+.text-slate-500,
+.text-slate-400 {
+  color: var(--hv-muted) !important;
+}
+
+[class*="text-yellow-"],
+[class*="text-orange-"] {
+  color: var(--hv-accent) !important;
+}
+
+[class*="bg-blue-"],
+[class*="bg-teal-"],
+[class*="bg-cyan-"],
+[class*="bg-indigo-"],
+[class*="bg-purple-"],
+[class*="bg-emerald-"],
+[class*="bg-green-"] {
+  background-color: var(--hv-soft) !important;
+}
+
+.bg-gray-50,
+.bg-gray-100,
+.bg-slate-50,
+.bg-slate-100 {
+  background-color: #f5fbfc !important;
+}
+
+[class*="bg-yellow-"],
+[class*="bg-orange-"] {
+  background-color: rgba(246, 190, 74, 0.18) !important;
+}
+
+[class*="border-blue-"],
+[class*="border-teal-"],
+[class*="border-cyan-"],
+[class*="border-indigo-"],
+[class*="border-purple-"],
+[class*="border-emerald-"],
+[class*="border-green-"] {
+  border-color: rgba(5, 133, 142, 0.35) !important;
+}
+
+[class*="border-gray-"],
+[class*="border-slate-"] {
+  border-color: rgba(19, 53, 65, 0.14) !important;
+}
+
+[class*="from-blue-"],
+[class*="from-teal-"],
+[class*="from-cyan-"],
+[class*="from-indigo-"],
+[class*="from-purple-"],
+[class*="from-emerald-"],
+[class*="from-green-"] {
+  --tw-gradient-from: var(--hv-secondary) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(5, 133, 142, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+[class*="to-blue-"],
+[class*="to-teal-"],
+[class*="to-cyan-"],
+[class*="to-indigo-"],
+[class*="to-purple-"],
+[class*="to-emerald-"],
+[class*="to-green-"] {
+  --tw-gradient-to: var(--hv-primary) var(--tw-gradient-to-position) !important;
+}
+
+[class*="from-yellow-"],
+[class*="from-orange-"] {
+  --tw-gradient-from: var(--hv-accent) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(246, 190, 74, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+[class*="to-yellow-"],
+[class*="to-orange-"] {
+  --tw-gradient-to: var(--hv-accent) var(--tw-gradient-to-position) !important;
+}
+
+/* Branded controls */
+a:hover {
+  color: var(--hv-secondary);
+}
+
+button,
+.btn,
+[role="button"] {
+  font-weight: 600;
+}
+
+/* Global button system (site-wide):
+   Primary = yellow (#F6BE4A), Secondary = white (#FFFFFF). */
+:is(button, input[type="submit"], input[type="button"])[class*="border"],
+a[class*="border"][class*="py-"] {
+  background: var(--hv-btn-secondary-bg) !important;
+  color: var(--hv-btn-secondary-text) !important;
+  border-color: var(--hv-btn-secondary-border) !important;
+}
+
+:is(button, input[type="submit"], input[type="button"])[class*="bg-"],
+a[class*="bg-"][class*="py-"] {
+  background: var(--hv-btn-primary-bg) !important;
+  color: var(--hv-btn-primary-text) !important;
+  border-color: var(--hv-btn-primary-bg) !important;
+}
+
+:is(button, input[type="submit"], input[type="button"])[class*="bg-"]:hover,
+a[class*="bg-"][class*="py-"]:hover {
+  background: #efb23a !important;
+  color: var(--hv-btn-primary-text) !important;
+}
+
+:is(button, input[type="submit"], input[type="button"])[class*="border"]:hover,
+a[class*="border"][class*="py-"]:hover {
+  background: var(--hv-soft) !important;
+  color: var(--hv-primary) !important;
+}
+
+/* Global responsive safety net (mobile/tablet only).
+   Intentionally scoped to max-width breakpoints to avoid desktop changes. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+}
+
+@media (max-width: 1023.98px) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
+
+  img,
+  svg,
+  video,
+  canvas,
+  iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Common content wrappers across pages */
+  .max-w-7xl,
+  .max-w-6xl,
+  .max-w-5xl,
+  .max-w-4xl,
+  .max-w-3xl,
+  .max-w-2xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Avoid giant headings on tablet/mobile */
+  h1 {
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  /* Generic fixed-height image blocks often overflow on small screens */
+  .h-\[500px\],
+  .h-\[450px\],
+  .h-\[400px\],
+  .h-\[380px\] {
+    height: 320px !important;
+  }
+
+  /* Keep long navigation/button labels wrapped */
+  a,
+  button {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 767.98px) {
+  /* Section vertical rhythm on mobile */
+  section.py-20 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  section.py-16 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+  section.py-12 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /* Main page titles */
+  .text-6xl {
+    font-size: 2rem !important;
+    line-height: 1.15 !important;
+  }
+  .text-5xl {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+  .text-4xl {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+  }
+  .text-3xl {
+    font-size: 1.3rem !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Cards and forms spacing */
+  .rounded-\[4rem\],
+  .rounded-\[3rem\],
+  .rounded-\[2\.5rem\] {
+    border-radius: 1.25rem !important;
+  }
+  .p-10 {
+    padding: 1.25rem !important;
+  }
+  .p-8 {
+    padding: 1rem !important;
+  }
+  .p-6 {
+    padding: 0.9rem !important;
+  }
+
+  /* Grid heavy pages */
+  .grid.md\:grid-cols-2,
+  .grid.lg\:grid-cols-2,
+  .grid.lg\:grid-cols-3,
+  .grid.lg\:grid-cols-4,
+  .grid.md\:grid-cols-3,
+  .grid.md\:grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Keep CTA buttons full-width and tappable */
+  .flex.sm\:flex-row {
+    flex-direction: column !important;
+  }
+  .px-12.py-4,
+  .px-10.py-4 {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Sticky sidebars can block content on small screens */
+  .lg\:sticky {
+    position: static !important;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .text-2xl {
+    font-size: 1.15rem !important;
+  }
+  .text-xl {
+    font-size: 1.05rem !important;
+  }
+  .text-lg {
+    font-size: 0.98rem !important;
+  }
+
+  .gap-12 {
+    gap: 1.25rem !important;
+  }
+  .gap-10 {
+    gap: 1rem !important;
+  }
+  .gap-8 {
+    gap: 0.9rem !important;
+  }
+  .gap-6 {
+    gap: 0.75rem !important;
+  }
+}

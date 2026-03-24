@@ -1,0 +1,27 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+{% block title %}{% tr "Xác nhận xóa - HandsViet Dashboard" "Delete confirmation - HandsViet Dashboard" %}{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'dashboard:user_list' %}" class="hover:text-teal-600 transition-colors">{% tr "Người dùng" "Users" %}</a>
+<span class="text-gray-300">/</span>
+<span class="text-gray-900 font-medium">{% tr "Xóa tài khoản" "Delete account" %}</span>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto py-20 text-center">
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tighter">{% tr "Xác nhận xóa tài khoản?" "Confirm account deletion?" %}</h1>
+    <p class="text-gray-500 mb-12 text-lg">
+        {% if request.LANGUAGE_CODE|slice:':2' == 'en' %}
+        You are about to delete <span class="text-red-600 font-black">"{{ target_user.username }}"</span>. This action cannot be undone.
+        {% else %}
+        Bạn đang chuẩn bị xóa tài khoản <span class="text-red-600 font-black">"{{ target_user.username }}"</span>. Hành động này không thể khôi phục.
+        {% endif %}
+    </p>
+    <form method="POST" class="flex items-center justify-center gap-6">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest transition-all">{% tr "Xóa vĩnh viễn" "Delete permanently" %}</button>
+        <a href="{% url 'dashboard:user_list' %}" class="px-10 py-4 rounded-2xl text-[11px] font-black text-slate-400 hover:text-slate-900 border border-slate-200 hover:bg-white transition-all uppercase tracking-widest">{% tr "Quay lại danh sách" "Back to list" %}</a>
+    </form>
+</div>
+{% endblock %}

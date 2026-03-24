@@ -1,0 +1,175 @@
+{% load static i18n i18n_extras %}
+{% get_current_language as CURRENT_LANGUAGE %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANGUAGE|slice:':2' }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% tr "Đặt lịch khám - HandsViet" "Book an Appointment - HandsViet" %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .input-glass {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .input-glass:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #2dd4bf;
+            outline: none;
+            box-shadow: 0 0 15px rgba(45, 212, 191, 0.3);
+        }
+        .input-glass::placeholder { color: rgba(255, 255, 255, 0.6); }
+        option { background: #1e293b; color: white; }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-white antialiased overflow-x-hidden">
+    {% include 'includes/loader.html' %}
+    {% include 'pages/header_tailwind.html' %}
+
+    <main class="relative min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+        <div class="fixed inset-0 z-0 transform-gpu">
+            <img src="{% static 'images/rehab_bg.png' %}" class="w-full h-full object-cover" alt="Background">
+            <div class="absolute inset-0 bg-slate-900/80"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-slate-900/40"></div>
+        </div>
+
+        <div class="max-w-4xl w-full mx-auto relative z-10">
+            {% if messages %}
+            <div class="mb-6 space-y-3">
+                {% for message in messages %}
+                <div class="rounded-2xl px-5 py-4 text-sm font-semibold {% if message.tags == 'success' %}bg-emerald-500/20 border border-emerald-300/40 text-emerald-100{% else %}bg-amber-500/20 border border-amber-300/40 text-amber-100{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 drop-shadow-2xl">
+                    {% tr "Đặt lịch khám bệnh" "Book an appointment" %}
+                </h1>
+                <div class="w-24 h-1.5 bg-teal-500 mx-auto rounded-full mb-8"></div>
+                <p class="text-xl text-slate-200/90 font-medium">
+                    {% tr "Điền thông tin để đặt lịch với bác sĩ chuyên khoa." "Fill in your details to schedule with a specialist." %}
+                </p>
+            </div>
+
+            <div class="glass-card rounded-[2.5rem] p-8 md:p-12">
+                <form method="post" class="space-y-8">
+                    {% csrf_token %}
+                    {{ lead_form.page }}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">
+                                {% tr "Họ và tên *" "Full name *" %}
+                            </label>
+                            <input type="text" name="name" required
+                                   value="{{ request.POST.name|default:'' }}"
+                                   placeholder="{% tr 'Nhập họ và tên của bạn' 'Enter your full name' %}"
+                                   class="w-full px-4 py-4 rounded-2xl input-glass">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">
+                                {% tr "Số điện thoại *" "Phone number *" %}
+                            </label>
+                            <input type="tel" name="phone"
+                                   value="{{ request.POST.phone|default:'' }}"
+                                   placeholder="{% tr 'Nhập số điện thoại' 'Enter your phone number' %}"
+                                   class="w-full px-4 py-4 rounded-2xl input-glass">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">Email</label>
+                            <input type="email" name="email"
+                                   value="{{ request.POST.email|default:'' }}"
+                                   placeholder="{% tr 'Nhập email của bạn' 'Enter your email address' %}"
+                                   class="w-full px-4 py-4 rounded-2xl input-glass">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">
+                                {% tr "Ngày khám *" "Preferred date *" %}
+                            </label>
+                            <input type="date" name="date" value="{{ request.POST.date|default:'' }}"
+                                   class="w-full px-4 py-4 rounded-2xl input-glass">
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">
+                                {% tr "Chuyên khoa *" "Specialty *" %}
+                            </label>
+                            <select name="specialty" class="w-full px-4 py-4 rounded-2xl input-glass appearance-none cursor-pointer">
+                                <option value="">{% tr "Chọn chuyên khoa" "Select specialty" %}</option>
+                                <option value="xuong-khop" {% if request.POST.specialty == 'xuong-khop' %}selected{% endif %}>{% tr "PHCN Cơ xương khớp" "Musculoskeletal Rehabilitation" %}</option>
+                                <option value="chan-thuong" {% if request.POST.specialty == 'chan-thuong' %}selected{% endif %}>{% tr "PHCN Chấn thương" "Trauma Rehabilitation" %}</option>
+                                <option value="than-kinh" {% if request.POST.specialty == 'than-kinh' %}selected{% endif %}>{% tr "PHCN Thần kinh" "Neurological Rehabilitation" %}</option>
+                                <option value="nhi-khoa" {% if request.POST.specialty == 'nhi-khoa' %}selected{% endif %}>{% tr "PHCN Nhi khoa" "Pediatric Rehabilitation" %}</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">
+                                {% tr "Dịch vụ *" "Service *" %}
+                            </label>
+                            <select name="service" class="w-full px-4 py-4 rounded-2xl input-glass appearance-none cursor-pointer">
+                                <option value="">{% tr "Chọn dịch vụ" "Select service" %}</option>
+                                <option value="bai-tap" {% if request.POST.service == 'bai-tap' %}selected{% endif %}>{% tr "Bài tập trị liệu" "Therapeutic Exercise" %}</option>
+                                <option value="vat-ly" {% if request.POST.service == 'vat-ly' %}selected{% endif %}>{% tr "Vật lý trị liệu" "Physical Therapy" %}</option>
+                                <option value="hoat-dong" {% if request.POST.service == 'hoat-dong' %}selected{% endif %}>{% tr "Hoạt động trị liệu" "Occupational Therapy" %}</option>
+                                <option value="ngon-ngu" {% if request.POST.service == 'ngon-ngu' %}selected{% endif %}>{% tr "Ngôn ngữ trị liệu" "Speech Therapy" %}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <label class="block text-sm font-bold text-teal-300 uppercase tracking-widest ml-1">
+                            {% tr "Ghi chú thêm" "Additional notes" %}
+                        </label>
+                        <textarea name="message" rows="4"
+                                  placeholder="{% tr 'Mô tả ngắn tình trạng hoặc nhu cầu tư vấn' 'Briefly describe your condition or consultation needs' %}"
+                                  class="w-full px-4 py-4 rounded-2xl input-glass">{{ request.POST.message|default:'' }}</textarea>
+                    </div>
+
+                    <button type="submit"
+                            class="w-full py-5 bg-gradient-to-r from-teal-500 to-cyan-600 text-white rounded-2xl font-black text-xl shadow-2xl shadow-teal-500/30 hover:shadow-teal-500/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 uppercase tracking-widest">
+                        {% tr "Xác nhận đặt lịch" "Confirm booking" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="relative">{% include 'pages/footer.html' %}</div>
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('pageLoader');
+            if (!loader) return;
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 700);
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>

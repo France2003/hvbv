@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} - HandsViet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style type="text/tailwindcss">
+        .hero-gradient {
+            background: radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                #133541;
+        }
+
+        /* Custom Prose Styles for better readability */
+        .service-content h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            font-weight: 900;
+            color: #133541;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .service-content h2::before {
+            content: '';
+            width: 0.375rem;
+            height: 2rem;
+            background-color: #05858E;
+            border-radius: 9999px;
+            display: inline-block;
+        }
+
+        .service-content p {
+            margin-bottom: 1.5rem;
+            color: #4d6871;
+            line-height: 2;
+        }
+
+        .service-content ul {
+            margin-bottom: 2rem;
+            margin-left: 1rem;
+        }
+        
+        .service-content li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: #4d6871;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-content li::before {
+            content: '✓';
+            color: #05858E;
+            font-weight: 700;
+            margin-top: 0.25rem;
+        }
+
+        /* Ensure header is not sticky on this page */
+        header {
+            position: relative !important;
+            top: auto !important;
+            animation: none !important;
+        }
+
+        #progressBar {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased">
+    {% include 'includes/loader.html' %}
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    {% include 'pages/header_tailwind.html' %}
+    <main class="bg-slate-50 min-h-screen font-sans">
+        <!-- Premium Hero Section -->
+        <section class="relative hero-gradient pt-20 pb-40 overflow-hidden">
+            <!-- Background Orbs (Static) -->
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px]"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center lg:text-left">
+                <div class="max-w-4xl mx-auto lg:mx-0">
+                    <span
+                        class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-black bg-teal-500/10 text-teal-400 border border-teal-500/20 uppercase tracking-[0.2em] mb-8">
+                        {{ service.category.name }}
+                    </span>
+                    <h1 class="text-4xl md:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight">
+                        {{ service.title }}
+                    </h1>
+                    <p
+                        class="text-xl md:text-2xl text-slate-400 leading-relaxed font-medium mb-10 max-w-2xl mx-auto lg:mx-0">
+                        {{ service.summary }}
+                    </p>
+
+                    <div
+                        class="flex flex-wrap justify-center lg:justify-start gap-4 text-slate-400 text-sm font-semibold">
+                        <span
+                            class="flex items-center gap-2 bg-white/5 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+                            <svg class="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Cập nhật: {{ service.updated_at|date:"d/m/Y" }}
+                        </span>
+                        {% if service.duration %}
+                        <span
+                            class="flex items-center gap-2 bg-teal-500/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-teal-500/20 text-teal-400">
+                            ⏱️ {{ service.duration }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Architecture -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 pb-32 relative z-20">
+            <div class="grid lg:grid-cols-12 gap-10">
+                <!-- Left: Premium Article -->
+                <div class="lg:col-span-8">
+                    <div
+                        class="bg-white rounded-[3rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 transition-all hover:shadow-teal-500/5">
+                        {% if service.thumbnail %}
+                        <div class="relative group">
+                            <img src="{{ service.thumbnail.url }}" alt="{{ service.title }}"
+                                class="w-full aspect-[21/9] object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent">
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="relative group">
+                            <img src="{% static 'images/assets/clinic-desk.jpg' %}" alt="{{ service.title }}"
+                                class="w-full aspect-[21/9] object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="p-8 md:p-16 -mt-10 relative bg-white rounded-t-[3rem]">
+                            <div class="service-content prose prose-lg prose-slate max-w-none">
+                                {{ service.content|safe }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Action Sidebar -->
+                <div class="lg:col-span-4 space-y-8">
+                    <!-- Specialized Registration Form Card: Premium Redesign -->
+                    {% include 'includes/sidebar_registration.html' %}
+
+                    <!-- Featured Highlight -->
+                    {% if service.is_featured %}
+                    <div
+                        class="bg-gradient-to-br from-teal-500 to-blue-600 p-10 rounded-[3rem] shadow-2xl shadow-teal-500/20 text-white relative overflow-hidden group">
+                        <div class="absolute -right-10 -bottom-10 text-[12rem] opacity-10">✨</div>
+                        <div class="relative z-10">
+                            <div class="text-xs font-bold uppercase tracking-[0.3em] opacity-70 mb-3">HandsViet Suggests
+                            </div>
+                            <h4 class="text-2xl font-black mb-4 leading-tight">
+                                {{ service.featured_tag|default:"Dịch vụ được yêu thích nhất" }}</h4>
+                            <p class="text-sm text-teal-50/80 leading-relaxed font-semibold">
+                                Giải pháp hỗ trợ phục hồi sức khỏe được hàng nghìn khách hàng tin tưởng lựa chọn tại
+                                phòng
+                                khám.
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% include 'pages/footer.html' %}
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('pageLoader');
+            if (loader) {
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 700);
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
+

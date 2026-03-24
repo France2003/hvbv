@@ -1,0 +1,158 @@
+﻿{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+
+{% block title %}{% tr 'Tổng quan - HandsViet Admin' 'Overview - HandsViet Admin' %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-slate-900 font-extrabold">{% tr 'Tổng quan hệ thống' 'System overview' %}</span>
+{% endblock %}
+
+{% block content %}
+<div class="relative overflow-hidden bg-white p-10 rounded-[2.5rem] border border-slate-200 mb-10 group shadow-sm">
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-2">
+            <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                {{ greeting_text|default:'Hello' }}, <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-500">{{ request.user.username }}</span>
+            </h2>
+            <p class="text-slate-400 font-medium max-w-xl text-lg">
+                {% if request.LANGUAGE_CODE|default:'en'|slice:':2' == 'en' %}
+                HandsViet is ready. You have <span class="text-teal-600 font-bold underline decoration-teal-200">{{ new_news_today|default:0 }} new articles</span> and <span class="text-blue-600 font-bold underline decoration-blue-200">{{ new_leads_today|default:0 }} support requests</span> to review.
+                {% else %}
+                Hệ thống HandsViet đã sẵn sàng. Bạn có <span class="text-teal-600 font-bold underline decoration-teal-200">{{ new_news_today|default:0 }} bản tin mới</span> và <span class="text-blue-600 font-bold underline decoration-blue-200">{{ new_leads_today|default:0 }} yêu cầu hỗ trợ</span> cần xử lý.
+                {% endif %}
+            </p>
+        </div>
+        <div class="hidden lg:flex items-center gap-4 bg-slate-50 p-2 rounded-[2rem] border border-slate-100">
+            <div class="flex -space-x-3">
+                {% for badge in on_duty_badges %}
+                <div class="w-12 h-12 rounded-full border-4 border-white flex items-center justify-center font-bold text-xs {% cycle 'bg-slate-200 text-slate-500' 'bg-teal-500/20 text-teal-600' 'bg-emerald-500/20 text-emerald-600' %}">{{ badge }}</div>
+                {% empty %}
+                <div class="w-12 h-12 rounded-full border-4 border-white bg-slate-200 flex items-center justify-center font-bold text-slate-500 text-xs">NA</div>
+                {% endfor %}
+                {% if on_duty_extra_count > 0 %}
+                <div class="w-12 h-12 rounded-full border-4 border-white bg-emerald-500/20 flex items-center justify-center font-bold text-emerald-600 text-xs">+{{ on_duty_extra_count }}</div>
+                {% endif %}
+            </div>
+            <div class="pr-4">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{% tr 'Đội ngũ trực' 'On-duty team' %}</p>
+                <p class="text-xs font-bold text-slate-700">{{ on_duty_count|default:0 }} {% tr 'Thành viên' 'members' %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="absolute -right-20 -top-20 w-80 h-80 bg-teal-50/50 rounded-full blur-3xl"></div>
+    <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-blue-50/30 rounded-full blur-2xl"></div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 transition-all duration-500 group relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-6 border border-indigo-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2.5"></path></svg>
+            </div>
+            <div class="text-5xl font-black text-slate-900 tracking-tighter mb-1">{{ total_users|default:0 }}</div>
+            <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">{% tr 'Người dùng' 'Users' %}</div>
+            <div class="mt-4 flex items-center gap-1.5 text-emerald-500 font-bold text-[10px] uppercase">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l-8 8h16z"></path></svg>
+                +12% <span class="text-slate-300 font-medium lowercase italic">{% tr 'tháng này' 'this month' %}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 transition-all duration-500 group relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 border border-emerald-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2.5"></path></svg>
+            </div>
+            <div class="text-5xl font-black text-slate-900 tracking-tighter mb-1">{{ total_videos|default:0 }}</div>
+            <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">{% tr 'Video bài tập' 'Exercise videos' %}</div>
+            <div class="mt-4 flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M5 12h14"></path></svg>
+                {% tr 'Mới' 'New' %} <span class="text-slate-300 font-medium lowercase italic">{% tr 'tuần này' 'this week' %}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 transition-all duration-500 group relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-14 h-14 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6 border border-amber-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" stroke-width="2.5"></path></svg>
+            </div>
+            <div class="text-5xl font-black text-slate-900 tracking-tighter mb-1">{{ total_news|default:0 }}</div>
+            <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">{% tr 'Tin tức y tế' 'Medical news' %}</div>
+            <div class="mt-4 flex items-center gap-1.5 text-blue-500 font-bold text-[10px] uppercase">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4l-8 8h16z"></path></svg>
+                +3 <span class="text-slate-300 font-medium lowercase italic">{% tr 'hôm nay' 'today' %}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 transition-all duration-500 group relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-14 h-14 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-6 border border-rose-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" stroke-width="2.5"></path></svg>
+            </div>
+            <div class="text-5xl font-black text-slate-900 tracking-tighter mb-1">{{ total_therapies|default:0 }}</div>
+            <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">{% tr 'Liệu pháp' 'Therapy' %}</div>
+            <div class="mt-4 flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase">
+                <span class="w-2 h-2 rounded-full bg-slate-300"></span>
+                {% tr 'Đang hoạt động' 'Active' %}
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 transition-all duration-500 group relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-14 h-14 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-6 border border-teal-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-width="2.5"></path></svg>
+            </div>
+            <div class="text-5xl font-black text-slate-900 tracking-tighter mb-1">{{ total_services|default:0 }}</div>
+            <div class="text-[11px] font-black text-slate-400 uppercase tracking-[0.15em]">{% tr 'Dịch vụ GP' 'Services' %}</div>
+            <div class="mt-4 flex items-center gap-1.5 text-teal-500 font-bold text-[10px] uppercase">
+                <span class="w-2 h-2 rounded-full bg-teal-500 animate-pulse"></span>
+                {% tr 'Sẵn sàng' 'Ready' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="space-y-6">
+        <div class="bg-white rounded-[2.5rem] p-8 border border-slate-200 shadow-sm h-full">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="text-lg font-black text-slate-900 tracking-tight">{% tr 'Hoạt động mới' 'Recent activity' %}</h3>
+                <span class="w-2 h-2 bg-rose-500 rounded-full animate-ping"></span>
+            </div>
+
+            {% if recent_activities %}
+            <div class="space-y-8">
+                {% for activity in recent_activities %}
+                <div class="flex gap-4 relative">
+                    {% if not forloop.last %}
+                    <div class="absolute left-[11px] top-8 bottom-[-20px] w-0.5 bg-slate-100"></div>
+                    {% endif %}
+                    <div class="w-6 h-6 rounded-full {{ activity.dot_class }} border-4 border-white shadow-sm flex-shrink-0 z-10"></div>
+                    <div>
+                        <p class="text-[11px] font-black text-slate-900 uppercase tracking-wide">{{ activity.title }}</p>
+                        <p class="text-xs text-slate-400 font-medium mt-1">{{ activity.description }}</p>
+                        <p class="text-[9px] font-bold text-slate-300 mt-2 uppercase">{{ activity.time_label }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-xs text-slate-400 font-medium">{% tr 'Chưa có hoạt động mới.' 'No recent activity yet.' %}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

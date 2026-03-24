@@ -1,0 +1,125 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n_extras %}
+{% block title %}{{ title }} - HandsViet Dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<a href="{% url 'dashboard:service_list' %}" class="hover:text-teal-600">{% tr "Dịch vụ" "Services" %}</a>
+<span class="text-gray-300">/</span>
+<span class="text-gray-900 font-medium">{{ title }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto">
+    <div class="flex items-center gap-4 mb-8">
+        <a href="{% url 'dashboard:service_list' %}" class="w-12 h-12 bg-white border border-gray-100 text-gray-400 hover:text-teal-600 rounded-2xl flex items-center justify-center transition-all">←</a>
+        <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ title }}</h1>
+    </div>
+    <form method="post" enctype="multipart/form-data" class="bg-white rounded-[2.5rem] shadow-xl border border-gray-100 p-8 md:p-12 space-y-8">
+        {% csrf_token %}
+        {{ form.price_text }}
+        {{ form.duration }}
+        {% if form.errors %}
+        <div class="bg-red-50 border border-red-200 text-red-700 p-6 rounded-3xl text-sm">
+            <ul class="list-disc list-inside">
+                {% for field in form %}
+                {% for error in field.errors %}<li><strong>{{ field.label }}:</strong> {{ error }}</li>{% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}<li><strong>{% tr "Lỗi" "Error" %}:</strong> {{ error }}</li>{% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 space-y-6">
+                <section class="border border-slate-200 rounded-3xl p-6 bg-white">
+                    <h2 class="text-base font-bold text-slate-900 mb-5">{% tr "Thông tin dịch vụ" "Service information" %}</h2>
+                    <div class="space-y-5">
+                        <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.title.label }}</label>{{ form.title }}</div>
+                        <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.slug.label }}</label>{{ form.slug }}</div>
+                        <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.category.label }}</label>{{ form.category }}</div>
+                        <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.summary.label }}</label>{{ form.summary }}</div>
+                    </div>
+                </section>
+
+                <section class="border border-slate-200 rounded-3xl p-6 bg-white">
+                    <h2 class="text-base font-bold text-slate-900 mb-5">{% tr "Ảnh dịch vụ" "Service image" %}</h2>
+                    <div class="p-6 bg-slate-50 border-2 border-dashed border-slate-300 rounded-3xl">{{ form.thumbnail }}</div>
+                </section>
+            </div>
+
+            <div class="lg:col-span-5 space-y-6">
+                <section class="border border-teal-200 bg-teal-50/50 rounded-3xl p-6">
+                    <h2 class="text-base font-bold text-teal-900 mb-5">{% tr "Giá dịch vụ theo chu kỳ" "Recurring pricing" %}</h2>
+                    <div class="space-y-5">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.cycle_unit.label }}</label>{{ form.cycle_unit }}</div>
+                            <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.cycle_count.label }}</label>{{ form.cycle_count }}</div>
+                        </div>
+                        <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.unit_price.label }}</label>{{ form.unit_price }}</div>
+                        <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.total_price_preview.label }}</label>{{ form.total_price_preview }}</div>
+                        <div class="text-xs text-teal-800 bg-teal-100 border border-teal-200 rounded-xl px-3 py-2">{% tr "Hệ thống tự lưu giá và thời gian theo định dạng price_text + duration." "The system stores the composed value as price_text + duration." %}</div>
+                    </div>
+                </section>
+
+                <section class="border border-slate-200 rounded-3xl p-6 bg-white">
+                    <h2 class="text-base font-bold text-slate-900 mb-5">{% tr "Thiết lập hiển thị" "Display settings" %}</h2>
+                    <div class="space-y-5">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.featured_tag.label }}</label>{{ form.featured_tag }}</div>
+                            <div class="space-y-2"><label class="text-[11px] font-bold text-gray-500 uppercase tracking-widest ml-1">{{ form.order.label }}</label>{{ form.order }}</div>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-start gap-3">
+                            <div class="mt-1">{{ form.is_featured }}</div>
+                            <div>
+                                <label for="{{ form.is_featured.id_for_label }}" class="font-semibold text-slate-800 block leading-none cursor-pointer">{{ form.is_featured.label }}</label>
+                                <p class="text-xs text-slate-500 mt-1">{% tr "Bật để ưu tiên hiển thị ở trang dịch vụ." "Enable to prioritize this service on the public service page." %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex items-center justify-between">
+            <a href="{% url 'dashboard:service_list' %}" class="text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">{% tr "Hủy" "Cancel" %}</a>
+            <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-10 py-4 rounded-2xl font-bold transition-all">{{ button_text|default:"Save" }}</button>
+        </div>
+    </form>
+</div>
+
+<script>
+(() => {
+    const cycleUnit = document.getElementById("{{ form.cycle_unit.id_for_label }}");
+    const cycleCount = document.getElementById("{{ form.cycle_count.id_for_label }}");
+    const unitPrice = document.getElementById("{{ form.unit_price.id_for_label }}");
+    const totalPreview = document.getElementById("{{ form.total_price_preview.id_for_label }}");
+    const hiddenPrice = document.getElementById("{{ form.price_text.id_for_label }}");
+    const hiddenDuration = document.getElementById("{{ form.duration.id_for_label }}");
+
+    const labels = {
+        week: "{% tr 'tuần' 'week' %}",
+        month: "{% tr 'tháng' 'month' %}",
+        year: "{% tr 'năm' 'year' %}",
+    };
+    const suffix = "{% tr 'VND' 'VND' %}";
+    const locale = "{% if request.LANGUAGE_CODE|slice:':2' == 'en' %}en-US{% else %}vi-VN{% endif %}";
+
+    const formatMoney = (value) => `${new Intl.NumberFormat(locale).format(value)} ${suffix}`;
+    const syncPricing = () => {
+        const count = Math.max(parseInt(cycleCount?.value || "1", 10) || 1, 1);
+        const pricePerCycle = Math.max(parseFloat(unitPrice?.value || "0") || 0, 0);
+        const unit = cycleUnit?.value || "month";
+        const total = Math.round(count * pricePerCycle);
+        if (totalPreview) totalPreview.value = total > 0 ? formatMoney(total) : "";
+        if (hiddenPrice) hiddenPrice.value = total > 0 ? formatMoney(total) : "";
+        if (hiddenDuration) hiddenDuration.value = `${count} ${labels[unit] || labels.month}`;
+    };
+    [cycleUnit, cycleCount, unitPrice].forEach((el) => {
+        if (!el) return;
+        el.addEventListener("input", syncPricing);
+        el.addEventListener("change", syncPricing);
+    });
+    syncPricing();
+})();
+</script>
+{% endblock %}
